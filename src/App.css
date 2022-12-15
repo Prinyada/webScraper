@@ -1,11 +1,15 @@
 :root {
     --blue: #9FC5E8;
 }
+
 .App {
   text-align: center;
 }
 
-.App-logo {
+.button-wrapper {
+
+}
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -38,4 +42,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

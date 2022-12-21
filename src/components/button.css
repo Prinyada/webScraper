@@ -1,8 +1,17 @@
 .button {
-    margin: 6px 0px;
+    margin-top: 20px;
     cursor: pointer;
+    height: 35px;
+    border-radius: 3px;    
+
 }
 
 .primaryBtn {
+    background-color: var(--green);
+    text-align: center;
     
+}
+
+.secondaryBtn {
+    background-color: var(--orange);
 }

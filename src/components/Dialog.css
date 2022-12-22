@@ -1,0 +1,7 @@
+* {
+    background-color: var(#EEEEEE);
+}
+.container {
+    border: none;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+}

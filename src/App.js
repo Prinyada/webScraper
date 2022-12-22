@@ -1,8 +1,16 @@
+import { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import Button from './components/button'
-import { BUTTON_TYPES } from './data/button';
+import { Dialog } from './components/Dialog';
 
-const App = () =>{
+function App() {
+  const [openDialog, setOpenDialog] = useState(false);
+  const lostItems = () => { 
+    
+  }
+  const secondHand = () => {
+
+  }
   return (
     <div className="App">
       <div className="content">
@@ -10,8 +18,20 @@ const App = () =>{
         <h5>for KMUTNB Community</h5>
       </div>
       <div className="button-wrapper">
-        <Button type={BUTTON_TYPES.PRIMARY} buttonText="ประกาศของหาย"/>
-        <Button type={BUTTON_TYPES.SECONDARY} buttonText="ประกาศของมือสอง"/>
+        <button className='primaryBtn button' 
+        onClick={() => {
+          setOpenDialog(true);
+        }}
+        >
+          ประกาศของหาย
+        </button>
+        <button className='secondaryBtn button' onClick={() => {
+          setOpenDialog(true);
+        }}
+        >
+          ประกาศของมือสอง
+        </button>
+        {openDialog && <Dialog openDialog={openDialog} setOpenDialog={setOpenDialog}/>}
       </div>
     </div>
   );

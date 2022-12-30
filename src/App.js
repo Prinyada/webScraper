@@ -1,16 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import { Dialog } from './components/Dialog';
+import React from 'react';
 
 function App() {
-  const [openDialog, setOpenDialog] = useState(false);
-  const lostItems = () => { 
-    
-  }
-  const secondHand = () => {
+  const [openDialog, setOpenDialog] = useState({
+    message: "",
+    isLoading: false
+  });
+  const lostItemClick = () => {
+    setOpenDialog({
+      message: "lost",
+      isLoading: true
+    })
+  };
+  const secondhandClick = () => {
+    setOpenDialog({
+      message: "second",
+      isLoading: true
+    })
+  };
 
-  }
+  let dialogRef = useRef();
+  useEffect(() => {
+    let handleClose = (e) => {
+      if(dialogRef.current.contains(e.target)){
+        setOpenDialog({
+          isLoading: false
+        })
+        console.log(dialogRef.current);
+      }     
+    }
+    document.addEventListener("click", handleClose)
+  });
+  
+
   return (
     <div className="App">
       <div className="content">
@@ -20,18 +45,21 @@ function App() {
       <div className="button-wrapper">
         <button className='primaryBtn button' 
         onClick={() => {
-          setOpenDialog(true);
+          lostItemClick();
         }}
         >
           ประกาศของหาย
         </button>
-        <button className='secondaryBtn button' onClick={() => {
-          setOpenDialog(true);
+        <button className='secondaryBtn button' 
+        onClick={() => {
+          secondhandClick();
         }}
         >
           ประกาศของมือสอง
         </button>
-        {openDialog && <Dialog openDialog={openDialog} setOpenDialog={setOpenDialog}/>}
+      </div>
+      <div className="dialog" ref={dialogRef}>
+        { openDialog.isLoading && <Dialog  message={openDialog.message}/> }
       </div>
     </div>
   );

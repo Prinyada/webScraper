@@ -1,10 +1,18 @@
-import React from 'react';
+import React from "react";
 import "./Dialog.css";
-export const Dialog = ({openDialog, setOpenDialog}) => {
+import { FaBell } from "react-icons/fa";
+export const Dialog = ({ message }) => {
   return (
-    <div className="container">
-        <p>ไม่ใช่ระบบซื้อขายจ้า</p>
-        <button>รับทราบ</button>
+    <div className="container-dialog">
+      <div className="content-dialog">
+        <div className="content-dialog-top">
+         <FaBell/>
+        </div>
+        <div className="content-dialog-bottom">
+          <p>{message}</p>
+          <button>รับทราบ</button>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};

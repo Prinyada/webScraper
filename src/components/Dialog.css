@@ -1,7 +1,21 @@
-* {
-    background-color: var(#EEEEEE);
+.container-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
 }
-.container {
+.content-dialog {
+    background-color: #FFFFFF;
+    padding: 20px 30px 20px 30px;
+    border-radius: 3px;
     border: none;
     box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }

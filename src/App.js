@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import { Dialog } from './components/Dialog';
+import Dialog from './components/Dialog';
 import React from 'react';
 
 function App() {
@@ -46,7 +46,8 @@ function App() {
         <button className='primaryBtn button' 
         onClick={() => {
           lostItemClick();
-        }}
+        }} 
+        text="ประกาศของหาย"
         >
           ประกาศของหาย
         </button>

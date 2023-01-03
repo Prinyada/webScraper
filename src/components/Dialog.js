@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Dialog.css";
 import { FaBell } from "react-icons/fa";
-export const Dialog = ({ message }) => {
+import { Switch, Route } from 'react-router-dom';
+import { LostItems } from "../LostItems";
+import { SecondHand } from "../SecondHand";
+
+function Dialog(props) {
   return (
     <div className="container-dialog">
       <div className="content-dialog">
@@ -9,10 +13,12 @@ export const Dialog = ({ message }) => {
          <FaBell/>
         </div>
         <div className="content-dialog-bottom">
-          <p>{message}</p>
-          <button>รับทราบ</button>
+          <p>{props.message}</p>
+          <button>เข้าสู่หน้า {props.message}</button>
         </div>
       </div>
     </div>
   );
 };
+
+export default Dialog;

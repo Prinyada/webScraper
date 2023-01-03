@@ -1,4 +1,12 @@
-export const BUTTON_TYPES = {
-    PRIMARY: "PRIMARY",
-    SECONDARY: "SECONDARY"
-}
+const button = [
+    {
+        title: "ประกาศของหาย",
+        buttonStyle: "primaryBtn button"
+    },
+    {
+        title: "ประกาศของมือสอง",
+        buttonStyle: "secondaryBtn button"
+    }
+];
+
+export default button;

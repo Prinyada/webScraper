@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const SecondHand = () => {
+const SecondHand = () => {
   return (
     <div>SecondHand</div>
   )
 }
+
+export default SecondHand;

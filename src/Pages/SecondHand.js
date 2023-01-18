@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SecondHand = () => {
+function SecondHand(){
   return (
     <div>SecondHand</div>
   )

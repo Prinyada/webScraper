@@ -1,5 +1,12 @@
+.home-container {
+  justify-items: center;
+  text-align: center;
+  display: block;
+}
 .button-wrapper {
-  
+  width: 25%;
+  text-align: center;
+  display: inline-block;
 }
 
 .button {

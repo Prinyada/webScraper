@@ -6,6 +6,8 @@
   --white: #FFFFFF;
   --grey: #EEEEEE;
   --red: #ff7066;
+  --gray91: #999999;
+  --black: #000000;
 }
 
 * {
@@ -14,10 +16,7 @@
 
 body {
   background-color: var(--background);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
+  margin: 0 auto;
 }
 
 code {

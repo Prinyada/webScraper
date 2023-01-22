@@ -1,0 +1,42 @@
+.header {
+    background-color: var(--white);
+    height: 80px;
+    border-bottom: 1px solid var(--grey);
+}
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+}
+.header-right, .button-home, .button-admin {
+    display: flex;
+    height: 80px;
+    align-items: center;
+    padding-right: 15px;
+}
+/* ------------------ button link ---------------*/
+.logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.logo-link {
+    color: var(--black);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.button-link{
+    color: var(--black);
+    text-decoration: none;
+    font-size: 1rem;
+    display: flex;
+    height: 80px;
+    align-items: center;
+}
+

@@ -18,10 +18,11 @@ function App() {
       this.detailPost = detailPost;
     }
   }
+  const [dataLostItems, setDatadataLostItems] = useState([]);
+  const [dataSecondHand, setdataSecondHand] = useState([]); 
 
   function Data(){
-    const [dataLostItems, setDatadataLostItems] = useState([]);
-    const [dataSecondHand, setdataSecondHand] = useState([]); 
+
 
     useEffect(() => {
       onValue(ref(db, "scraper"), (snapshot) => {
@@ -47,8 +48,8 @@ function App() {
         setdataSecondHand([...tempArraySecond]);
       });
     }, []);
-    console.log("this Lostitem -> ",dataLostItems);
-    console.log("this SecondHand -> ",dataSecondHand);
+    // console.log("this Lostitem -> ",dataLostItems);
+    // console.log("this SecondHand -> ",dataSecondHand);
   }
   Data();
   return (
@@ -56,8 +57,8 @@ function App() {
       <Header/>
       <Routes>
         <Route exact path="/" element={<Home />}/>
-        <Route exact path="/lostItems" element={<LostItems />} />
-        <Route exact path="/secondHand" element={<SecondHand />} />
+        <Route exact path="/lostItems" element={<LostItems dataLost={dataLostItems}/>} />
+        <Route exact path="/secondHand" element={<SecondHand dataSecond={dataSecondHand}/>} />
         <Route exact path="/admin" element={<Admin />}/>         
       </Routes>
     </>

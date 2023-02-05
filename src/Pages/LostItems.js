@@ -1,14 +1,14 @@
-import React, { useState, useEffect} from "react";
-import { ref, onValue } from "firebase/database";
-import { Table } from "react-bootstrap";
-import Header from "../components/Header";
-import { db } from "../realtimeData/firebase-config";
+import React from "react";
+import { useState } from "react";
+import './LostItems.css';
 
-function LostItems() {
-    // console.log(Data.data);
+
+function LostItems(props) {
+    let data = props.dataLost;
+    
     return(
-        <div>
-
+        <div className="">
+            
         </div>
     )
 

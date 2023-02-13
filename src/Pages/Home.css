@@ -3,8 +3,19 @@
   text-align: center;
   display: block;
 }
+.header-home .line-1 {
+  font-size: 4rem;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+.header-home .line-2 {
+  font-size: 1rem;
+  margin-top: 0;
+  font-weight: bold;
+}
+/* ------------- button ------------------- */
 .button-wrapper {
-  width: 25%;
+  width: 30rem;
   text-align: center;
   display: inline-block;
 }
@@ -12,10 +23,11 @@
 .button {
   margin-top: 20px;
   cursor: pointer;
-  height: 35px;
+  height: 3rem;
   border: none;
   border-radius: 3px;   
-  width: 100%;
+  width: 30rem;
+  font-size: 1.6rem;
 }
 
 .primaryBtn, .secondaryBtn {
@@ -29,9 +41,10 @@
 }
 
 .primaryBtn {
-  background-color: var(--red);    
+  background-color: var(--teal);    
 }
 
 .secondaryBtn {
-  background-color: var(--orange);
+  background-color: var(--sapphireblue);
 }
+/* ----------------------------------------- */

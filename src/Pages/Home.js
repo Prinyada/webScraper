@@ -13,8 +13,10 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1>Online Bulletin Board</h1>
-      <h5>for KMUTNB Community</h5>
+      <div className="header-home">
+        <p className="line-1">Online Bulletin Board</p>
+        <p className="line-2">for KMUTNB Community</p>
+      </div>
       <div className="button-wrapper">
         <button className="primaryBtn button" onClick={lostItemClick}>
           ประกาศของหาย

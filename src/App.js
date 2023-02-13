@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Routes, Route, Link, Router, useNavigate } from "react-router-dom";
+import { createContext, useEffect, useReducer, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import LostItems from "./Pages/LostItems";
 import SecondHand from "./Pages/SecondHand";
 import React from "react";
@@ -7,7 +7,11 @@ import Home from "./Pages/Home";
 import { db } from "./realtimeData/firebase-config";
 import { ref, onValue } from "firebase/database";
 import Header from "./components/Header";
+import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
+import { initialState, reducer } from "./reducer/UseReducer";
+
+export const UserContext = createContext();
 
 function App() {
   class Detail {
@@ -19,7 +23,9 @@ function App() {
     }
   }
   const [dataLostItems, setDatadataLostItems] = useState([]);
-  const [dataSecondHand, setdataSecondHand] = useState([]); 
+  const [dataSecondHand, setdataSecondHand] = useState([]);
+  
+  const [ state, dispatch ] = useReducer(reducer, initialState)
 
   function Data(){
 
@@ -54,13 +60,17 @@ function App() {
   Data();
   return (
     <>
+    <UserContext.Provider value={{state, dispatch}}>
       <Header/>
       <Routes>
         <Route exact path="/" element={<Home />}/>
         <Route exact path="/lostItems" element={<LostItems dataLost={dataLostItems}/>} />
         <Route exact path="/secondHand" element={<SecondHand dataSecond={dataSecondHand}/>} />
-        <Route exact path="/admin" element={<Admin />}/>         
+        <Route exact path="/login" element={<Login />}/>  
+        <Route path="/admin/*" element={<Admin/>}/>      
       </Routes>
+    </UserContext.Provider>
+      
     </>
   );
 }

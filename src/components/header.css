@@ -1,7 +1,7 @@
 .header {
     background-color: var(--white);
     height: 80px;
-    border-bottom: 1px solid var(--grey);
+    border-bottom: 1px solid var(--gray);
 }
 .container {
     max-width: 960px;
@@ -31,7 +31,7 @@
     font-size: 2rem;
 }
 
-.button-link{
+.button-link {
     color: var(--black);
     text-decoration: none;
     font-size: 1rem;

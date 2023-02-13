@@ -1,0 +1,20 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    /* width: 100vw; */
+    /* height: 100vh; */
+}
+.SideMenuAndAdminContent {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.SideMenu {
+
+}
+
+.AdminContent {
+    padding-left: 12px;
+}

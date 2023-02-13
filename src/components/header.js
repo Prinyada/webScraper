@@ -9,14 +9,13 @@ function Header() {
   const { state, dispatch } = useContext(UserContext);
 
   const RenderHeader = () => {
-    if (state === true || state === null) {
+    if (state === true) {
       return (
         <div className="header">
           <div className="container">
             <div className="header-container">
               <div className="logo-container">
-                  <TbSpeakerphone />
-                  EIEI
+                  ADMIN
               </div>
               <div className="header-right">
                 <div
@@ -34,7 +33,7 @@ function Header() {
           </div>
         </div>
       );
-    } else {
+    } else if(state !== true) {
       return (
         <div className="header">
           <div className="container">
@@ -64,7 +63,6 @@ function Header() {
       );
     }
   };
-  console.log("this payload",state)
   return <RenderHeader />;
 }
 

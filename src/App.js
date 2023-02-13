@@ -58,12 +58,13 @@ function App() {
     // console.log("this SecondHand -> ",dataSecondHand);
   }
   Data();
+
   return (
     <>
     <UserContext.Provider value={{state, dispatch}}>
       <Header/>
       <Routes>
-        <Route exact path="/" element={<Home />}/>
+        <Route exact path="/" element={<Home />} />
         <Route exact path="/lostItems" element={<LostItems dataLost={dataLostItems}/>} />
         <Route exact path="/secondHand" element={<SecondHand dataSecond={dataSecondHand}/>} />
         <Route exact path="/login" element={<Login />}/>  

@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import { TbSpeakerphone } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { UserContext } from "../App";
+import mainLogo from "../logo.png";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
+
+  let activeLink = "button-link active";
+  let normalLink = "button-link";
 
   const RenderHeader = () => {
     if (state === true) {
@@ -15,7 +19,10 @@ function Header() {
           <div className="container">
             <div className="header-container">
               <div className="logo-container">
-                  ADMIN
+                <img src={mainLogo} className="main-logo"/>
+              </div>
+              <div className="header-center">
+                <p>DashBoard Admin</p>
               </div>
               <div className="header-right">
                 <div
@@ -24,9 +31,9 @@ function Header() {
                     dispatch({ type: "ADMIN", payload: false });
                   }}
                 >
-                  <Link to="/login" className="button-link">
+                  <NavLink to="/login" className="button-link-logout">
                     Logout
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>
@@ -39,22 +46,21 @@ function Header() {
           <div className="container">
             <div className="header-container">
               <div className="logo-container">
-                <Link to="/" className="logo-link">
-                  <TbSpeakerphone />
-                  EIEI
-                </Link>
+                <div className="logo-link">
+                  <img src={mainLogo} className="main-logo"/>
+                </div>
               </div>
               <div className="header-right">
                 <div className="button-home">
-                  <Link to="/" className="button-link">
+                  <NavLink to="/" className={({ isActive }) => isActive? activeLink : normalLink}>
                     Home
-                  </Link>
+                  </NavLink>
                 </div>
                 <div className="button-admin">
-                  <Link to="/login" className="button-link">
+                  <NavLink to="/login" className={({ isActive }) => isActive? activeLink : normalLink}>
                     <MdAdminPanelSettings className="logo" />
                     Admin
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </div>

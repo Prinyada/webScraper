@@ -15,28 +15,61 @@
 }
 .header-right, .button-home, .button-admin {
     display: flex;
-    height: 80px;
+    height: 50px;
     align-items: center;
     padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 3px;
+}
+
+.button-home:hover::after {
+    background-color: var(--black);
+}
+
+.main-logo {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.header-center p {
+    font-size: 22px;
+    font-weight: bold;
 }
 /* ------------------ button link ---------------*/
-.logo {
-    font-weight: bold;
-    font-size: 1.5rem;
+.logo-container {
+    display: flex;
 }
 .logo-link {
     color: var(--black);
     text-decoration: none;
     font-weight: bold;
     font-size: 2rem;
+    
 }
 
-.button-link {
+.active {
+    border: 1px solid black;
+}
+
+.button-link, .button-link-logout {
     color: var(--black);
     text-decoration: none;
     font-size: 1rem;
     display: flex;
-    height: 80px;
+    height: 50px;
     align-items: center;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 3px;
+}
+
+.button-link-logout:hover,
+.button-link:hover {
+    border: none;
+    background-color: var(--pastelblue);
 }
 

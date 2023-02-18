@@ -1,24 +1,29 @@
-import { Space } from 'antd';
-import React, { useContext, useEffect } from 'react'
-import SideMenu from '../components/SideMenu';
-import AdminContent from '../components/AdminContent';
+import { Space } from "antd";
+import React, { useContext, useEffect } from "react";
+import SideMenu from "../components/SideMenu";
+import AdminContent from "../components/AdminContent";
 import "./Admin.css";
-import { UserContext } from "../App"
+import { UserContext } from "../App";
 
 function Admin() {
   const { state, dispatch } = useContext(UserContext);
 
-  useEffect(() =>{
+  useEffect(() => {
     dispatch({ type: "ADMIN", payload: true });
-  },[]);
+  }, []);
+
   return (
     <div className="admin-container">
-      <Space className="SideMenuAndAdminContent">
-        <SideMenu/>
-        <AdminContent/>
-      </Space>
+        <section>
+          <div className="sideMenu-content">
+              <SideMenu/>
+          </div>
+          <div className="resultMenu">
+              <AdminContent/>
+          </div>
+        </section>
     </div>
-  )
+  );
 }
 
 export default Admin;

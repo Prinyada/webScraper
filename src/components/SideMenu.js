@@ -3,6 +3,8 @@ import './SideMenu.css';
 import { Menu } from 'antd';
 import { EditOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai" ;
 
 
 function SideMenu() {
@@ -15,13 +17,18 @@ function SideMenu() {
         }}
         items={[
             {
+                label: "หน้าหลัก",
+                icon: <AiOutlineHome />,
+                key: ""
+            },
+            {
                 label: "แก้ไขรหัสผ่าน",
                 icon: <EditOutlined />,
                 key: "editpassword"
             },
             {
                 label: "เพิ่มข้อมูล",
-                icon: <EditOutlined />,
+                icon: <IoIosAddCircleOutline />,
                 key: "insertdata"
             }
         ]}

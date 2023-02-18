@@ -1,33 +1,36 @@
-import React,{  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Editpassword.css";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, update } from "firebase/database";
+import { Button, Checkbox, Form, Input } from "antd";
 
 function Editpassword() {
-  const [ passdb, setPassDb ] = useState("");
+  const [passdb, setPassDb] = useState("");
 
-  const [oldPass, setOldPass ] = useState("");
-  const [newPass, setNewPass ] = useState("");
-  const [confirmNewPass, setconfirmNewPass ] = useState("");
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [confirmNewPass, setconfirmNewPass] = useState("");
 
-  const [ error, setError ] = useState("")
+  const [error, setError] = useState("");
 
 
   function editToDb() {
     let newP = parseInt(newPass);
-    if(oldPass === passdb){ //passเก่าตรงกัน
-      if(newPass === confirmNewPass){ //พร้อมแก้ไข
-        setError("noError")
-        update(ref(db,"user"),{
-          password: newP
+    if (oldPass === passdb) {
+      //passเก่าตรงกัน
+      if (newPass === confirmNewPass) {
+        //พร้อมแก้ไข
+        setError("noError");
+        update(ref(db, "user"), {
+          password: newP,
         });
+      } else {
+        // newpass กับ confirmnewpass ไม่ตรงกัน
+        setError("newpassER");
       }
-      else{ // newpass กับ confirmnewpass ไม่ตรงกัน
-        setError("newpassER")
-      }
-    }
-    else { // ใส่passเก่าไม่ถูก
-      setError("oldpassER")
+    } else {
+      // ใส่passเก่าไม่ถูก
+      setError("oldpassER");
     }
   }
   useEffect(() => {

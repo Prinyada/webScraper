@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
 import { Select, Input, Button } from "antd";
 import { db } from "../realtimeData/firebase-config";
-import { ref, onValue, set } from "firebase/database";
+import { ref, onValue, set, push } from "firebase/database";
 
 function Insertdata() {
   const [ text, setText ] = useState("");
@@ -11,7 +11,9 @@ function Insertdata() {
   const [ selected, setSelected ] = useState("");
   const [ error, setError ] = useState("");
 
-  const [ tempClosepost, setTempClosePost ] = useState();
+  const [ tempClosepost, setTempClosePost ] = useState([]);
+
+  // const newData = db.push();
 
   function addtofirebase(){
     let tempData = addData;
@@ -23,20 +25,24 @@ function Insertdata() {
         setError("inputError")
       }
       else {
-        // setTempClosepost
+        
       }
     }
   }
 
-  useEffect(() => {
-    let tempClose = [];
-    onValue(ref(db, "close_post"), (snapshot) => {
+  function selectTable(table) {
+    let tempData = [];
+    onValue(ref(db, table), (snapshot) => {
       snapshot.forEach((childsnapshot) => {
         let t = childsnapshot.val()
-        tempClose.push(t);
+        tempData.push(t);
       })
+      setTempClosePost([...tempData])
     });
-    setTempClosePost([...tempClose])
+  }
+
+  useEffect(() => {
+    
     
   }, []);
   
@@ -50,6 +56,7 @@ function Insertdata() {
           onChange={(value) => {
             setError("");
             setSelected(value);
+            selectTable(value);
           }}
           options={[
             { value: "close_post", label: "close_post" },
@@ -90,7 +97,14 @@ function Insertdata() {
         <Button type="primary" onClick={addtofirebase}>เพิ่มข้อมูล</Button>
       </div>
       { (error === "undefine" || error === "inputError") && <p className="text-error">กรุณากรอกข้อมูล</p>}
-      <div className="showData-content"></div>
+      <div className="showData-content">
+        { tempClosepost.map( (data) => {
+          return (
+            <p>{data}</p>
+          )
+        })}
+        <p></p>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-.select-content, .text-error {
+.select-content {
     margin-left: 40px;
     margin-top: 20px;
     display: flex;
@@ -6,6 +6,13 @@
     align-items: center;
     justify-content: center;
 }
+.text-error {
+    margin-top: 20px;
+    display: flex;
+    height: max-content;
+    align-items: center;
+    justify-content: center;
+} 
 .selected-content, .input-content {
     margin-left: 40px;
     margin-top: 20px;

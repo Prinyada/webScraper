@@ -1,6 +1,6 @@
 .header {
     background-color: var(--white);
-    height: 80px;
+    height: 100px;
     border-bottom: 1px solid var(--gray);
 }
 .container {
@@ -10,7 +10,7 @@
 .header-container {
     display: flex;
     justify-content: space-between;
-    height: 80px;
+    height: 100px;
     align-items: center;
 }
 .header-right, .button-home, .button-admin {
@@ -27,8 +27,8 @@
 }
 
 .main-logo {
-    width: 70px;
-    height: 70px;
+    width: 100px;
+    height: 100px;
     display: flex;
     align-items: center;
     padding-right: 15px;

@@ -1,22 +1,30 @@
 import { Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
-import { Select, Input, Button } from "antd";
+import { Select, Input, Button, Tag, message } from "antd";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, set, push } from "firebase/database";
 
 function Insertdata() {
   const [ text, setText ] = useState("");
-  const [ addData, setAddData ] = useState("");
+  const [ addData, setAddData ] = useState([]);
   const [ selected, setSelected ] = useState("");
   const [ error, setError ] = useState("");
+  const [ state, setState ] = useState(true);
 
-  const [ tempClosepost, setTempClosePost ] = useState([]);
+  const [ tempSelectTable, setTempSelectTable ] = useState([]);
 
-  // const newData = db.push();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  function success(){
+    messageApi.open({
+      type: 'success',
+      content: 'This is a success message',
+    });
+  };
 
   function addtofirebase(){
-    let tempData = addData;
+    setState(false);
     if(selected === ""){
       setError("selectedError");
     }
@@ -25,26 +33,84 @@ function Insertdata() {
         setError("inputError")
       }
       else {
-        
+        addData.push(text);
+        set(ref(db, "test"), {
+          ...addData
+        })
+        setTimeout(() => {
+          setState(true);
+        },1000)
       }
     }
   }
 
   function selectTable(table) {
     let tempData = [];
-    onValue(ref(db, table), (snapshot) => {
-      snapshot.forEach((childsnapshot) => {
-        let t = childsnapshot.val()
-        tempData.push(t);
-      })
-      setTempClosePost([...tempData])
-    });
+    if(table === "close_post"){
+      onValue(ref(db, "test"), (snapshot) => {
+        snapshot.forEach((childsnapshot) => {
+          let t = childsnapshot.val();
+          tempData.push(t);
+        })
+        setAddData([...tempData]);
+        setTempSelectTable([...tempData]);
+        
+      });
+    }
+    else if(table === "color" || table === "place"){
+      onValue(ref(db,"detail/"+table), (snapshot) => {
+        snapshot.forEach((childsnapshot) => {
+          let t = childsnapshot.val();
+          tempData.push(t);
+        })
+        setTempSelectTable([...tempData]);
+      }) 
+    }
+    else if(table === "find" || table === "sell"){
+      onValue(ref(db,"type/"+table), (snapshot) => {
+        snapshot.forEach((childsnapshot) => {
+          let t = childsnapshot.val();
+          tempData.push(t);
+        })
+        setTempSelectTable([...tempData]);
+      }) 
+    }
+    else{
+      onValue(ref(db,"detail/category/"+table), (snapshot) => {
+        snapshot.forEach((childsnapshot) => {
+          let t = childsnapshot.val();
+          tempData.push(t);
+        })
+        setTempSelectTable([...tempData]);
+      }) 
+    }
   }
 
   useEffect(() => {
     
     
   }, []);
+
+  // const forMap = (tag) => {
+  //   const tagElem = (
+  //     <Tag
+  //     style={{fontSize: 16, fontFamily: 'Prompt'}}
+        // closable
+        // onClose={(e) => {
+        //   e.preventDefault();
+          // handleClose(tag);
+        // }}
+  //     >
+  //       {tag}
+  //     </Tag>
+  //   );
+  //   return (
+  //     <p key={tag} style={{ display: 'flex',marginTop: 10 }}>
+  //       {tagElem}
+  //     </p>
+  //   );
+  // };
+
   
   return (
     <div className="insertdata-container">
@@ -57,6 +123,7 @@ function Insertdata() {
             setError("");
             setSelected(value);
             selectTable(value);
+            setState(true);
           }}
           options={[
             { value: "close_post", label: "close_post" },
@@ -91,18 +158,20 @@ function Insertdata() {
         <Input 
         style={{ width: 200 ,fontSize: 16, fontFamily: 'Prompt' }}
         placeholder="ข้อมูลที่ต้องการเพิ่ม" onChange={ e => {
-          setAddData(e.target.value);
+          setText(e.target.value);
           setError("")
           }}/>&nbsp;
         <Button type="primary" onClick={addtofirebase}>เพิ่มข้อมูล</Button>
       </div>
       { (error === "undefine" || error === "inputError") && <p className="text-error">กรุณากรอกข้อมูล</p>}
+      {contextHolder}
       <div className="showData-content">
-        { tempClosepost.map( (data) => {
+        { state === true && addData.map( (data,i) => {
           return (
-            <p>{data}</p>
+            <p key={i}>{data}</p>
           )
         })}
+        {/* { addData.map(forMap) } */}
         <p></p>
       </div>
     </div>

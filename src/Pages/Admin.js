@@ -16,7 +16,7 @@ function Admin() {
     <div className="admin-container">
         <section>
           <div className="sideMenu-content">
-              <SideMenu/>
+              <SideMenu />
           </div>
           <div className="resultMenu">
               <AdminContent/>

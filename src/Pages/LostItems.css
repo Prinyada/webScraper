@@ -1,13 +1,23 @@
 .lost-container {
+    margin-top: 15px; 
     justify-items: center;
     text-align: center;
     display: block;
 }
 
 .lost-header {
-
+    color: var(--white);
+    font-size: 24px;
+    background-color: var(--teal); 
+    margin-left: 250px;
+    margin-right: 250px;
 }
 
 .header-1 {
-    /* background-color: ; */
+    
+    /* width: 500px; */
+    /* text-align: center; */
+    /* margin-left: 100px;
+    margin-right: 100px;
+    /* width: fit-content; */
 }

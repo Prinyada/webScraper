@@ -1,30 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import './LostItems.css';
 
 
 function LostItems(props) {
+    console.log("this props",props);
     let data = props.dataLost;
+    // console.log("this data",data);
 
-    // console.log("this day -> ",data[0].day);
-    // console.log("this month -> ",data[0].month);
-    // console.log("this detailPost -> ",data[0].detailPost);
-    // console.log("this year -> ",data[0].year);
     
+
+    useEffect(() => {
+        data.map((data, i) => {
+            console.log("this data",data.day);
+            // console.log("this day -> ",data[i].day);
+            // console.log("this month -> ",data[i].month);
+            // console.log("this detailPost -> ",data[i].detailPost);
+            // console.log("this year -> ",data[i].year);
+            console.log("------------------------------");
+        })
+    }, [])
+
     return(
         <div className="lost-container">
             <div className="lost-header">
                 <p className="header-1">ของหาย</p>
             </div>
             <div className="lost-content">
-                { data.map((lost,index) => {
+                <div className="lost">
+
+                </div>
+                {/* { data.map( (data,index) => {
                     return (
-                        <div className="lost-1">
-                            
+                        <div className="lost">
+
                         </div>
+                        // <p key={index}>{data.day}</p>
+
                     )
-                })}
+                })} */}
             </div>
+            
         </div>
     )
 

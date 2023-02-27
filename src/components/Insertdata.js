@@ -37,9 +37,6 @@ function Insertdata() {
         set(ref(db, "test"), {
           ...addData
         })
-        setTimeout(() => {
-          setState(true);
-        },1000)
       }
     }
   }
@@ -47,7 +44,7 @@ function Insertdata() {
   function selectTable(table) {
     let tempData = [];
     if(table === "close_post"){
-      onValue(ref(db, "test"), (snapshot) => {
+      onValue(ref(db, table), (snapshot) => {
         snapshot.forEach((childsnapshot) => {
           let t = childsnapshot.val();
           tempData.push(t);
@@ -87,29 +84,29 @@ function Insertdata() {
   }
 
   useEffect(() => {
-    
+    console.log("this state -> ",state);
     
   }, []);
 
-  // const forMap = (tag) => {
-  //   const tagElem = (
-  //     <Tag
-  //     style={{fontSize: 16, fontFamily: 'Prompt'}}
+  const forMap = (tag) => {
+    const tagElem = (
+      <Tag
+      style={{fontSize: 16, fontFamily: 'Prompt'}}
         // closable
         // onClose={(e) => {
         //   e.preventDefault();
-          // handleClose(tag);
+        //   handleClose(tag);
         // }}
-  //     >
-  //       {tag}
-  //     </Tag>
-  //   );
-  //   return (
-  //     <p key={tag} style={{ display: 'flex',marginTop: 10 }}>
-  //       {tagElem}
-  //     </p>
-  //   );
-  // };
+      >
+        {tag}
+      </Tag>
+    );
+    return (
+      <p key={tag} style={{ display: 'flex',marginTop: 10 }}>
+        {tagElem}
+      </p>
+    );
+  };
 
   
   return (
@@ -166,12 +163,13 @@ function Insertdata() {
       { (error === "undefine" || error === "inputError") && <p className="text-error">กรุณากรอกข้อมูล</p>}
       {contextHolder}
       <div className="showData-content">
-        { state === true && addData.map( (data,i) => {
+        {/* { state === true && tempSelectTable.map( (data,i) => {
           return (
             <p key={i}>{data}</p>
           )
-        })}
-        {/* { addData.map(forMap) } */}
+        })} */}
+        { state === true && tempSelectTable.map(forMap) }
+        
         <p></p>
       </div>
     </div>

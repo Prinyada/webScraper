@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import './LostItems.css';
+import mainLogo from "../logo.png";
 
 
 function LostItems(props) {
@@ -28,7 +29,36 @@ function LostItems(props) {
             </div>
             <div className="lost-content">
                 <div className="lost">
-
+                    <div className="lost-1">
+                        <div className="lost1-type">
+                            ของหาย
+                        </div>
+                        <div className="lost1-date">
+                            วัน/เดือน/ปี
+                        </div>
+                    </div>
+                    <div className="lost-2">
+                        <div className="lost2-category">
+                            ชนิด
+                        </div>
+                        <div className="lost2-userfacebook">
+                            คนโพสต์
+                        </div>
+                    </div>
+                    <div className="lost-3">
+                        <div className="lost3-left">
+                            <img src={mainLogo} className="ex-picture"/>
+                        </div>
+                        <div className="lost3-right">
+                            <div className="lost3-right-top">
+                                <p>สถานที่หาย :</p>
+                                <p>ลักษณะ :</p>
+                            </div>
+                            <div className="lost3-right-buttom">
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {/* { data.map( (data,index) => {
                     return (

@@ -22,7 +22,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="header-home">
-        <p className="line-1">Online Bulletin Board</p>
+        <span className="first">O</span><span className="line-1">nline <span className="mid">B</span>ulletin <span className="end">B</span>oard</span>
         <p className="line-2">for KMUTNB Community</p>
       </div>
       <div className="button-wrapper">

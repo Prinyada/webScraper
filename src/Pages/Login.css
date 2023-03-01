@@ -19,6 +19,13 @@
     align-items: center;
     text-align: center;
 }
+.text-login {
+    margin-bottom: 0;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    color: var(--teal);
+}
 /* -------------- input ------------------ */
 .text-error {
     color: var(--red);

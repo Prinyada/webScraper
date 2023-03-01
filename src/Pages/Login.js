@@ -4,6 +4,7 @@ import { db } from "../realtimeData/firebase-config";
 import { ref, onValue } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
+import { FiLogIn } from "react-icons/fi";
 
 function Login() {
   const { state, dispatch } = useContext(UserContext);
@@ -54,7 +55,7 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-content">
-        <h1>Login</h1>
+        <h1 className="text-login">Login&nbsp;<FiLogIn/></h1>
         <input className="input-login" type="text" placeholder="username" onChange={e => setUsernameInput(e.target.value)}/>
         { (error === "undefine" || error === "usernameError") && <p className="text-error">username error</p>}
         <input className="input-login" type="password" placeholder="password" onChange={e => setPasswordInput(e.target.value)}/>

@@ -15,13 +15,17 @@ function SecondHand(props) {
       <div className="second-content">
         {data.map((data, index) => {
           let day = new Date(data.detailPost.date_time);
-          let text = data.detailPost.text;
+          let text = data.detailPost.describe;
+          // console.log(data.detailPost.describe);
+          if(text === undefined || text === '-'){
+            text = ["-"];
+          }
           return (
-            <div className="second">
+            <div className="second" key={index}>
               <div className="second-1">
                 <div className="second1-type">ของมือสอง</div>
                 <div className="second1-date">
-                  <p key={index}>
+                  <p >
                     {day.getDate()}/{day.getMonth()}/{day.getFullYear()}
                   </p>
                 </div>
@@ -42,8 +46,9 @@ function SecondHand(props) {
                     <p style={{ display: "flex" }}>
                       ราคา : {data.detailPost.price}
                     </p>
-                    {text.map((values, id) => {
-                      return <label key={id}>{values}&nbsp;</label>;
+                    <p>ลักษณะ :</p>
+                    {text.map((t,i) => {
+                      return (<label key={i}>{t}&nbsp;</label>)
                     })}
                   </div>
                   <div className="second3-right-buttom">

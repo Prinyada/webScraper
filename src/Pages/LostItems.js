@@ -20,9 +20,9 @@ function LostItems(props) {
             let im = data.detailPost.image;
             let text = data.detailPost.text;
             
-            text.map((v,u) => {
-              console.log("this text -> ",v);
-            })
+            // text.map((v,u) => {
+            //   console.log("this text -> ",v);
+            // })
           return (
             <div key={index} className="lost">
               <div className="lost-1">
@@ -39,8 +39,8 @@ function LostItems(props) {
               </div>
               <div className="lost-3">
                 <div className="lost3-left">
-                  {/* <ImageSlider slides={data.detailPost.image}/> */}
-                  <img src={mainLogo} className="ex-picture"/>
+                  <ImageSlider slides={data.detailPost.image}/>
+                  {/* <img src={mainLogo} className="ex-picture"/> */}
                 </div>
                 <div className="lost3-right">
                   <div className="lost3-right-top">

@@ -30,7 +30,7 @@ function Home() {
           ประกาศของหาย
         </button>
         <button className="secondaryBtn button" onClick={secondhandClick}>
-          ประกาศของมือสอง
+          ประกาศซื้อขาย
         </button>
       </div>
     </div>

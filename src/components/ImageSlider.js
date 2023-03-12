@@ -8,7 +8,7 @@ function ImageSlider(props) {
   let data = props.slides;
 
   function sendRequest(img) {
-    // console.log("this img -> ",img);
+    console.log("this img -> ",img);
     // axios
     //   .post("http://localhost:5000/post", {
     //     img: img,
@@ -30,6 +30,8 @@ function ImageSlider(props) {
     //   .get(img)
     //   .then((res) => {
     //     console.log(res);
+    //   }).then((r) => {
+    //     console.log(r.data);
     //   })
     //   .catch((error) => {
     //     console.log(error);
@@ -54,7 +56,9 @@ function ImageSlider(props) {
     return (
       <div className="imageslider-container">
         {data.map((img, a) => {
-          // sendRequest(img);
+          console.log("this img -> ",img);
+          // let y = sendRequest(img);
+          // console.log("this y  -> ",y);
           return <img key={a} src={img} style={slideStyles} />;
         })}
       </div>

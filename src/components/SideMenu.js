@@ -27,7 +27,7 @@ function SideMenu() {
                 key: "editpassword"
             },
             {
-                label: "เพิ่มข้อมูล",
+                label: "เพิ่มข้อมูลในการกรอง",
                 icon: <IoIosAddCircleOutline />,
                 key: "insertdata"
             }

@@ -1,0 +1,9 @@
+.imageslider-container {
+    height: 200px;
+    width: 200px;
+    position: relative;
+}
+.ex-picture {
+    height: 200px;
+    width: 200px;
+}

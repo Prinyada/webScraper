@@ -112,7 +112,7 @@ function Insertdata() {
   return (
     <div className="insertdata-container">
       <div className="select-content">
-        <p className="nameselect">เลือกตารางที่ต้องการเพิ่มข้อมูล :</p>&nbsp;
+        <p className="nameselect">เลือกตารางที่ต้องการเพิ่มข้อมูลในการกรอง :</p>&nbsp;
         <Select
           defaultValue=""
           style={{ width: 200 }}

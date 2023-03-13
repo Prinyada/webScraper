@@ -37,6 +37,8 @@ function Insertdata() {
         set(ref(db, "test"), {
           ...addData
         })
+        setAddData([]);
+        setTempSelectTable([]);
       }
     }
   }
@@ -44,14 +46,13 @@ function Insertdata() {
   function selectTable(table) {
     let tempData = [];
     if(table === "close_post"){
-      onValue(ref(db, table), (snapshot) => {
+      onValue(ref(db, "test"), (snapshot) => {
         snapshot.forEach((childsnapshot) => {
           let t = childsnapshot.val();
           tempData.push(t);
         })
         setAddData([...tempData]);
         setTempSelectTable([...tempData]);
-        
       });
     }
     else if(table === "color" || table === "place"){
@@ -60,6 +61,7 @@ function Insertdata() {
           let t = childsnapshot.val();
           tempData.push(t);
         })
+        setAddData([...tempData]);
         setTempSelectTable([...tempData]);
       }) 
     }
@@ -69,6 +71,7 @@ function Insertdata() {
           let t = childsnapshot.val();
           tempData.push(t);
         })
+        setAddData([...tempData]);
         setTempSelectTable([...tempData]);
       }) 
     }
@@ -78,32 +81,25 @@ function Insertdata() {
           let t = childsnapshot.val();
           tempData.push(t);
         })
+        setAddData([...tempData]);
         setTempSelectTable([...tempData]);
       }) 
     }
   }
 
   useEffect(() => {
-    console.log("this state -> ",state);
-    
+    // console.log("this state -> ",state);
+    setAddData([]);
+    setTempSelectTable([]);
   }, []);
 
   const forMap = (tag) => {
-    const tagElem = (
-      <Tag
-      style={{fontSize: 16, fontFamily: 'Prompt'}}
-        // closable
-        // onClose={(e) => {
-        //   e.preventDefault();
-        //   handleClose(tag);
-        // }}
-      >
-        {tag}
-      </Tag>
-    );
     return (
-      <p key={tag} style={{ display: 'flex',marginTop: 10 }}>
-        {tagElem}
+      <p key={tag} id="k" name="popo" style={{ display: 'flex',marginTop: 10 }} onClick={(e) => {
+        var e = document.getElementsByName("popo");
+        console.log("this key -> ",e);
+      }}>
+        {tag}
       </p>
     );
   };

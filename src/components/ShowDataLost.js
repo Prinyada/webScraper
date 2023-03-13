@@ -2,8 +2,8 @@ import React from "react";
 import "./ShowDataLost.css";
 import mainLogo from "../logo.png";
 
-function showDataLost() {
-  // console.log("this data -> ",data);
+function showDataLost(data) {
+  console.log("this data -> ",data);
   // let day = new Date(data.detailPost.date_time);
   // let im = data.detailPost.image;
   // let text = data.detailPost.text;

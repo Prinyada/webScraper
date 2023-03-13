@@ -10,7 +10,6 @@ import Header from "./components/Header";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
 import { initialState, reducer } from "./reducer/UseReducer";
-import Footer from "./components/Footer";
 
 export const UserContext = createContext();
 
@@ -69,7 +68,8 @@ function App() {
         <Route exact path="/lostItems" element={<LostItems dataLost={dataLostItems}/>} />
         <Route exact path="/secondHand" element={<SecondHand dataSecond={dataSecondHand}/>} />
         <Route exact path="/login" element={<Login />}/>  
-        <Route path="/admin/*" element={<Admin/>}/>      
+        <Route path="/admin/*" element={<Admin/>}/>
+          
       </Routes>
     </UserContext.Provider>
       

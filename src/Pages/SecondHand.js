@@ -47,9 +47,9 @@ function SecondHand(props) {
                       ราคา : {data.detailPost.price}
                     </p>
                     <p>ลักษณะ :</p>
-                    {text.map((t,i) => {
+                    {/* {text.map((t,i) => {
                       return (<label key={i}>{t}&nbsp;</label>)
-                    })}
+                    })} */}
                   </div>
                   <div className="second3-right-buttom">
                     <button className="button-80" role="button">

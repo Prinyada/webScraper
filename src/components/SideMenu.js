@@ -14,6 +14,7 @@ function SideMenu() {
         <Menu
         onClick={(item) => {
             navigate(item.key);
+            console.log(item.key);
         }}
         items={[
             {

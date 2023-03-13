@@ -19,7 +19,7 @@ function Admin() {
               <SideMenu />
           </div>
           <div className="resultMenu">
-              <AdminContent/>
+              <AdminContent />
           </div>
         </section>
     </div>

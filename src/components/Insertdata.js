@@ -39,6 +39,7 @@ function Insertdata() {
         })
         setAddData([]);
         setTempSelectTable([]);
+
       }
     }
   }
@@ -89,8 +90,8 @@ function Insertdata() {
 
   useEffect(() => {
     // console.log("this state -> ",state);
-    setAddData([]);
-    setTempSelectTable([]);
+    // setAddData([]);
+    // setTempSelectTable([]);
   }, []);
 
   const forMap = (tag) => {

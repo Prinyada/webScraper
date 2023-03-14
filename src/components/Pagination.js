@@ -2,8 +2,6 @@ import React from 'react'
 import './Pagination.css';
 
 function Pagination({totalPosts,postsPerPage, setCurrentPage}) {
-    console.log("this totalpost -> ",totalPosts);
-    console.log("this postperpage -> ",postsPerPage);
     let pages = [];
     
     for(let i = 1; i <= Math.ceil(totalPosts/postsPerPage); i++) {

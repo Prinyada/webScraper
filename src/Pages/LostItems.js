@@ -3,18 +3,22 @@ import "./LostItems.css";
 import ImageSlider from "../components/ImageSlider";
 import { Input, Space, Select } from "antd";
 import Pagination from "../components/Pagination";
+import ShowDataLost from "../components/ShowDataLost";
 
 function LostItems(props) {
   let data = props.dataLost;
 
   let dataArray = [];
+
   data.map((data, index) => {
     dataArray.push(data);
   });
 
+  console.log();
+
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(0);
-  const [fliter, setFliter] = useState("");
+  const [filterText, setFilterText] = useState("");
 
   //---------- Pagination --------------------//
   let size = dataArray.length;
@@ -24,15 +28,37 @@ function LostItems(props) {
   const firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
 
-  function search(){
-    let searchData = dataArray.filter((d) => d.detailPost.place.includes(searchText))
+
+  function search() {
+    console.log(searchText);
+    let searchData = dataArray.filter((d) => {
+      if (
+        d.detailPost.place.includes(searchText) ||
+        d.detailPost.describe.includes(searchText)
+      ) {
+        return d;
+      }
+    });
     size = searchData.length;
-    currentPosts = searchData.slice(firstPostIndex, lastPostIndex)
+    currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+    return true;
   }
 
-  useEffect(() => {
-    
-  }, []);
+  function filter() {
+    if (filterText !== "all") {
+      let filterData = dataArray.filter((d) => {
+        if (d.detailPost.category.includes(filterText)) {
+          return d;
+        }
+      });
+      size = filterData.length;
+      currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+      return true;
+    }
+    return false;
+  }
+
+  useEffect(() => {}, []);
 
   return (
     <div className="lost-container">
@@ -51,20 +77,18 @@ function LostItems(props) {
             placeholder="พิมพ์คำที่ต้องการค้นหา"
             onChange={(e) => {
               setSearchText(e.target.value);
-              // search();
-              console.log(currentPosts);
             }}
           />
         </div>
         <div className="lost-flitter-right">
           <Select
-            defaultValue="ตัวกรอง"
+            defaultValue="ทั้งหมด"
             style={{ width: 150 }}
             onChange={(value) => {
-              setFliter(value);
+              setFilterText(value);
             }}
-            size="large"
             options={[
+              { value: "all", label: "ทั้งหมด" },
               { value: "apartment_condo", label: "อพาร์ทเม้นท์/คอนโด" },
               { value: "bag_wallet", label: "กระเป๋า" },
               { value: "card_ticket", label: "บัตร" },
@@ -82,107 +106,23 @@ function LostItems(props) {
             defaultValue="เรียงวันที่"
             style={{ width: 150 }}
             onChange={(value) => {}}
-            size="large"
-            options={[
-              { value: "apartment_condo", label: "เก่าสุด-ใหม่สุด" },
-              { value: "bag_wallet", label: "ใหม่สุด-เก่าสุด" },
-            ]}
+            options={
+              [
+                // { value: "apartment_condo", label: "เก่าสุด-ใหม่สุด" },
+                // { value: "bag_wallet", label: "ใหม่สุด-เก่าสุด" },
+              ]
+            }
           />
         </div>
       </div>
       <div className="lost-content">
-        {searchText === "" &&
-          currentPosts.map((data, index) => {
-            let day = new Date(data.detailPost.date_time);
-            return (
-              <div key={index} className="lost">
-                <div className="lost-1">
-                  <div className="lost1-type">ของหาย</div>
-                  <div className="lost1-date">
-                    <p>
-                      {day.getDate()}/{day.getMonth() + 1}/
-                      {day.getFullYear() + 543}
-                    </p>
-                  </div>
-                </div>
-                <div className="lost-2">
-                  <div className="lost2-category">
-                    {data.detailPost.category}
-                  </div>
-                  <div className="lost2-userfacebook">
-                    <p>ผู้โพสต์ : {data.detailPost.username}</p>
-                  </div>
-                </div>
-                <div className="lost-3">
-                  <div className="lost3-left">
-                    <ImageSlider slides={data.detailPost.image} />
-                  </div>
-                  <div className="lost3-right">
-                    <div className="lost3-right-top">
-                      <p style={{ display: "flex" }}>
-                        สถานที่หาย : {data.detailPost.place}
-                      </p>
-                      <p style={{ display: "flex" }}>
-                        ลักษณะ : {data.detailPost.describe}
-                      </p>
-                    </div>
-                    <div className="lost3-right-buttom">
-                      <button className="button-80" role="button">
-                        <a href={data.detailPost.post_url}>ดูโพสต์</a>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-        {searchText !== "" &&
-          currentPosts.filter((d) => d.detailPost.place.includes(searchText))
-            .map((data, index) => {
-              let day = new Date(data.detailPost.date_time);
-              return (
-                <div key={index} className="lost">
-                  <div className="lost-1">
-                    <div className="lost1-type">ของหาย</div>
-                    <div className="lost1-date">
-                      <p>
-                        {day.getDate()}/{day.getMonth() + 1}/
-                        {day.getFullYear() + 543}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="lost-2">
-                    <div className="lost2-category">
-                      {data.detailPost.category}
-                    </div>
-                    <div className="lost2-userfacebook">
-                      <p>ผู้โพสต์ : {data.detailPost.username}</p>
-                    </div>
-                  </div>
-                  <div className="lost-3">
-                    <div className="lost3-left">
-                      <ImageSlider slides={data.detailPost.image} />
-                    </div>
-                    <div className="lost3-right">
-                      <div className="lost3-right-top">
-                        <p style={{ display: "flex" }}>
-                          สถานที่หาย : {data.detailPost.place}
-                        </p>
-                        <p style={{ display: "flex" }}>
-                          ลักษณะ : {data.detailPost.describe}
-                        </p>
-                      </div>
-                      <div className="lost3-right-buttom">
-                        <button className="button-80" role="button">
-                          <a href={data.detailPost.post_url}>ดูโพสต์</a>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+        {searchText !== "" ? (
+          search() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+        ) : filterText !== "" ? ( 
+          filter() ? <ShowDataLost currentPosts={currentPosts}></ShowDataLost> :  <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+        ) : (
+          <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+        )}
         {
           <Pagination
             totalPosts={size}

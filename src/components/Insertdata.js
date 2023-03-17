@@ -45,6 +45,7 @@ function Insertdata() {
   }
 
   function selectTable(table) {
+    // console.log(table);
     let tempData = [];
     if(table === "close_post"){
       onValue(ref(db, "test"), (snapshot) => {

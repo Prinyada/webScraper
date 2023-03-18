@@ -1,25 +1,81 @@
 import React, { useEffect, useState } from "react";
 import "./SecondHand.css";
-import mainLogo from "../logo.png";
-import ImageSlider from "../components/ImageSlider";
-import { Input, Space, Select } from "antd";
-import { useNavigate } from 'react-router-dom';
+import { Input, Select } from "antd";
 import Pagination from "../components/Pagination";
+import ShowDataSecond from "../components/ShowDataSecond";
 
 function SecondHand(props) {
-  console.log("this props", props);
   let data = props.dataSecond;
-  let size = Object.keys(props.dataSecond).length;
-  console.log("this lenght -> ",size);
-  const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  let dataArray = [];
 
-  const [ currentPage, setCurrentPage ] = useState(1);
-  const [ postsPerPage, setPostsPage ] = useState(8);
+  data.map((data, index) => {
+    dataArray.push(data);
+  });
 
+  const [searchText, setSearchText] = useState("");
+  const [status, setStatus] = useState(0);
+  const [filterText, setFilterText] = useState("");
+  const [sortText, setSortText] = useState("");
+
+  //---------- Pagination --------------------//
+  let size = dataArray.length;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPage] = useState(8);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = data.slice(firstPostIndex,lastPostIndex)
+  let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+
+  function search() {
+    let searchData = dataArray.filter((d) => {
+      if (
+        d.detailPost.place.includes(searchText) ||
+        d.detailPost.describe.includes(searchText)
+      ) {
+        return d;
+      }
+    });
+    size = searchData.length;
+    currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+    return true;
+  }
+
+  function filter() {
+    let filterData = dataArray.filter((d) => {
+      if (d.detailPost.category.includes(filterText)) {
+        return d;
+      }
+    });
+    size = filterData.length;
+    currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+    return true;
+  }
+
+  function sortDate() {
+    if (sortText === "oldToNew") {
+      const sortByDate = (dataArray) => {
+        const sorter = (a, b) => {
+          return ( new Date(a.detailPost.date_time).getTime() -new Date(b.detailPost.date_time).getTime() );
+        };
+        dataArray.sort(sorter);
+      };
+      sortByDate(dataArray);
+      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      return true;
+    } else if (sortText === "newToOld") {
+      const sortByDate = (dataArray) => {
+        const sorter = (a, b) => {
+          return ( new Date(b.detailPost.date_time).getTime() - new Date(a.detailPost.date_time).getTime() );
+        };
+        dataArray.sort(sorter);
+      };
+      sortByDate(dataArray);
+      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      return true;
+    }
+  }
+
+  useEffect(() => {}, []);
+
   return (
     <div className="second-container">
       <div className="second-header">
@@ -27,29 +83,28 @@ function SecondHand(props) {
       </div>
       <div className="second-header2">
         <div className="second-search-left">
-          <Search
+          <Input
             style={{
               width: 400,
               fontSize: 16,
-              fontFamily: "",
+              fontFamily: "Prompt",
               marginBottom: 10,
             }}
-            placeholder="กรอกคำที่ต้องการค้นหา"
-            allowClear
-            enterButton="ค้นหา"
-            size="large"
-            onSearch={onSearch}
+            placeholder="พิมพ์คำที่ต้องการค้นหา"
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
           />
         </div>
         <div className="second-flitter-right">
           <Select
-            defaultValue="ตัวกรอง"
+            defaultValue="ทั้งหมด"
             style={{ width: 150 }}
             onChange={(value) => {
-              // setFliter(value);
+              setFilterText(value);
             }}
-            size="large"
             options={[
+              { value: "all", label: "ทั้งหมด" },
               { value: "apartment_condo", label: "อพาร์ทเม้นท์/คอนโด" },
               { value: "bag_wallet", label: "กระเป๋า" },
               { value: "card_ticket", label: "บัตร" },
@@ -66,61 +121,40 @@ function SecondHand(props) {
           <Select
             defaultValue="เรียงวันที่"
             style={{ width: 150 }}
-            onChange={(value) => {}}
-            size="large"
+            onChange={(value) => {
+              setSortText(value);
+            }}
             options={[
-              { value: "apartment_condo", label: "เก่าสุด-ใหม่สุด" },
-              { value: "bag_wallet", label: "ใหม่สุด-เก่าสุด" },
+              { value: "oldToNew", label: "เก่าสุด-ใหม่สุด" },
+              { value: "newToOld", label: "ใหม่สุด-เก่าสุด" },
             ]}
           />
         </div>
       </div>
-      {/* {<DataContent data={data}/>} */}
       <div className="second-content">
-        {currentPosts.map((data, index) => {
-            let day = new Date(data.detailPost.date_time);
-            let im = data.detailPost.image;
-            let text = data.detailPost.text;
-            console.log("this data => ",data);
-            // console.log(data.category);
-          return (
-            <div key={index} className="second">
-              <div className="second-1">
-                <div className="second1-type">ซื้อ-ขาย</div>
-                <div className="second1-date">
-                    <p>{day.getDate()}/{day.getMonth()+1}/{day.getFullYear()+543}</p>
-                </div>
-              </div>
-              <div className="second-2">
-                <div className="second2-category">{data.detailPost.category}</div>
-                <div className="second2-userfacebook">
-                    <p>ผู้โพสต์ : {data.detailPost.username}</p>
-                </div>
-              </div>
-              <div className="second-3">
-                <div className="second3-left">
-                  <ImageSlider slides={data.detailPost.image}/>
-                  {/* <img src={mainLogo} className="ex-picture"/> */}
-                </div>
-                <div className="second3-right">
-                  <div className="second3-right-top">
-                    <p style={{display: "flex"}}>สถานที่ : {data.detailPost.place}</p>
-                    <p style={{display: "flex"}}>ลักษณะ : {data.detailPost.describe}</p>
-                    {/* <p style={{display: "block"}}></p> */}
-                  </div>
-                  <div className="second3-right-buttom">
-                  <button className="button-80" role="button">
-                    <a href={data.detailPost.post_url}>ดูโพสต์</a>
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            // <p key={index}>{data.day}</p>
-          );
-        })}
-        <Pagination totalPosts={size} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
-        {/* <DataContent/> */}
+        {searchText !== "" ? (
+          search() && (
+            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+          )
+        ) : (filterText !== "all" && filterText !== "") ? (
+          filter() && (
+            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+          )
+        ) : (sortText !== "default" && sortText !== "") ? (
+          sortDate() && (
+            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+          )
+        ) : (
+          <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+        )}
+
+        {
+          <Pagination
+            totalPosts={size}
+            postsPerPage={postsPerPage}
+            setCurrentPage={setCurrentPage}
+          />
+        }
       </div>
     </div>
   );

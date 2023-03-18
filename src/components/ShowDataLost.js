@@ -20,7 +20,7 @@ function ShowDataLost({currentPosts}) {
                 </div>
               </div>
               <div className="lost-2">
-                <div className="lost2-category">{data.detailPost.category}</div>
+                <div className="lost2-category">ประเภท : {data.detailPost.category}</div>
                 <div className="lost2-userfacebook">
                   <p>ผู้โพสต์ : {data.detailPost.username}</p>
                 </div>

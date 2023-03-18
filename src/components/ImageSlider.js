@@ -8,8 +8,9 @@ import {MdKeyboardArrowRight} from 'react-icons/md';
 
 
 function ImageSlider(props) {
+
   let data = props.slides;
-  // console.log("this data -> ",data?.length);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const leftArrowStyles = {
@@ -22,6 +23,7 @@ function ImageSlider(props) {
     zIndex: 1,
     cursor: "pointer"
   }
+
   const rightArrowStyles = {
     position: "absolute",
     top: "50%",
@@ -32,19 +34,18 @@ function ImageSlider(props) {
     zIndex: 1,
     cursor: "pointer"
   }
+
   const goToPrevious = () => {
-    // let lenght = data.lenght;
-    // console.log("lenght -> ",data);
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? data?.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   }
+
   const goToNext = () => {
     const isLastSlide = currentIndex === data?.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   }
-  // sendRequest(slides);
   if (data === undefined) {
     return <div className="imageslider-container">ไม่มีรูปจ้า</div>;
   } else {

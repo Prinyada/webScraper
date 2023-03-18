@@ -14,11 +14,11 @@ function LostItems(props) {
     dataArray.push(data);
   });
 
-  console.log();
 
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(0);
   const [filterText, setFilterText] = useState("");
+  const [sortText, setSortText] = useState("");
 
   //---------- Pagination --------------------//
   let size = dataArray.length;
@@ -30,7 +30,6 @@ function LostItems(props) {
 
 
   function search() {
-    console.log(searchText);
     let searchData = dataArray.filter((d) => {
       if (
         d.detailPost.place.includes(searchText) ||
@@ -45,19 +44,39 @@ function LostItems(props) {
   }
 
   function filter() {
-    if (filterText !== "all") {
-      let filterData = dataArray.filter((d) => {
-        if (d.detailPost.category.includes(filterText)) {
-          return d;
-        }
-      });
-      size = filterData.length;
-      currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
-      return true;
-    }
-    return false;
+    let filterData = dataArray.filter((d) => {
+      if (d.detailPost.category.includes(filterText)) {
+        return d;
+      }
+    });
+    size = filterData.length;
+    currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+    return true;
   }
 
+  function sortDate() {
+    if (sortText === "oldToNew") {
+      const sortByDate = (dataArray) => {
+        const sorter = (a, b) => {
+          return ( new Date(a.detailPost.date_time).getTime() -new Date(b.detailPost.date_time).getTime() );
+        };
+        dataArray.sort(sorter);
+      };
+      sortByDate(dataArray);
+      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      return true;
+    } else if (sortText === "newToOld") {
+      const sortByDate = (dataArray) => {
+        const sorter = (a, b) => {
+          return ( new Date(b.detailPost.date_time).getTime() - new Date(a.detailPost.date_time).getTime() );
+        };
+        dataArray.sort(sorter);
+      };
+      sortByDate(dataArray);
+      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      return true;
+    }
+  }
   useEffect(() => {}, []);
 
   return (
@@ -105,21 +124,31 @@ function LostItems(props) {
           <Select
             defaultValue="เรียงวันที่"
             style={{ width: 150 }}
-            onChange={(value) => {}}
+            onChange={(value) => {
+              setSortText(value);
+            }}
             options={
               [
-                // { value: "apartment_condo", label: "เก่าสุด-ใหม่สุด" },
-                // { value: "bag_wallet", label: "ใหม่สุด-เก่าสุด" },
+                { value: "oldToNew", label: "เก่าสุด-ใหม่สุด" },
+                { value: "newToOld", label: "ใหม่สุด-เก่าสุด" },
               ]
             }
           />
         </div>
       </div>
       <div className="lost-content">
-        {searchText !== "" ? (
-          search() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-        ) : filterText !== "" ? ( 
-          filter() ? <ShowDataLost currentPosts={currentPosts}></ShowDataLost> :  <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+      {searchText !== "" ? (
+          search() && (
+            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+          )
+        ) : (filterText !== "all" && filterText !== "") ? (
+          filter() && (
+            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+          )
+        ) : (sortText !== "default" && sortText !== "") ? (
+          sortDate() && (
+            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+          )
         ) : (
           <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
         )}

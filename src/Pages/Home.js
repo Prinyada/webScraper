@@ -7,7 +7,10 @@ function Home() {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
 
-  useEffect(() =>{
+  // const date = new Date();
+  // console.log("date now -> ",date.getHours(),date.getMinutes(),date.getSeconds());
+
+  useEffect(() =>{ 
     dispatch({ type: "ADMIN", payload: false });
   },[]);
 

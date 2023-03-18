@@ -69,7 +69,6 @@ function App() {
         <Route exact path="/secondHand" element={<SecondHand dataSecond={dataSecondHand}/>} />
         <Route exact path="/login" element={<Login />}/>  
         <Route path="/admin/*" element={<Admin/>}/>
-          
       </Routes>
     </UserContext.Provider>
       

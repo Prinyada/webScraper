@@ -1,116 +1,126 @@
 import { Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
-import { Select, Input, Button, Tag, message } from "antd";
+import { Select, Input, Button, Tag, message, Modal } from "antd";
 import { db } from "../realtimeData/firebase-config";
-import { ref, onValue, set, push } from "firebase/database";
+import { ref, onValue, set, remove } from "firebase/database";
 
 function Insertdata() {
-  const [ text, setText ] = useState("");
-  const [ addData, setAddData ] = useState([]);
-  const [ selected, setSelected ] = useState("");
-  const [ error, setError ] = useState("");
-  const [ state, setState ] = useState(true);
+  const [text, setText] = useState("");
+  const [addData, setAddData] = useState([]);
+  const [selected, setSelected] = useState("");
+  const [error, setError] = useState("");
+  const [state, setState] = useState(true);
 
-  const [ tempSelectTable, setTempSelectTable ] = useState([]);
+  const [tempSelectTable, setTempSelectTable] = useState([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  function success(){
-    messageApi.open({
-      type: 'success',
-      content: 'This is a success message',
-    });
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function addtofirebase(){
+  function success() {
+    messageApi.open({
+      type: "success",
+      content: "This is a success message",
+    });
+  }
+
+  // insert data
+  function addtofirebase() {
     setState(false);
-    if(selected === ""){
+    if (selected === "") {
       setError("selectedError");
-    }
-    else {
-      if(addData === ""){
-        setError("inputError")
-      }
-      else {
+    } else {
+      if (addData === "") {
+        setError("inputError");
+      } else {
         addData.push(text);
         set(ref(db, "test"), {
-          ...addData
-        })
-        setAddData([]);
-        setTempSelectTable([]);
-
+          ...addData,
+        });
       }
     }
   }
 
+  // read data then select
   function selectTable(table) {
-    // console.log(table);
+    // console.log(selected);
     let tempData = [];
-    if(table === "close_post"){
-      onValue(ref(db, "test"), (snapshot) => {
-        snapshot.forEach((childsnapshot) => {
-          let t = childsnapshot.val();
-          tempData.push(t);
-        })
-        setAddData([...tempData]);
-        setTempSelectTable([...tempData]);
-      });
+    if (table !== "") {
+      if (table === "close_post") {
+        onValue(ref(db, `test`), (snapshot) => {
+          let s = snapshot.val();
+          console.log("this snapshot -> ", s);
+          snapshot.forEach((childsnapshot) => {
+            let t = childsnapshot.val();
+            tempData.push(t);
+          });
+          setAddData([...tempData]);
+          setTempSelectTable([...tempData]);
+        });
+      } else if (table === "color" || table === "place") {
+        onValue(ref(db, "detail/" + table), (snapshot) => {
+          snapshot.forEach((childsnapshot) => {
+            let t = childsnapshot.val();
+            tempData.push(t);
+          });
+          setAddData([...tempData]);
+          setTempSelectTable([...tempData]);
+        });
+      } else if (table === "find" || table === "sell") {
+        onValue(ref(db, "type/" + table), (snapshot) => {
+          snapshot.forEach((childsnapshot) => {
+            let t = childsnapshot.val();
+            tempData.push(t);
+          });
+          setAddData([...tempData]);
+          setTempSelectTable([...tempData]);
+        });
+      } else {
+        onValue(ref(db, "detail/category/" + table), (snapshot) => {
+          snapshot.forEach((childsnapshot) => {
+            let t = childsnapshot.val();
+            tempData.push(t);
+          });
+          setAddData([...tempData]);
+          setTempSelectTable([...tempData]);
+        });
+      }
     }
-    else if(table === "color" || table === "place"){
-      onValue(ref(db,"detail/"+table), (snapshot) => {
-        snapshot.forEach((childsnapshot) => {
-          let t = childsnapshot.val();
-          tempData.push(t);
-        })
-        setAddData([...tempData]);
-        setTempSelectTable([...tempData]);
-      }) 
-    }
-    else if(table === "find" || table === "sell"){
-      onValue(ref(db,"type/"+table), (snapshot) => {
-        snapshot.forEach((childsnapshot) => {
-          let t = childsnapshot.val();
-          tempData.push(t);
-        })
-        setAddData([...tempData]);
-        setTempSelectTable([...tempData]);
-      }) 
-    }
-    else{
-      onValue(ref(db,"detail/category/"+table), (snapshot) => {
-        snapshot.forEach((childsnapshot) => {
-          let t = childsnapshot.val();
-          tempData.push(t);
-        })
-        setAddData([...tempData]);
-        setTempSelectTable([...tempData]);
-      }) 
-    }
+  }
+
+  // delete data
+  function clickText(index) {
+    const t = ref(db, `test/${index}`);
+    remove(t).then(() => {
+      
+    });
   }
 
   useEffect(() => {
-    // console.log("this state -> ",state);
-    // setAddData([]);
-    // setTempSelectTable([]);
+    
   }, []);
 
-  const forMap = (tag) => {
+  const forMap = (tag, index) => {
     return (
-      <p key={tag} id="k" name="popo" style={{ display: 'flex',marginTop: 10 }} onClick={(e) => {
-        var e = document.getElementsByName("popo");
-        console.log("this key -> ",e);
-      }}>
+      <p
+        key={tag}
+        id={index}
+        style={{ display: "inline-flex", marginTop: 20 }}
+        onClick={() => {
+          clickText(index);
+        }}
+      >
         {tag}
       </p>
     );
   };
 
-  
   return (
     <div className="insertdata-container">
       <div className="select-content">
-        <p className="nameselect">เลือกตารางที่ต้องการเพิ่มข้อมูลในการกรอง :</p>&nbsp;
+        <p className="nameselect">เลือกหมวดที่ต้องการเพิ่มข้อมูลในการกรอง :</p>
+        &nbsp;
         <Select
           defaultValue=""
           style={{ width: 200 }}
@@ -118,57 +128,58 @@ function Insertdata() {
             setError("");
             setSelected(value);
             selectTable(value);
-            setState(true);
+            // setState(true);         
           }}
           options={[
-            { value: "close_post", label: "close_post" },
-            { value: "acessories", label: "acessories" },
-            { value: "apartment_condo", label: "apartment_condo" },
-            { value: "bag_wallet", label: "bag_wallet" },
-            { value: "card_ticket", label: "card_ticket" },
-            { value: "clothing", label: "clothing" },
-            { value: "education", label: "education" },
-            { value: "key", label: "key" },
-            { value: "notebook_pc", label: "notebook_pc" },
-            { value: "pet", label: "pet" },
-            { value: "phone", label: "phone" },
-            { value: "stuff", label: "stuff" },
-            { value: "vehicle", label: "vehicle" },
-            { value: "watch", label: "watch" },
-            { value: "color", label: "color" },
-            { value: "place", label: "place" },
-            { value: "find", label: "find" },
-            { value: "sell", label: "sell" },
-            { value: "disabled", label: "Disabled", disabled: true },
+            { value: "close_post", label: "ปิดโพสต์" },
+            { value: "acessories", label: "อุปกรณ์เสริม" },
+            { value: "apartment_condo", label: "หอพัก/คอนโด/ที่อยู่อาศัย" },
+            { value: "bag_wallet", label: "กระเป๋า" },
+            { value: "card_ticket", label: "บัตร/ตั๋ว" },
+            { value: "clothing", label: "เครื่องแต่งกาย" },
+            { value: "education", label: "เกี่ยวกับการศึกษา" },
+            { value: "key", label: "กุญแจ/คีย์การ์ด" },
+            { value: "notebook_pc", label: "คอมพิวเตอร์/โน๊ตบุ๊ค" },
+            { value: "pet", label: "สัตว์เลี้ยง" },
+            { value: "phone", label: "โทรศัพท์" },
+            { value: "stuff", label: "ของใช้ภายในบ้าน" },
+            { value: "vehicle", label: "รถยนต์/รถมอเตอร์ไซต์" },
+            { value: "watch", label: "นาฬิกา" },
+            { value: "color", label: "สี" },
+            { value: "place", label: "สถานที่" },
+            { value: "find", label: "ตามหา" },
+            { value: "sell", label: "ซื้อ-ขาย" },
           ]}
         />
-        
       </div>
-      { (error === "undefine" || error === "selectedError") && <p className="text-error">กรุณาเลือกตาราง</p>}
+      {(error === "undefine" || error === "selectedError") && (
+        <p className="text-error">กรุณาเลือกหมวด</p>
+      )}
       <div className="selected-content">
-        <p>ชื่อตาราง :</p>&nbsp;
-          <p className="nameselected">{selected}</p>
+        <p>หมวดที่เลือก :</p>&nbsp;
+        <p className="nameselected">{selected}</p>
       </div>
       <div className="input-content">
-        <Input 
-        style={{ width: 200 ,fontSize: 16, fontFamily: 'Prompt' }}
-        placeholder="ข้อมูลที่ต้องการเพิ่ม" onChange={ e => {
-          setText(e.target.value);
-          setError("")
-          }}/>&nbsp;
-        <Button type="primary" onClick={addtofirebase}>เพิ่มข้อมูล</Button>
+        <Input
+          style={{ width: 200, fontSize: 16, fontFamily: "Prompt" }}
+          placeholder="ข้อมูลที่ต้องการเพิ่ม"
+          onChange={(e) => {
+            setText(e.target.value);
+            setError("");
+          }}
+        />
+        &nbsp;
+        <Button type="primary" onClick={addtofirebase}>
+          เพิ่มข้อมูล
+        </Button>
       </div>
-      { (error === "undefine" || error === "inputError") && <p className="text-error">กรุณากรอกข้อมูล</p>}
+      {(error === "undefine" || error === "inputError") && (
+        <p className="text-error">กรุณากรอกข้อมูล</p>
+      )}
       {contextHolder}
       <div className="showData-content">
-        {/* { state === true && tempSelectTable.map( (data,i) => {
-          return (
-            <p key={i}>{data}</p>
-          )
-        })} */}
-        { state === true && tempSelectTable.map(forMap) }
-        
-        <p></p>
+        {/* {state === true && tempSelectTable.map(forMap)} */}
+        { tempSelectTable.map(forMap) }
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ function Login() {
         if(usernameInput === usernameDb){ // username ถูก
             if(passwordInput === passwordDb){ // username ถูก | password ถูก
                 dispatch({type:"ADMIN", payload: true})
-                navigate("/admin");
+                navigate("/admin/main");
             }
             else{ // username ถูก | password ผิด
                 setError("passwordError")

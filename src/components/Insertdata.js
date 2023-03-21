@@ -179,7 +179,7 @@ function Insertdata() {
       {contextHolder}
       <div className="showData-content">
         {/* {state === true && tempSelectTable.map(forMap)} */}
-        { tempSelectTable.map(forMap) }
+        {/* { tempSelectTable.map(forMap) } */}
       </div>
     </div>
   );

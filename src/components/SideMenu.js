@@ -20,7 +20,7 @@ function SideMenu() {
             {
                 label: "หน้าหลัก",
                 icon: <AiOutlineHome />,
-                key: ""
+                key: "main"
             },
             {
                 label: "แก้ไขรหัสผ่าน",

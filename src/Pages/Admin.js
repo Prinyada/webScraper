@@ -20,6 +20,7 @@ function Admin() {
           </div>
           <div className="resultMenu">
               <AdminContent />
+              <p></p>
           </div>
         </section>
     </div>

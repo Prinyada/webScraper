@@ -4,7 +4,6 @@ import "./Insertdata.css";
 import { Select, Input, Button, Tag, message, Modal } from "antd";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, set, remove } from "firebase/database";
-import deleteIcon from "../x-mark.png";
 
 function Insertdata() {
   const [text, setText] = useState("");

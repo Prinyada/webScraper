@@ -4,6 +4,7 @@ import "./Insertdata.css";
 import { Select, Input, Button, Tag, message, Modal } from "antd";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, set, remove } from "firebase/database";
+import deleteIcon from "../x-mark.png";
 
 function Insertdata() {
   const [text, setText] = useState("");
@@ -34,10 +35,30 @@ function Insertdata() {
       if (addData === "") {
         setError("inputError");
       } else {
-        addData.push(text);
-        set(ref(db, "test"), {
-          ...addData,
-        });
+        if (selected === "close_post") {
+          addData.push(text);
+          set(ref(db, `test`), {
+            ...addData,
+          });
+        }
+        else if(selected === "color" || selected === "place"){
+          addData.push(text);
+          set(ref(db, "detail/" + selected), {
+            ...addData,
+          });
+        }
+        else if(selected === "find" || selected === "sell"){
+          addData.push(text);
+          set(ref(db, "type/" + selected), {
+            ...addData,
+          });
+        }
+        else {
+          addData.push(text);
+          set(ref(db, "detail/category/" + selected), {
+            ...addData,
+          });
+        }
       }
     }
   }
@@ -48,9 +69,7 @@ function Insertdata() {
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {
-        onValue(ref(db, `test`), (snapshot) => {
-          let s = snapshot.val();
-          console.log("this snapshot -> ", s);
+        onValue(ref(db, table), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
             tempData.push(t);
@@ -90,28 +109,25 @@ function Insertdata() {
   }
 
   // delete data
-  function clickText(index) {
+  function clickDeleteText(index) {
     const t = ref(db, `test/${index}`);
-    remove(t).then(() => {
-      
-    });
+    remove(t).then(() => {});
   }
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   const forMap = (tag, index) => {
     return (
       <p
         key={tag}
         id={index}
-        style={{ display: "inline-flex", marginTop: 20 }}
+        className="boxText"
         onClick={() => {
-          clickText(index);
+          // clickText(index);
         }}
       >
         {tag}
+        <span className="delete" onClick={() => {clickDeleteText(index)}}>x</span>
       </p>
     );
   };
@@ -128,7 +144,7 @@ function Insertdata() {
             setError("");
             setSelected(value);
             selectTable(value);
-            // setState(true);         
+            // setState(true);
           }}
           options={[
             { value: "close_post", label: "ปิดโพสต์" },
@@ -178,9 +194,10 @@ function Insertdata() {
       )}
       {contextHolder}
       <div className="showData-content">
-        {/* {state === true && tempSelectTable.map(forMap)} */}
-        {/* { tempSelectTable.map(forMap) } */}
+        {state === true && tempSelectTable.map(forMap)}
       </div>
+
+      {/* { tempSelectTable.map(forMap) } */}
     </div>
   );
 }

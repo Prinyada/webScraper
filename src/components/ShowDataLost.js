@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ImageSlider from "./ImageSlider";
 import './ShowDataLost.css';
+import axios from "axios";
+import mainLogo from "../logo.png";
 
 function ShowDataLost({currentPosts}) {
+  const [ linkImage, setLinkImage ] = useState([]);
+
+  function showType(data){
+    let size = data.length;
+    
+  }
+
+  function checkStatusImage(value){
+    
+  }
+  useEffect(() => {
+    
+  },[])
+
   return (
     <>
       {

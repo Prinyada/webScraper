@@ -1,3 +1,9 @@
+.insertdata-container {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+}
+
 .select-content {
     margin-left: 40px;
     margin-top: 20px;
@@ -6,14 +12,17 @@
     align-items: center;
     justify-content: center;
 }
+
 .text-error {
     margin-top: 20px;
     display: flex;
     height: max-content;
     align-items: center;
     justify-content: center;
-} 
-.selected-content, .input-content {
+}
+
+.selected-content,
+.input-content {
     margin-left: 40px;
     margin-top: 20px;
     display: flex;
@@ -21,7 +30,51 @@
     align-items: center;
     justify-content: center;
 }
+
 .showData-content {
-    /* border: 1px solid var(--black);
-    height: 300px; */
+    text-align: center;
+    /* justify-content: space-between; */
+    border: 1px solid var(--black);
+    height: 300px;
+    width: 300px;
+    background-color: var(--powerblue);
+    margin-left: 25px;
+    margin-top: 15px;
+    overflow-y: scroll;
+}
+
+.boxText {
+    /* width: 60%; */
+    /* justify-content: flex-start; */
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: var(--pastelblue);
+    display: block;
+    text-align: center;
+    flex-direction: column;
+    width: fit-content;
+    padding-left: 10px;
+}
+
+.tagText {
+
+}
+
+.delete {
+    background-color: var(--red);
+    /* width: 100%; */
+    align-items: center;
+    /* justify-content: flex-end; */
+    color: var(--white);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.delete:hover{
+    cursor: pointer;
+    background-color:  #fb5f54;
 }

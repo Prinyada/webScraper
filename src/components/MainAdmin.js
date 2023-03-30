@@ -1,61 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import './MainAdmin.css';
+import React, { useEffect, useState } from "react";
+import "./MainAdmin.css";
 import {
   Chart as ChartJS,
   BarElement,
   CategoryScale,
   LinearScale,
   Tooltip,
-  Legend
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 import { ref, onValue } from "firebase/database";
 import { db } from "../realtimeData/firebase-config";
 
-ChartJS.register(
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend
-)
-
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 function MainAdmin() {
-  
-  const [ day, setDay ] = useState([]);
+  const [day, setDay] = useState([]);
+  const [find, setFind] = useState([]);
+  const [sell, setSell] = useState([]);
 
   const data = {
-    labels: day,
+    labels: day.map((dt) => {
+      let newDate = new Date(dt);
+      return `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear() + 543 }`;
+    }),
     datasets: [
       {
-        label: '369',
-        data: [3,6,9,8,9],
-        backgroundColor: 'aqua',
-        borderColor: 'black',
-        borderWidth: 1
-      }
-    ]
-  }
+        label: "ประกาศของหาย",
+        data: find,
+        backgroundColor: "#008080",
+        borderColor: "black",
+        borderWidth: 1,
+      },
+      {
+        label: "ประกาศซื้อ-ขาย",
+        data: sell,
+        backgroundColor: `#0F52BA`,
+        borderColor: "black",
+        borderWidth: 1,
+      },
+    ],
+  };
 
-  const options = {
-
-  }
+  const options = {};
 
   useEffect(() => {
     onValue(ref(db, "report"), (snapshot) => {
       let d = [];
+      let f = [];
+      let s = [];
       snapshot.forEach((childSnapshot) => {
-        let c = childSnapshot.key;
-        d.push(c)
-      })
+        let day = childSnapshot.key;
+        let find = childSnapshot.val().find;
+        let sell = childSnapshot.val().sell;
+        d.push(day);
+        f.push(find);
+        s.push(sell);
+      });
       setDay(d);
+      setFind(f);
+      setSell(s);
     });
-  },[])
+  }, []);
   return (
     <div>
       <div>
-        <Bar data={data} options={options}></Bar>
+        <Bar
+          style={{
+            margin: "15px",
+            width: "1000px",
+          }}
+          data={data}
+          options={options}
+        ></Bar>
       </div>
       {/* {day.map((dt,index) => {
         return (
@@ -63,8 +80,7 @@ function MainAdmin() {
         )
       })} */}
     </div>
-    
-  )
+  );
 }
 
-export default MainAdmin
+export default MainAdmin;

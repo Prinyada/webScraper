@@ -32,7 +32,7 @@ function ShowDataSecond({ currentPosts }) {
               <div className="second3-right">
                 <div className="second3-right-top">
                   <p style={{ display: "flex" }}>
-                    สถานที่หาย : {data.detailPost.place}
+                    สถานที่ : {data.detailPost.place}
                   </p>
                   <p style={{ display: "flex" }}>
                     ลักษณะ : {data.detailPost.describe}

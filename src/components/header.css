@@ -2,20 +2,24 @@
     background-color: var(--white);
     height: 100px;
     border-bottom: 1px solid var(--gray);
-    /* top: 0; */
-    /* position: fixed; */
+    margin: 0 auto;
 }
+
 .container {
     max-width: 960px;
     margin: 0 auto;
 }
+
 .header-container {
     display: flex;
     justify-content: space-between;
     height: 100px;
     align-items: center;
 }
-.header-right, .button-home, .button-admin {
+
+.header-right,
+.button-home,
+.button-admin {
     display: flex;
     height: 50px;
     align-items: center;
@@ -41,23 +45,32 @@
     font-size: 22px;
     font-weight: bold;
 }
+
+.mobile-menu {
+    display: none;
+}
+
+
+
 /* ------------------ button link ---------------*/
 .logo-container {
     display: flex;
 }
+
 .logo-link {
     color: var(--black);
     text-decoration: none;
     font-weight: bold;
     font-size: 2rem;
-    
+
 }
 
 .active {
     border: 1px solid black;
 }
 
-.button-link, .button-link-logout {
+.button-link,
+.button-link-logout {
     color: var(--black);
     text-decoration: none;
     font-size: 1rem;
@@ -75,3 +88,74 @@
     background-color: var(--pastelblue);
 }
 
+@media screen and (max-width: 480px) {
+    .mobile-menu {
+        display: block;
+        font-size: 2rem;
+    }
+
+    .header {
+        padding: 0 2rem;
+    }
+
+    .header-right {
+        width: 100%;
+        height: auto;
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        top: 100px;
+        transition: 0.5s ease;
+        border-radius: 0;
+        left: -100%;
+        opacity: 0;
+    }
+    .header-right.actived {
+        background-color: var(--lightblue);
+        left: 0;
+        opacity: 1;
+        z-index: 1;
+        padding-left: 0;
+        align-content: center;
+        transition: 0.5s ease;
+    }
+    .button-home, .button-admin {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .button-link {
+        /* display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 10vw;
+        padding: 10px 0; */
+    }   
+
+    .button-link.active {
+        border: none;
+    }
+    
+    .button-link,
+    .button-link-logout {
+        color: var(--black);
+        text-decoration: none;
+        height: 50px;
+        padding-right: 15px;
+        padding-left: 15px;
+        border-radius: 0;
+    }
+    
+    .button-link-logout:hover,
+    .button-link:hover {
+        border: none;
+        background-color: none;
+    }
+
+}
+
+@media screen and (min-width: 450px) and (max-width: 481px){
+    .header {
+        padding: 0 4rem;
+    }
+}

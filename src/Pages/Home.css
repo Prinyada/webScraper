@@ -59,3 +59,26 @@
   background-color: var(--sapphireblue);
 }
 /* ----------------------------------------- */
+
+@media screen and (max-width: 480px){
+  .button-wrapper {
+    width: 22rem;
+    text-align: center;
+    display: inline-block;
+  }
+  .first, .mid, .end {
+    font-size: 4rem;
+    margin-top: 0;
+    font-weight: bold;
+    color: var(--verdigris);
+  }
+  .button {
+    margin-top: 20px;
+    cursor: pointer;
+    height: 3rem;
+    border: none;
+    border-radius: 3px;   
+    width: 18rem;
+    font-size: 1.2rem;
+  }
+}

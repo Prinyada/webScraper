@@ -64,7 +64,6 @@ function Insertdata() {
 
   // read data then select
   function selectTable(table) {
-    // console.log(selected);
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {

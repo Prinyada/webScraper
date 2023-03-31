@@ -1,16 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { TbSpeakerphone } from "react-icons/tb";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
-import { MdAdminPanelSettings } from "react-icons/md";
+import { MdAdminPanelSettings, MdHome } from "react-icons/md";
 import { UserContext } from "../App";
 import mainLogo from "../logo.png";
+import { FiMenu, FiX, FiHome } from "react-icons/fi";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
 
   let activeLink = "button-link active";
   let normalLink = "button-link";
+
+  const [click, setClick] = useState(false);
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
 
   const RenderHeader = () => {
     if (state === true) {
@@ -19,7 +24,7 @@ function Header() {
           <div className="container">
             <div className="header-container">
               <div className="logo-container">
-                <img src={mainLogo} className="main-logo"/>
+                <img src={mainLogo} className="main-logo" />
               </div>
               <div className="header-center">
                 <p>DashBoard Admin</p>
@@ -40,28 +45,42 @@ function Header() {
           </div>
         </div>
       );
-    } else if(state !== true) {
+    } else if (state !== true) {
       return (
         <div className="header">
           <div className="container">
             <div className="header-container">
               <div className="logo-container">
                 <div className="logo-link">
-                  <img src={mainLogo} className="main-logo"/>
+                  <img src={mainLogo} className="main-logo" />
                 </div>
               </div>
-              <div className="header-right">
-                <div className="button-home">
-                  <NavLink to="/" className={({ isActive }) => isActive? activeLink : normalLink}>
+              <div className={ click ? "header-right actived" : "header-right"}>
+                <div className="button-home" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? (activeLink) : (normalLink)
+                    }
+                  >
+                    <MdHome className="logo"/>
                     Home
                   </NavLink>
                 </div>
-                <div className="button-admin">
-                  <NavLink to="/login" className={({ isActive }) => isActive? activeLink : normalLink}>
+                <div className="button-admin" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive ? (activeLink) : normalLink
+                    }
+                  >
                     <MdAdminPanelSettings className="logo" />
                     Admin
                   </NavLink>
                 </div>
+              </div>
+              <div className="mobile-menu" onClick={handleClick}>
+                {click ? <FiX /> : <FiMenu />}
               </div>
             </div>
           </div>

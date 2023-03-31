@@ -12,9 +12,6 @@ function ShowDataLost({currentPosts}) {
     
   }
 
-  function checkStatusImage(value){
-    
-  }
   useEffect(() => {
     
   },[])

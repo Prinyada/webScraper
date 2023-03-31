@@ -28,8 +28,6 @@ function App() {
   const [ state, dispatch ] = useReducer(reducer, initialState)
 
   function Data(){
-
-
     useEffect(() => {
       onValue(ref(db, "scraper"), (snapshot) => {
         let tempArrayLost = [];

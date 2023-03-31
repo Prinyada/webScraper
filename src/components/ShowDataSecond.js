@@ -10,7 +10,7 @@ function ShowDataSecond({ currentPosts }) {
         return (
           <div key={index} className="second">
             <div className="second-1">
-              <div className="second1-type">ของหาย</div>
+              <div className="second1-type">ซื้อ-ขาย</div>
               <div className="second1-date">
                 <p>
                   {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}

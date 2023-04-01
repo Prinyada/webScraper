@@ -79,7 +79,7 @@ function SecondHand(props) {
   return (
     <div className="second-container">
       <div className="second-header">
-        <p className="header-1">ประกาศซื้อ-ขาย</p>
+        <p className="header-sell-1">ประกาศซื้อ-ขาย</p>
       </div>
       <div className="second-header2">
         <div className="second-search-left">

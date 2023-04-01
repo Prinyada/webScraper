@@ -1,8 +1,9 @@
 .admin-container {
-    display: flex;
-    flex-direction: column;
-    /* width: 100vw; */
-    /* height: 100vh; */
+    justify-items: center;
+    text-align: center;
+    display: block;
+    max-width: 960px;
+    margin: 0 auto;
 }
 /* .SideMenuAndAdminContent {
     display: flex;
@@ -19,9 +20,5 @@
 
 .AdminContent {
     
-}
-
-section {
-    display: flex;
 }
 

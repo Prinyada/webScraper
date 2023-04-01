@@ -4,6 +4,7 @@ import SideMenu from "../components/SideMenu";
 import AdminContent from "../components/AdminContent";
 import "./Admin.css";
 import { UserContext } from "../App";
+import RouteAdmin from '../router/RouteAdmin'
 
 function Admin() {
   const { state, dispatch } = useContext(UserContext);
@@ -14,14 +15,7 @@ function Admin() {
 
   return (
     <div className="admin-container">
-        <section>
-          <div className="sideMenu-content">
-              <SideMenu />
-          </div>
-          <div className="resultMenu">
-              <AdminContent />
-          </div>
-        </section>
+      <RouteAdmin/>
     </div>
   );
 }

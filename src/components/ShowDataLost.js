@@ -5,7 +5,6 @@ import axios from "axios";
 import mainLogo from "../logo.png";
 
 function ShowDataLost({ currentPosts }) {
-  const [linkImage, setLinkImage] = useState([]);
 
   function showType(data) {
     let size = data.length;
@@ -115,10 +114,6 @@ function ShowDataLost({ currentPosts }) {
     }
     return tempType;
   }
-
-  // showType(data.detailPost.category)
-
-  useEffect(() => {}, []);
 
   return (
     <>

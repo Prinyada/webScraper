@@ -130,6 +130,16 @@ function Insertdata() {
     );
   };
 
+  function showDataSelect() {
+    if(selected !== ""){
+      return (
+      <div className="showData-content">
+        {state === true && tempSelectTable.map(forMap)}
+      </div>
+      )
+    }
+  }
+
   return (
     <div className="insertdata-container">
       <div className="select-content">
@@ -137,7 +147,7 @@ function Insertdata() {
         &nbsp;
         <Select
           defaultValue=""
-          style={{ width: 200 }}
+          className="select-table"
           onChange={(value) => {
             setError("");
             setSelected(value);
@@ -191,10 +201,7 @@ function Insertdata() {
         <p className="text-error">กรุณากรอกข้อมูล</p>
       )}
       {contextHolder}
-      <div className="showData-content">
-        {state === true && tempSelectTable.map(forMap)}
-      </div>
-
+      {showDataSelect()}
       {/* { tempSelectTable.map(forMap) } */}
     </div>
   );

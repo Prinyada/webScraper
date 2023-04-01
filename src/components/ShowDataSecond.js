@@ -3,6 +3,114 @@ import './ShowDataSecond.css';
 import ImageSlider from "./ImageSlider";
 
 function ShowDataSecond({ currentPosts }) {
+  function showType(data) {
+    let size = data.length;
+    console.log(data);
+    let tempType = [];
+    if (size === 1) {
+      data.map((type, index) => {
+        if (type === "-") {
+          let t = "ไม่ระบุประเภท";
+          tempType.push(t);
+        } else {
+          let ty;
+          if (type === "acessories") {
+            ty = "อุปกรณ์เสริม";
+            tempType.push(ty);
+          } else if (type === "apartment_condo") {
+            ty = "อพาร์ทเม้นท์/คอนโด";
+            tempType.push(ty);
+          } else if (type === "decorations") {
+            ty = "สร้อย/แหวน/กำไล";
+            tempType.push(ty);
+          } else if (type === "bag_wallet") {
+            ty = "กระเป๋า";
+            tempType.push(ty);
+          } else if (type === "clothing") {
+            ty = "เสื้อผ้า";
+            tempType.push(ty);
+          } else if (type === "card_ticket") {
+            ty = "บัตร";
+            tempType.push(ty);
+          } else if (type === "education") {
+            ty = "การศึกษา";
+            tempType.push(ty);
+          } else if (type === "key") {
+            ty = "กุญแจ";
+            tempType.push(ty);
+          } else if (type === "notebook_pc") {
+            ty = "โน๊ตบุ๊ค";
+            tempType.push(ty);
+          } else if (type === "pet") {
+            ty = "สัตว์เลี้ยง";
+            tempType.push(ty);
+          } else if (type === "phone") {
+            ty = "โทรศัพท์";
+            tempType.push(ty);
+          } else if (type === "stuff") {
+            ty = "ของใช้ภายในบ้าน";
+            tempType.push(ty);
+          } else if (type === "vehicle") {
+            ty = "ยานพาหนะ";
+            tempType.push(ty);
+          } else if (type === "watch") {
+            ty = "นาฬิกา";
+            tempType.push(ty);
+          }
+        }
+      });
+    } else {
+      data.map((type, index) => {
+        let ty;
+        if (type === "acessories") {
+          ty = "อุปกรณ์เสริม";
+          tempType.push(ty);
+        } else if (type === "apartment_condo") {
+          ty = "อพาร์ทเม้นท์/คอนโด";
+          tempType.push(ty);
+        } else if (type === "decorations") {
+          ty = "สร้อย/แหวน/กำไล";
+          tempType.push(ty);
+        } else if (type === "bag_wallet") {
+          ty = "กระเป๋า";
+          tempType.push(ty);
+        } else if (type === "clothing") {
+          ty = "เสื้อผ้า";
+          tempType.push(ty);
+        } else if (type === "card_ticket") {
+          ty = "บัตร";
+          tempType.push(ty);
+        } else if (type === "education") {
+          ty = "การศึกษา";
+          tempType.push(ty);
+        } else if (type === "key") {
+          ty = "กุญแจ";
+          tempType.push(ty);
+        } else if (type === "notebook_pc") {
+          ty = "โน๊ตบุ๊ค";
+          tempType.push(ty);
+        } else if (type === "pet") {
+          ty = "สัตว์เลี้ยง";
+          tempType.push(ty);
+        } else if (type === "phone") {
+          ty = "โทรศัพท์";
+          tempType.push(ty);
+        } else if (type === "stuff") {
+          ty = "ของใช้ภายในบ้าน";
+          tempType.push(ty);
+        } else if (type === "vehicle") {
+          ty = "ยานพาหนะ";
+          tempType.push(ty);
+        } else if (type === "watch") {
+          ty = "นาฬิกา";
+          tempType.push(ty);
+        }
+        tempType.push(",");
+      });
+      tempType.pop();
+    }
+    return tempType;
+  }
   return (
     <>
       {currentPosts.map((data, index) => {
@@ -19,7 +127,7 @@ function ShowDataSecond({ currentPosts }) {
             </div>
             <div className="second-2">
               <div className="second2-category">
-                ประเภท : {data.detailPost.category}
+                {showType(data.detailPost.category)}
               </div>
               <div className="second2-userfacebook">
                 <p>ผู้โพสต์ : {data.detailPost.username}</p>
@@ -36,6 +144,9 @@ function ShowDataSecond({ currentPosts }) {
                   </p>
                   <p style={{ display: "flex" }}>
                     ลักษณะ : {data.detailPost.describe}
+                  </p>
+                  <p style={{ display: "flex" }}>
+                    ราคา : {data.detailPost.price}
                   </p>
                 </div>
                 <div className="second3-right-buttom">

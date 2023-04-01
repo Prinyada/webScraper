@@ -1,12 +1,13 @@
 .insertdata-container {
-    /* display: flex; */
-    align-items: center;
-    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    display: block;
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 .select-content {
-    margin-left: 40px;
-    margin-top: 20px;
+    margin: 0 auto;
     display: flex;
     height: max-content;
     align-items: center;
@@ -14,7 +15,7 @@
 }
 
 .text-error {
-    margin-top: 20px;
+    margin: 0 auto;
     display: flex;
     height: max-content;
     align-items: center;
@@ -23,8 +24,7 @@
 
 .selected-content,
 .input-content {
-    margin-left: 40px;
-    margin-top: 20px;
+    margin: 0 auto;
     display: flex;
     height: max-content;
     align-items: center;
@@ -32,20 +32,19 @@
 }
 
 .showData-content {
+    display: block;
+    height: max-content;
+    align-items: center;
     text-align: center;
-    /* justify-content: space-between; */
     border: 1px solid var(--black);
     height: 300px;
     width: 300px;
     background-color: var(--powerblue);
-    margin-left: 25px;
-    margin-top: 15px;
+    margin: 20px auto;
     overflow-y: scroll;
 }
 
 .boxText {
-    /* width: 60%; */
-    /* justify-content: flex-start; */
     justify-content: space-between;
     margin-left: 40px;
     margin-right: 40px;
@@ -77,4 +76,14 @@
 .delete:hover{
     cursor: pointer;
     background-color:  #fb5f54;
+}
+
+.select-table {
+    width: 200px;
+}
+
+@media screen and (max-width: 481px){
+    .select-table {
+        width: 120px;
+    }
 }

@@ -22,8 +22,10 @@ function MainAdmin() {
   const data = {
     labels: day.map((dt) => {
       let newDate = new Date(dt);
-      return `${newDate.getDate()}/${newDate.getMonth() + 1}/${newDate.getFullYear() + 543 }`;
-    }),
+      return `${newDate.getDate()}/${newDate.getMonth() + 1}/${
+        newDate.getFullYear() + 543
+      }`;
+    }), 
     datasets: [
       {
         label: "ประกาศของหาย",
@@ -31,6 +33,7 @@ function MainAdmin() {
         backgroundColor: "#008080",
         borderColor: "black",
         borderWidth: 1,
+        family: "Prompt",
       },
       {
         label: "ประกาศซื้อ-ขาย",
@@ -38,11 +41,18 @@ function MainAdmin() {
         backgroundColor: `#0F52BA`,
         borderColor: "black",
         borderWidth: 1,
+        family: "Prompt",
       },
     ],
   };
 
-  const options = {};
+  function sum7Day(){
+    // for
+  }
+
+  const options = {
+
+  };
 
   useEffect(() => {
     onValue(ref(db, "report"), (snapshot) => {
@@ -62,23 +72,26 @@ function MainAdmin() {
       setSell(s);
     });
   }, []);
+
+  
+
   return (
-    <div>
-      <div>
+    <div className="main-admin-container">
+      <div className="chart-content">
         <Bar
-          style={{
-            margin: "15px",
-            width: "1000px",
-          }}
+          className="bar-chart"
           data={data}
           options={options}
         ></Bar>
       </div>
-      {/* {day.map((dt,index) => {
-        return (
-          <p key={index}>{dt}</p>
-        )
-      })} */}
+      <div className="chart-content-2">
+        <div className="chart-content-left">
+
+        </div>
+        <div className="chart-content-right">
+          
+        </div>
+      </div>
     </div>
   );
 }

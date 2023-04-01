@@ -28,32 +28,21 @@
 
 .lost-3 {
   display: flex;
-  /* text-align: center; */
   justify-content: space-around;
-  /* padding-left: 10px;
-    padding-right: 10px; */
   padding-bottom: 10px;
 }
 
 .lost3-left {
   margin-top: 10px;
-  /* width: max-content;
-      height: max-content; */
-  /* justify-content: flex-start; */
 }
 
 .lost3-right {
-  /* justify-content: flex-start; */
-  /* display: block; */
-  /* width: max-content; */
+
 }
 
 .lost3-right-top {
-  /* justify-content: flex-start; */
   display: block;
   border-bottom: 1px solid var(--white);
-  /* width: 200px; */
-
 }
 
 .ex-picture {

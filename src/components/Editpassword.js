@@ -80,7 +80,7 @@ function Editpassword() {
       {error === "newpassER" && (
         <p className="text-error">new password not same</p>
       )}
-      <Button style={{ marginTop: 10 }} type="primary" onClick={editToDb}>ยืนยัน</Button>
+      <Button style={{ marginTop: 10,width: 100 }} type="primary" onClick={editToDb}>ยืนยัน</Button>
     </div>
   );
 }

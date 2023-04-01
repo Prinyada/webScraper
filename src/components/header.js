@@ -17,6 +17,8 @@ function Header() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  console.log("this state -> ", state);
+
   const RenderHeader = () => {
     if (state === true) {
       return (
@@ -26,20 +28,53 @@ function Header() {
               <div className="logo-container">
                 <img src={mainLogo} className="main-logo" />
               </div>
-              <div className="header-center">
-                <p>DashBoard Admin</p>
-              </div>
-              <div className="header-right">
-                <div
-                  className="button-admin"
-                  onClick={() => {
-                    dispatch({ type: "ADMIN", payload: false });
-                  }}
-                >
-                  <NavLink to="/login" className="button-link-logout">
-                    Logout
+              <div className="header-center"></div>
+              <div className={click ? "header-right actived" : "header-right"}>
+                <div className="button-main-admin" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/admin/main"
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }
+                  >
+                    หน้าหลัก
                   </NavLink>
                 </div>
+                <div className="button-editpassword" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/admin/editpassword"
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }
+                  >
+                    แก้ไขรหัสผ่าน
+                  </NavLink>
+                </div>
+                <div className="button-insertdata" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/admin/insertdata"
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }
+                  >
+                    เพิ่มข้อมูลในการกรอง
+                  </NavLink>
+                </div>
+                <div className="button-admin" onClick={closeMobileMenu}>
+                  <NavLink
+                    to="/login"
+                    className="button-link-logout"
+                    onClick={() => {
+                      dispatch({ type: "ADMIN", payload: false });
+                      closeMobileMenu();
+                    }}
+                  >
+                    ออกจากระบบ
+                  </NavLink>
+                </div>
+              </div>
+              <div className="mobile-menu" onClick={handleClick}>
+                {click ? <FiX /> : <FiMenu />}
               </div>
             </div>
           </div>
@@ -55,15 +90,15 @@ function Header() {
                   <img src={mainLogo} className="main-logo" />
                 </div>
               </div>
-              <div className={ click ? "header-right actived" : "header-right"}>
+              <div className={click ? "header-right actived" : "header-right"}>
                 <div className="button-home" onClick={closeMobileMenu}>
                   <NavLink
                     to="/"
                     className={({ isActive }) =>
-                      isActive ? (activeLink) : (normalLink)
+                      isActive ? activeLink : normalLink
                     }
                   >
-                    <MdHome className="logo"/>
+                    <MdHome className="logo" />
                     Home
                   </NavLink>
                 </div>
@@ -71,7 +106,7 @@ function Header() {
                   <NavLink
                     to="/login"
                     className={({ isActive }) =>
-                      isActive ? (activeLink) : normalLink
+                      isActive ? activeLink : normalLink
                     }
                   >
                     <MdAdminPanelSettings className="logo" />

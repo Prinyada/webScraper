@@ -19,7 +19,10 @@
 
 .header-right,
 .button-home,
-.button-admin {
+.button-admin,
+.button-main-admin,
+.button-editpassword,
+.button-insertdata {
     display: flex;
     height: 50px;
     align-items: center;
@@ -110,6 +113,7 @@
         left: -100%;
         opacity: 0;
     }
+
     .header-right.actived {
         background-color: var(--lightblue);
         left: 0;
@@ -119,7 +123,9 @@
         align-content: center;
         transition: 0.5s ease;
     }
-    .button-home, .button-admin {
+
+    .button-home,
+    .button-admin {
         margin-top: 10px;
         margin-bottom: 10px;
     }
@@ -130,12 +136,12 @@
         justify-content: center;
         height: 10vw;
         padding: 10px 0; */
-    }   
+    }
 
     .button-link.active {
         border: none;
     }
-    
+
     .button-link,
     .button-link-logout {
         color: var(--black);
@@ -145,7 +151,7 @@
         padding-left: 15px;
         border-radius: 0;
     }
-    
+
     .button-link-logout:hover,
     .button-link:hover {
         border: none;
@@ -154,7 +160,7 @@
 
 }
 
-@media screen and (min-width: 450px) and (max-width: 481px){
+@media screen and (min-width: 450px) and (max-width: 481px) {
     .header {
         padding: 0 4rem;
     }

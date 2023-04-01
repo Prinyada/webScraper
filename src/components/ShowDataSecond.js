@@ -5,7 +5,6 @@ import ImageSlider from "./ImageSlider";
 function ShowDataSecond({ currentPosts }) {
   function showType(data) {
     let size = data.length;
-    console.log(data);
     let tempType = [];
     if (size === 1) {
       data.map((type, index) => {

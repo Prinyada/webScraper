@@ -24,6 +24,9 @@
   font-weight: bold;
   color: var(--verdigris);
 }
+.home-content {
+  margin-top: 15px;
+}
 /* ------------- button ------------------- */
 .button-wrapper {
   width: 30rem;
@@ -58,6 +61,8 @@
 .secondaryBtn {
   background-color: var(--sapphireblue);
 }
+
+
 /* ----------------------------------------- */
 
 @media screen and (max-width: 480px){

@@ -1,0 +1,6 @@
+.footer-container {
+    background-color: var(--navyblue);
+    color: var(--white);
+    height: 100px;
+    margin: 0 auto;
+}

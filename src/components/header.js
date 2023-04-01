@@ -17,8 +17,6 @@ function Header() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
-  console.log("this state -> ", state);
-
   const RenderHeader = () => {
     if (state === true) {
       return (

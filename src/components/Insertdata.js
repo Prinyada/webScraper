@@ -25,6 +25,52 @@ function Insertdata() {
     });
   }
 
+  function showTableSelect() {
+    let temp;
+    if (selected === "close_post") {
+      temp = "ปิดโพสต์";
+    } else if (selected === "acessories") {
+      temp = "อุปกรณ์เสริม";
+    } else if (selected === "apartment_condo") {
+      temp = "หอพัก/คอนโด/ที่อยู่อาศัย";
+    } else if (selected === "bag_wallet") {
+      temp = "กระเป๋า";
+    } else if (selected === "card_ticket") {
+      temp = "บัตร/ตั๋ว";
+    } else if (selected === "clothing") {
+      temp = "เครื่องแต่งกาย";
+    } else if (selected === "education") {
+      temp = "เกี่ยวกับการศึกษา";
+    } else if (selected === "key") {
+      temp = "กุญแจ";
+    } else if (selected === "notebook_pc") {
+      temp = "โน๊ตบุ๊ค";
+    } else if (selected === "pet") {
+      temp = "สัตว์เลี้ยง";
+    } else if (selected === "phone") {
+      temp = "โทรศัพท์";
+    } else if (selected === "stuff") {
+      temp = "ของใช้ภายในบ้าน";
+    } else if (selected === "vehicle") {
+      temp = "ยานพาหนะ";
+    } else if (selected === "watch") {
+      temp = "นาฬิกา";
+    } else if (selected === "color") {
+      temp = "สี";
+    } else if (selected === "place") {
+      temp = "สถานที่";
+    } else if (selected === "find") {
+      temp = "ตามหา";
+    } else if (selected === "sell") {
+      temp = "ซื้อ-ขาย";
+    }
+    return temp;
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   // insert data
   function addtofirebase() {
     setState(false);
@@ -39,20 +85,17 @@ function Insertdata() {
           set(ref(db, `test`), {
             ...addData,
           });
-        }
-        else if(selected === "color" || selected === "place"){
+        } else if (selected === "color" || selected === "place") {
           addData.push(text);
           set(ref(db, "detail/" + selected), {
             ...addData,
           });
-        }
-        else if(selected === "find" || selected === "sell"){
+        } else if (selected === "find" || selected === "sell") {
           addData.push(text);
           set(ref(db, "type/" + selected), {
             ...addData,
           });
-        }
-        else {
+        } else {
           addData.push(text);
           set(ref(db, "detail/category/" + selected), {
             ...addData,
@@ -67,7 +110,7 @@ function Insertdata() {
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {
-        onValue(ref(db, table), (snapshot) => {
+        onValue(ref(db, 'test'), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
             tempData.push(t);
@@ -109,7 +152,9 @@ function Insertdata() {
   // delete data
   function clickDeleteText(index) {
     const t = ref(db, `test/${index}`);
-    remove(t).then(() => {});
+    remove(t).then(() => {
+      
+    });
   }
 
   useEffect(() => {}, []);
@@ -125,18 +170,25 @@ function Insertdata() {
         }}
       >
         {tag}
-        <span className="delete" onClick={() => {clickDeleteText(index)}}>x</span>
+        <span
+          className="delete"
+          onClick={() => {
+            clickDeleteText(index);
+          }}
+        >
+          x
+        </span>
       </p>
     );
   };
 
   function showDataSelect() {
-    if(selected !== ""){
+    if (selected !== "") {
       return (
-      <div className="showData-content">
-        {state === true && tempSelectTable.map(forMap)}
-      </div>
-      )
+        <div className="showData-content">
+          {state === true && tempSelectTable.map(forMap)}
+        </div>
+      );
     }
   }
 
@@ -181,7 +233,7 @@ function Insertdata() {
       )}
       <div className="selected-content">
         <p>หมวดที่เลือก :</p>&nbsp;
-        <p className="nameselected">{selected}</p>
+        <p className="nameselected">{showTableSelect()}</p>
       </div>
       <div className="input-content">
         <Input
@@ -202,7 +254,6 @@ function Insertdata() {
       )}
       {contextHolder}
       {showDataSelect()}
-      {/* { tempSelectTable.map(forMap) } */}
     </div>
   );
 }

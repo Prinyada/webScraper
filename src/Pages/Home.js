@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import { UserContext } from "../App"
+import { Checkbox } from 'antd';
 
 function Home() {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ function Home() {
     dispatch({ type: "ADMIN", payload: false });
   },[]);
 
+  const onChange = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+  }
 
   function lostItemClick() {
     navigate("/lostItems");
@@ -35,6 +39,9 @@ function Home() {
         <button className="secondaryBtn button" onClick={secondhandClick}>
           ประกาศซื้อ-ขาย
         </button>
+      </div>
+      <div className="home-content">
+        <Checkbox onChange={onChange}>Checkbox</Checkbox>
       </div>
     </div>
   );

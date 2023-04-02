@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Editpassword.css";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, update } from "firebase/database";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Input } from "antd";
 
 function Editpassword() {
   const [passdb, setPassDb] = useState("");

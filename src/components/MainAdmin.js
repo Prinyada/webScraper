@@ -46,10 +46,6 @@ function MainAdmin() {
     ],
   };
 
-  function sum7Day(){
-    // for
-  }
-
   const options = {
 
   };

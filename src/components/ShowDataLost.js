@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ImageSlider from "./ImageSlider";
 import "./ShowDataLost.css";
-import axios from "axios";
-import mainLogo from "../logo.png";
 
 function ShowDataLost({ currentPosts }) {
 

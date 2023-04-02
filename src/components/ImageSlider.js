@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./ImageSlider.css";
 import { useState } from "react";
-import axios from "axios";
-import mainLogo from "../logo.png";
 import {MdKeyboardArrowLeft} from 'react-icons/md';
 import {MdKeyboardArrowRight} from 'react-icons/md';
 

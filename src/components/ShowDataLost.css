@@ -36,18 +36,9 @@
   margin-top: 10px;
 }
 
-.lost3-right {
-
-}
-
 .lost3-right-top {
   display: block;
   border-bottom: 1px solid var(--white);
-}
-
-.ex-picture {
-  height: 200px;
-  width: 200px;
 }
 
 a {
@@ -115,7 +106,13 @@ a {
   transform: translateY(.125rem);
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 390px) and (max-width: 466px){
+  .lost {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 466px) and (max-width: 920px) {
   .lost {
     font-size: 16px;
   }

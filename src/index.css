@@ -30,7 +30,7 @@
 
 body {
   background-color: var(--gray);
-  margin: 0 auto;
+  margin: 0 auto; 
 }
 
 code {

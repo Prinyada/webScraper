@@ -85,23 +85,16 @@ function SecondHand(props) {
         <div className="second-search-left">
           <Input
             className="searchText"
-            // style={{
-            //   width: 400,
-            //   fontSize: 16,
-            //   fontFamily: "Prompt",
-            //   marginBottom: 10,
-            // }}
             placeholder="พิมพ์คำที่ต้องการค้นหา"
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
           />
         </div>
-        <div className="second-flitter-right">
+        <div className="second-filtter-right">
           <Select
             defaultValue="ทั้งหมด"
             className="select-type"
-            // style={{ width: 150 }}
             onChange={(value) => {
               setFilterText(value);
             }}
@@ -123,7 +116,6 @@ function SecondHand(props) {
           <Select
             defaultValue="เรียงวันที่"
             className="select-type"
-            // style={{ width: 150 }}
             onChange={(value) => {
               setSortText(value);
             }}

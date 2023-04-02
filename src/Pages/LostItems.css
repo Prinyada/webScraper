@@ -46,7 +46,7 @@
 }
 
 .searchText {
-  width: 120px;
+  width: 400px;
   font-family: "Prompt";
   margin-bottom: 10px;
 }
@@ -55,13 +55,19 @@
   width: 150px;
 }
 
-.searchText {
-  width: 400px;
-  font-family: "Prompt";
-  margin-bottom: 10px;
+@media screen and (min-width: 390px) and (max-width: 466px){
+  .select-type {
+    width: 90px;
+  }
+  
+  .searchText {
+    width: 100px;
+    font-family: "Prompt";
+    margin-bottom: 10px;
+  }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 466px) and (max-width: 920px) {
   .select-type {
     width: 100px;
   }
@@ -72,4 +78,5 @@
     margin-bottom: 10px;
   }
 }
+
 

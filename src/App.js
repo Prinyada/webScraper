@@ -10,7 +10,7 @@ import Header from "./components/Header";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
 import { initialState, reducer } from "./reducer/UseReducer";
-import Footer from "./components/footer.js";
+import './App.css';
 
 export const UserContext = createContext();
 

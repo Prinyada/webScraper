@@ -47,11 +47,6 @@ function Login() {
     });
   }, []);
 
-//   console.log("user db -> ",usernameDb);
-//   console.log("pass db -> ",typeof(passwordDb));
-
-//   console.log("pass input -> ", typeof(passwordInput));
-
   return (
     <div className="login-container">
       <div className="login-content">

@@ -1,9 +1,23 @@
 .imageslider-container {
-    height: 200px;
-    width: 200px;
-    position: relative;
+  height: 200px;
+  width: 200px;
+  position: relative;
 }
+
 .ex-picture {
-    height: 200px;
-    width: 200px;
+  height: 200px;
+  width: 200px;
+}
+
+@media screen and (min-width: 390px) and (max-width: 465px) {
+  .imageslider-container {
+    height: 160px;
+    width: 160px;
+    position: relative;
+  }
+
+  .ex-picture {
+    height: 160px;
+    width: 160px;
+  }
 }

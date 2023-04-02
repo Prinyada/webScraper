@@ -1,7 +1,4 @@
-import { Space } from "antd";
 import React, { useContext, useEffect } from "react";
-import SideMenu from "../components/SideMenu";
-import AdminContent from "../components/AdminContent";
 import "./Admin.css";
 import { UserContext } from "../App";
 import RouteAdmin from '../router/RouteAdmin'

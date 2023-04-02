@@ -115,7 +115,14 @@ a {
   transform: translateY(.125rem);
 }
 
-@media screen and (max-width: 480px) {
+
+@media screen and (min-width: 390px) and (max-width: 466px){
+  .second {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 466px) and (max-width: 920px) {
   .second {
     font-size: 16px;
   }

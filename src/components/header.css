@@ -130,14 +130,6 @@
         margin-bottom: 10px;
     }
 
-    .button-link {
-        /* display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 10vw;
-        padding: 10px 0; */
-    }
-
     .button-link.active {
         border: none;
     }

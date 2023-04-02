@@ -1,4 +1,3 @@
-import { Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
 import { Select, Input, Button, Tag, message, Modal } from "antd";
@@ -11,19 +10,13 @@ function Insertdata() {
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
   const [state, setState] = useState(true);
+  const [ deleteData, setDeleteData ] = useState(false);
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
 
   const [messageApi, contextHolder] = message.useMessage();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function success() {
-    messageApi.open({
-      type: "success",
-      content: "This is a success message",
-    });
-  }
 
   function showTableSelect() {
     let temp;
@@ -67,9 +60,7 @@ function Insertdata() {
     return temp;
   }
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // insert data
   function addtofirebase() {
@@ -101,16 +92,17 @@ function Insertdata() {
             ...addData,
           });
         }
+        setSelected("");
       }
     }
   }
 
   // read data then select
-  function selectTable(table) {
+  async function selectTable(table) {
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {
-        onValue(ref(db, 'test'), (snapshot) => {
+        onValue(ref(db, "test"), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
             tempData.push(t);
@@ -151,10 +143,16 @@ function Insertdata() {
 
   // delete data
   function clickDeleteText(index) {
-    const t = ref(db, `test/${index}`);
-    remove(t).then(() => {
-      
-    });
+    console.log("this index -> ",index);
+    if (index !== "" || index !== undefined) {
+      let t = ref(db, `test/${index}`);
+      remove(t).then(
+        
+      )
+      .then(function(){
+        
+      });
+    }
   }
 
   useEffect(() => {}, []);

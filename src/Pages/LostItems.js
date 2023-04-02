@@ -88,12 +88,6 @@ function LostItems(props) {
         <div className="lost-search-left">
           <Input
           className="searchText"
-            // style={{
-            //   width: 400,
-            //   fontSize: 16,
-            //   fontFamily: "Prompt",
-            //   marginBottom: 10,
-            // }}
             placeholder="พิมพ์คำที่ต้องการค้นหา"
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -104,7 +98,6 @@ function LostItems(props) {
           <Select
             defaultValue="ทั้งหมด"
             className="select-type"
-            // style={{ width: 150 }}
             onChange={(value) => {
               setFilterText(value);
             }}
@@ -126,7 +119,6 @@ function LostItems(props) {
           <Select
             defaultValue="เรียงวันที่"
             className="select-type"
-            // style={{ width: 150 }}
             onChange={(value) => {
               setSortText(value);
             }}

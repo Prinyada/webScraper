@@ -10,7 +10,9 @@ function Insertdata() {
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
   const [state, setState] = useState(true);
-  const [ deleteData, setDeleteData ] = useState(false);
+  const [deleteStatus, setDeleteStatus] = useState(false);
+  const [readStatus, setReadStatus] = useState(false);
+  const [addStatus, setAddStatus] = useState(false);
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
 
@@ -60,8 +62,6 @@ function Insertdata() {
     return temp;
   }
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
   // insert data
   function addtofirebase() {
     setState(false);
@@ -97,8 +97,8 @@ function Insertdata() {
     }
   }
 
-  // read data then select
-  async function selectTable(table) {
+  // read data then select อ่านแบบไม่รอ
+  function selectTable(table) {
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {
@@ -141,18 +141,38 @@ function Insertdata() {
     }
   }
 
+  function readDataWait() {}
+
   // delete data
   function clickDeleteText(index) {
-    console.log("this index -> ",index);
-    if (index !== "" || index !== undefined) {
-      let t = ref(db, `test/${index}`);
-      remove(t).then(
-        
-      )
-      .then(function(){
-        
-      });
+    // console.log("this data -> ",addData);
+    // console.log("this data 2 -> ",tempSelectTable);
+    // console.log("this index -> ", index);
+    // console.log("this tag -> ", tag);
+    // const arr = addData;
+    // let i = index;
+    // console.log("this arr -> ",arr);
+    // const tt = arr.slice(0, 2);
+    // console.log("this data delete 1 -> ", tt);
+    // const after = tt.concat(tt.slice(index+1));
+    // console.log("this data delete 2 -> ", after);
+    // setAddData(tt);
+    // console.log("this data after -> ",addData);
+    // let t = ref(db, `test/${index}`);
+    // remove(t);
+    let data = addData;
+    let position = index;
+    for(let i=position; i<data.length-1;i++){
+      data[i] = data[i+1];
     }
+    data.pop();
+    console.log(data);
+    setAddData(data);
+    console.log("this addData -> ",addData);
+    set(ref(db, `test`), {
+      ...addData,
+    });
+    setSelected("");
   }
 
   useEffect(() => {}, []);
@@ -171,7 +191,7 @@ function Insertdata() {
         <span
           className="delete"
           onClick={() => {
-            clickDeleteText(index);
+            clickDeleteText(index, tag);
           }}
         >
           x

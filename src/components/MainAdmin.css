@@ -11,11 +11,57 @@
     box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
     margin: 25px auto;
     width: 800px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .bar-chart {
     width: 800px;
     font-family: "Prompt";
+}
+
+.header-chart {
+    justify-items: center;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+.select-table-main {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+.header-chart-text {
+    text-decoration: underline;
+    padding-top: 10px;
+}
+
+.chart-content-2 {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.chart-content-left {
+    background-color: var(--white);
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    margin: 0 25px 20px 0;
+    padding: 10px 0;
+    width: 300px;
+    height: 100px;
+}
+
+.chart-content-right {
+    background-color: var(--white);
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    margin: 0 0 20px 0;
+    padding: 10px 0;
+    width: 300px;
+    height: 100px;
+}
+
+.text-result {
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 480px){

@@ -7,7 +7,7 @@ import MainAdmin from '../components/MainAdmin';
 function RouteAdmin() {
   return (
     <Routes>
-        <Route path="main" element={<MainAdmin/>}/>
+        <Route path="main" element={<MainAdmin />}/>
         <Route path="editpassword" element={<Editpassword/>}/>
         <Route path="insertdata" element={<Insertdata/>}/> 
     </Routes>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
 import { Select, Input, Button, Tag, message, Modal } from "antd";
 import { db } from "../realtimeData/firebase-config";
-import { ref, onValue, set, remove } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 
 function Insertdata() {
   const [text, setText] = useState("");
@@ -10,15 +10,10 @@ function Insertdata() {
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
   const [state, setState] = useState(true);
-  const [deleteStatus, setDeleteStatus] = useState(false);
-  const [readStatus, setReadStatus] = useState(false);
-  const [addStatus, setAddStatus] = useState(false);
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
 
   const [messageApi, contextHolder] = message.useMessage();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function showTableSelect() {
     let temp;
@@ -73,7 +68,7 @@ function Insertdata() {
       } else {
         if (selected === "close_post") {
           addData.push(text);
-          set(ref(db, `test`), {
+          set(ref(db, selected), {
             ...addData,
           });
         } else if (selected === "color" || selected === "place") {
@@ -97,12 +92,12 @@ function Insertdata() {
     }
   }
 
-  // read data then select อ่านแบบไม่รอ
+  // read data then select 
   function selectTable(table) {
     let tempData = [];
     if (table !== "") {
       if (table === "close_post") {
-        onValue(ref(db, "test"), (snapshot) => {
+        onValue(ref(db, table), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
             tempData.push(t);
@@ -141,37 +136,32 @@ function Insertdata() {
     }
   }
 
-  function readDataWait() {}
-
   // delete data
   function clickDeleteText(index) {
-    // console.log("this data -> ",addData);
-    // console.log("this data 2 -> ",tempSelectTable);
-    // console.log("this index -> ", index);
-    // console.log("this tag -> ", tag);
-    // const arr = addData;
-    // let i = index;
-    // console.log("this arr -> ",arr);
-    // const tt = arr.slice(0, 2);
-    // console.log("this data delete 1 -> ", tt);
-    // const after = tt.concat(tt.slice(index+1));
-    // console.log("this data delete 2 -> ", after);
-    // setAddData(tt);
-    // console.log("this data after -> ",addData);
-    // let t = ref(db, `test/${index}`);
-    // remove(t);
     let data = addData;
     let position = index;
     for(let i=position; i<data.length-1;i++){
       data[i] = data[i+1];
     }
     data.pop();
-    console.log(data);
     setAddData(data);
-    console.log("this addData -> ",addData);
-    set(ref(db, `test`), {
-      ...addData,
-    });
+    if (selected === "close_post") {
+      set(ref(db, selected), {
+        ...addData,
+      });
+    } else if (selected === "color" || selected === "place") {
+      set(ref(db, "detail/" + selected), {
+        ...addData,
+      });
+    } else if (selected === "find" || selected === "sell") {
+      set(ref(db, "type/" + selected), {
+        ...addData,
+      });
+    } else {
+      set(ref(db, "detail/category/" + selected), {
+        ...addData,
+      });
+    }
     setSelected("");
   }
 
@@ -183,9 +173,6 @@ function Insertdata() {
         key={tag}
         id={index}
         className="boxText"
-        onClick={() => {
-          // clickText(index);
-        }}
       >
         {tag}
         <span
@@ -216,13 +203,12 @@ function Insertdata() {
         <p className="nameselect">เลือกหมวดที่ต้องการเพิ่มข้อมูลในการกรอง :</p>
         &nbsp;
         <Select
-          defaultValue=""
+          defaultValue="หมวด"
           className="select-table"
           onChange={(value) => {
             setError("");
             setSelected(value);
             selectTable(value);
-            // setState(true);
           }}
           options={[
             { value: "close_post", label: "ปิดโพสต์" },

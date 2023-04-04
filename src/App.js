@@ -26,6 +26,9 @@ function App() {
   const [dataLostItems, setDatadataLostItems] = useState([]);
   const [dataSecondHand, setdataSecondHand] = useState([]);
 
+  const [ sizeLost, setSizeLost ] = useState(0);
+  const [ sizeSecond, setSizeSecond ] = useState(0);
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   function Data() {
@@ -51,7 +54,9 @@ function App() {
         setDatadataLostItems([...tempArrayLost]);
         setdataSecondHand([...tempArraySecond]);
       });
+    
     }, []);
+    
   }
   Data();
 
@@ -72,7 +77,7 @@ function App() {
             element={<SecondHand dataSecond={dataSecondHand} />}
           />
           <Route exact path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin/>} />
         </Routes>
       </UserContext.Provider>
     </>

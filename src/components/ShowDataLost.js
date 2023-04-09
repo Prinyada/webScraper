@@ -178,7 +178,7 @@ function ShowDataLost({ currentPosts }) {
             </div>
             <div className="lost-2">
               <div className="lost2-category">
-                {showType(data.detailPost.category)}
+                ประเภท : {showType(data.detailPost.category)}
               </div>
             </div>
             <div className="lost-3">

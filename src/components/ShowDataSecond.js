@@ -177,7 +177,7 @@ function ShowDataSecond({ currentPosts }) {
             </div>
             <div className="second-2">
               <div className="second2-category">
-                {showType(data.detailPost.category)}
+                ประเภท : {showType(data.detailPost.category)}
               </div>
             </div>
             <div className="second-3">

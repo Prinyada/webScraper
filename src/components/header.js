@@ -54,7 +54,7 @@ function Header() {
                       isActive ? activeLink : normalLink
                     }
                   >
-                    เพิ่มข้อมูลในการกรอง
+                    จัดการข้อมูลในการกรอง
                   </NavLink>
                 </div>
                 <div className="button-admin" onClick={closeMobileMenu}>
@@ -107,7 +107,7 @@ function Header() {
                     }
                   >
                     <MdAdminPanelSettings className="logo" />
-                    แอดมิน
+                    ผู้ดูแลระบบ
                   </NavLink>
                 </div>
               </div>

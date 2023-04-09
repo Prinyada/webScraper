@@ -21,7 +21,6 @@
   align-items: center;
   border-bottom: 1px solid var(--white);
   display: flex;
-  justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -106,6 +105,11 @@ a {
   transform: translateY(.125rem);
 }
 
+@media screen and (max-width: 390px){
+  .lost {
+    font-size: 14px;
+  }
+}
 @media screen and (min-width: 390px) and (max-width: 466px){
   .lost {
     font-size: 14px;

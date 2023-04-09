@@ -110,6 +110,55 @@ function ShowDataSecond({ currentPosts }) {
     }
     return tempType;
   }
+
+  function showDescribe(data){
+    let size = data.length;
+    let tempdata = [];
+    if(size === 1){
+      data.map((d,i) => {
+        if(data === "-"){
+          tempdata.push("-");
+        }
+        else{
+          tempdata.push(d);
+        }
+      })
+      return tempdata;
+    }
+    else {
+      data.map((d,i)=> {
+        tempdata.push(d);
+        tempdata.push(",")
+      })
+      tempdata.pop();
+      return tempdata;
+    }
+  }
+
+  function showPlace(data){
+    let size = data.length;
+    let tempdata = [];
+    if(size === 1){
+      data.map((d,i) => {
+        if(data === "-"){
+          tempdata.push("-");
+        }
+        else{
+          tempdata.push(d);
+        }
+      })
+      return tempdata;
+    }
+    else {
+      data.map((d,i)=> {
+        tempdata.push(d);
+        tempdata.push(",")
+      })
+      tempdata.pop();
+      return tempdata;
+    }
+  }
+
   return (
     <>
       {currentPosts.map((data, index) => {
@@ -117,19 +166,18 @@ function ShowDataSecond({ currentPosts }) {
         return (
           <div key={index} className="second">
             <div className="second-1">
-              <div className="second1-type">ซื้อ-ขาย</div>
               <div className="second1-date">
                 <p>
-                  {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
+                  วันที่ : {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
                 </p>
+              </div>
+              <div className="second2-userfacebook">
+                <p>ผู้โพสต์ : {data.detailPost.username}</p>
               </div>
             </div>
             <div className="second-2">
               <div className="second2-category">
                 {showType(data.detailPost.category)}
-              </div>
-              <div className="second2-userfacebook">
-                <p>ผู้โพสต์ : {data.detailPost.username}</p>
               </div>
             </div>
             <div className="second-3">
@@ -139,10 +187,10 @@ function ShowDataSecond({ currentPosts }) {
               <div className="second3-right">
                 <div className="second3-right-top">
                   <p style={{ display: "flex" }}>
-                    สถานที่ : {data.detailPost.place}
+                    สถานที่ : {showPlace(data.detailPost.place)}
                   </p>
                   <p style={{ display: "flex" }}>
-                    ลักษณะ : {data.detailPost.describe}
+                    ลักษณะ : {showDescribe(data.detailPost.describe)}
                   </p>
                   <p style={{ display: "flex" }}>
                     ราคา : {data.detailPost.price}

@@ -10,6 +10,22 @@
 }
 
 @media screen and (min-width: 390px) and (max-width: 465px) {
+
+}
+
+@media screen and (max-width: 390px){
+  .imageslider-container {
+    height: 140px;
+    width: 140px;
+    position: relative;
+  }
+
+  .ex-picture {
+    height: 140px;
+    width: 140px;
+  }
+}
+@media screen and (min-width: 390px) and (max-width: 466px){
   .imageslider-container {
     height: 160px;
     width: 160px;
@@ -20,4 +36,8 @@
     height: 160px;
     width: 160px;
   }
+}
+
+@media screen and (min-width: 466px) and (max-width: 920px) {
+
 }

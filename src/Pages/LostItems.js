@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LostItems.css";
-import ImageSlider from "../components/ImageSlider";
 import { Input, Space, Select } from "antd";
 import Pagination from "../components/Pagination";
 import ShowDataLost from "../components/ShowDataLost";
@@ -14,7 +13,6 @@ function LostItems(props) {
     dataArray.push(data);
   });
 
-
   const [searchText, setSearchText] = useState("");
   const [status, setStatus] = useState(0);
   const [filterText, setFilterText] = useState("");
@@ -24,10 +22,11 @@ function LostItems(props) {
   let size = dataArray.length;
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPage] = useState(8);
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
+  // const [lastPostIndex, setLastPostIndex] = useState(currentPage * postsPerPage);
+  // const [firstPostIndex, setFirstPostIndex] = useState(lastPostIndex - postsPerPage);
+  let lastPostIndex = currentPage * postsPerPage;
+  let firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
-
 
   function search() {
     let searchData = dataArray.filter((d) => {
@@ -38,7 +37,15 @@ function LostItems(props) {
         return d;
       }
     });
+  
     size = searchData.length;
+    if(size !== 0){
+      if (searchData[firstPostIndex] === undefined) {
+        setCurrentPage(1);
+        lastPostIndex = currentPage * postsPerPage;
+        firstPostIndex = lastPostIndex - postsPerPage;
+      }
+    }
     currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
     return true;
   }
@@ -50,6 +57,11 @@ function LostItems(props) {
       }
     });
     size = filterData.length;
+    if (filterData[firstPostIndex] === undefined) {
+      setCurrentPage(1);
+      lastPostIndex = currentPage * postsPerPage;
+      firstPostIndex = lastPostIndex - postsPerPage;
+    }
     currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
     return true;
   }
@@ -58,7 +70,10 @@ function LostItems(props) {
     if (sortText === "oldToNew") {
       const sortByDate = (dataArray) => {
         const sorter = (a, b) => {
-          return ( new Date(a.detailPost.date_time).getTime() -new Date(b.detailPost.date_time).getTime() );
+          return (
+            new Date(a.detailPost.date_time).getTime() -
+            new Date(b.detailPost.date_time).getTime()
+          );
         };
         dataArray.sort(sorter);
       };
@@ -68,7 +83,10 @@ function LostItems(props) {
     } else if (sortText === "newToOld") {
       const sortByDate = (dataArray) => {
         const sorter = (a, b) => {
-          return ( new Date(b.detailPost.date_time).getTime() - new Date(a.detailPost.date_time).getTime() );
+          return (
+            new Date(b.detailPost.date_time).getTime() -
+            new Date(a.detailPost.date_time).getTime()
+          );
         };
         dataArray.sort(sorter);
       };
@@ -87,7 +105,7 @@ function LostItems(props) {
       <div className="lost-header2">
         <div className="lost-search-left">
           <Input
-          className="searchText"
+            className="searchText"
             placeholder="พิมพ์คำที่ต้องการค้นหา"
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -122,25 +140,19 @@ function LostItems(props) {
             onChange={(value) => {
               setSortText(value);
             }}
-            options={
-              [
-                { value: "oldToNew", label: "เก่าสุด-ใหม่สุด" },
-                { value: "newToOld", label: "ใหม่สุด-เก่าสุด" },
-              ]
-            }
+            options={[
+              { value: "oldToNew", label: "เก่าสุด-ใหม่สุด" },
+              { value: "newToOld", label: "ใหม่สุด-เก่าสุด" },
+            ]}
           />
         </div>
       </div>
       <div className="lost-content">
-      {searchText !== "" ? (
-          search() && (
-            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-          )
-        ) : (filterText !== "all" && filterText !== "") ? (
-          filter() && (
-            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-          )
-        ) : (sortText !== "default" && sortText !== "") ? (
+        {searchText !== "" ? (
+          search() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+        ) : filterText !== "all" && filterText !== "" ? (
+          filter() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+        ) : sortText !== "default" && sortText !== "" ? (
           sortDate() && (
             <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
           )

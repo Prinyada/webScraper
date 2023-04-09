@@ -200,7 +200,7 @@ function Insertdata() {
   return (
     <div className="insertdata-container">
       <div className="select-content">
-        <p className="nameselect">เลือกหมวดที่ต้องการเพิ่มข้อมูลในการกรอง :</p>
+        <p className="nameselect">กรุณาเลือกหมวด :</p>
         &nbsp;
         <Select
           defaultValue="หมวด"

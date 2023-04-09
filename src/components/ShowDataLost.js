@@ -112,6 +112,54 @@ function ShowDataLost({ currentPosts }) {
     return tempType;
   }
 
+  function showDescribe(data){
+    let size = data.length;
+    let tempdata = [];
+    if(size === 1){
+      data.map((d,i) => {
+        if(data === "-"){
+          tempdata.push("-");
+        }
+        else{
+          tempdata.push(d);
+        }
+      })
+      return tempdata;
+    }
+    else {
+      data.map((d,i)=> {
+        tempdata.push(d);
+        tempdata.push(",")
+      })
+      tempdata.pop();
+      return tempdata;
+    }
+  }
+
+  function showPlace(data){
+    let size = data.length;
+    let tempdata = [];
+    if(size === 1){
+      data.map((d,i) => {
+        if(data === "-"){
+          tempdata.push("-");
+        }
+        else{
+          tempdata.push(d);
+        }
+      })
+      return tempdata;
+    }
+    else {
+      data.map((d,i)=> {
+        tempdata.push(d);
+        tempdata.push(",")
+      })
+      tempdata.pop();
+      return tempdata;
+    }
+  }
+
   return (
     <>
       {currentPosts.map((data, index) => {
@@ -119,19 +167,18 @@ function ShowDataLost({ currentPosts }) {
         return (
           <div key={index} className="lost">
             <div className="lost-1">
-              <div className="lost1-type">ของหาย</div>
               <div className="lost1-date">
                 <p>
-                  {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
+                  วันที่ : {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
                 </p>
+              </div>
+              <div className="lost2-userfacebook">
+                <p>ผู้โพสต์ : {data.detailPost.username}</p>
               </div>
             </div>
             <div className="lost-2">
               <div className="lost2-category">
                 {showType(data.detailPost.category)}
-              </div>
-              <div className="lost2-userfacebook">
-                <p>ผู้โพสต์ : {data.detailPost.username}</p>
               </div>
             </div>
             <div className="lost-3">
@@ -141,10 +188,10 @@ function ShowDataLost({ currentPosts }) {
               <div className="lost3-right">
                 <div className="lost3-right-top">
                   <p style={{ display: "flex" }}>
-                    สถานที่หาย : {data.detailPost.place}
+                    สถานที่หาย/พบเจอ : {showPlace(data.detailPost.place)}
                   </p>
                   <p style={{ display: "flex" }}>
-                    ลักษณะ : {data.detailPost.describe}
+                    ลักษณะ : {showDescribe(data.detailPost.describe)}
                   </p>
                 </div>
                 <div className="lost3-right-buttom">

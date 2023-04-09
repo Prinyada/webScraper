@@ -21,7 +21,6 @@
   align-items: center;
   border-bottom: 1px solid var(--white);
   display: flex;
-  justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
 }

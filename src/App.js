@@ -6,7 +6,7 @@ import React from "react";
 import Home from "./Pages/Home";
 import { db } from "./realtimeData/firebase-config";
 import { ref, onValue } from "firebase/database";
-import Header from "./components/Header";
+import Header from "./components/header";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
 import { initialState, reducer } from "./reducer/UseReducer";

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./Header.css";
+import "./header.css";
 import { MdAdminPanelSettings, MdHome } from "react-icons/md";
 import { UserContext } from "../App";
 import mainLogo from "../logo.png";

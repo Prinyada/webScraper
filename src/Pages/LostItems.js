@@ -57,10 +57,12 @@ function LostItems(props) {
       }
     });
     size = filterData.length;
-    if (filterData[firstPostIndex] === undefined) {
-      setCurrentPage(1);
-      lastPostIndex = currentPage * postsPerPage;
-      firstPostIndex = lastPostIndex - postsPerPage;
+    if(size !== 0){
+      if (filterData[firstPostIndex] === undefined) {
+        setCurrentPage(1);
+        lastPostIndex = currentPage * postsPerPage;
+        firstPostIndex = lastPostIndex - postsPerPage;
+      }
     }
     currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
     return true;
@@ -121,7 +123,6 @@ function LostItems(props) {
             }}
             options={[
               { value: "all", label: "ทั้งหมด" },
-              { value: "apartment_condo", label: "อพาร์ทเม้นท์/คอนโด" },
               { value: "bag_wallet", label: "กระเป๋า" },
               { value: "card_ticket", label: "บัตร" },
               { value: "clothing", label: "เสื้อผ้า" },

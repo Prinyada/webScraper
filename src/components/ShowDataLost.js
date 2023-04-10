@@ -3,7 +3,6 @@ import ImageSlider from "./ImageSlider";
 import "./ShowDataLost.css";
 
 function ShowDataLost({ currentPosts }) {
-
   function showType(data) {
     let size = data.length;
     let tempType = [];
@@ -112,49 +111,45 @@ function ShowDataLost({ currentPosts }) {
     return tempType;
   }
 
-  function showDescribe(data){
+  function showDescribe(data) {
     let size = data.length;
     let tempdata = [];
-    if(size === 1){
-      data.map((d,i) => {
-        if(data === "-"){
+    if (size === 1) {
+      data.map((d, i) => {
+        if (data === "-") {
           tempdata.push("-");
-        }
-        else{
+        } else {
           tempdata.push(d);
         }
-      })
+      });
       return tempdata;
-    }
-    else {
-      data.map((d,i)=> {
+    } else {
+      data.map((d, i) => {
         tempdata.push(d);
-        tempdata.push(",")
-      })
+        tempdata.push(",");
+      });
       tempdata.pop();
       return tempdata;
     }
   }
 
-  function showPlace(data){
+  function showPlace(data) {
     let size = data.length;
     let tempdata = [];
-    if(size === 1){
-      data.map((d,i) => {
-        if(data === "-"){
+    if (size === 1) {
+      data.map((d, i) => {
+        if (data === "-") {
           tempdata.push("-");
-        }
-        else{
+        } else {
           tempdata.push(d);
         }
-      })
+      });
       return tempdata;
-    }
-    else {
-      data.map((d,i)=> {
+    } else {
+      data.map((d, i) => {
         tempdata.push(d);
-        tempdata.push(",")
-      })
+        tempdata.push(",");
+      });
       tempdata.pop();
       return tempdata;
     }
@@ -162,48 +157,53 @@ function ShowDataLost({ currentPosts }) {
 
   return (
     <>
-      {currentPosts.map((data, index) => {
-        let day = new Date(data.detailPost.date_time);
-        return (
-          <div key={index} className="lost">
-            <div className="lost-1">
-              <div className="lost1-date">
-                <p>
-                  วันที่ : {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
-                </p>
-              </div>
-              <div className="lost2-userfacebook">
-                <p>ผู้โพสต์ : {data.detailPost.username}</p>
-              </div>
-            </div>
-            <div className="lost-2">
-              <div className="lost2-category">
-                ประเภท : {showType(data.detailPost.category)}
-              </div>
-            </div>
-            <div className="lost-3">
-              <div className="lost3-left">
-                <ImageSlider slides={data.detailPost.image} />
-              </div>
-              <div className="lost3-right">
-                <div className="lost3-right-top">
-                  <p style={{ display: "flex" }}>
-                    สถานที่หาย/พบเจอ : {showPlace(data.detailPost.place)}
-                  </p>
-                  <p style={{ display: "flex" }}>
-                    ลักษณะ : {showDescribe(data.detailPost.describe)}
+      {currentPosts.length === 0 ? (
+        <p>ไม่มีข้อมูล</p>
+      ) : (
+        currentPosts.map((data, index) => {
+          let day = new Date(data.detailPost.date_time);
+          return (
+            <div key={index} className="lost">
+              <div className="lost-1">
+                <div className="lost1-date">
+                  <p>
+                    วันที่ : {day.getDate()}/{day.getMonth() + 1}/
+                    {day.getFullYear() + 543}
                   </p>
                 </div>
-                <div className="lost3-right-buttom">
-                  <button className="button-80" role="button">
-                    <a href={data.detailPost.post_url}>ดูโพสต์</a>
-                  </button>
+                <div className="lost2-userfacebook">
+                  <p>ผู้โพสต์ : {data.detailPost.username}</p>
+                </div>
+              </div>
+              <div className="lost-2">
+                <div className="lost2-category">
+                  ประเภท : {showType(data.detailPost.category)}
+                </div>
+              </div>
+              <div className="lost-3">
+                <div className="lost3-left">
+                  <ImageSlider slides={data.detailPost.image} />
+                </div>
+                <div className="lost3-right">
+                  <div className="lost3-right-top">
+                    <p style={{ display: "flex" }}>
+                      สถานที่หาย/พบเจอ : {showPlace(data.detailPost.place)}
+                    </p>
+                    <p style={{ display: "flex" }}>
+                      ลักษณะ : {showDescribe(data.detailPost.describe)}
+                    </p>
+                  </div>
+                  <div className="lost3-right-buttom">
+                    <button className="button-80" role="button">
+                      <a href={data.detailPost.post_url}>ดูโพสต์</a>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </>
   );
 }

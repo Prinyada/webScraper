@@ -1,5 +1,5 @@
 import React from "react";
-import './ShowDataSecond.css';
+import "./ShowDataSecond.css";
 import ImageSlider from "./ImageSlider";
 
 function ShowDataSecond({ currentPosts }) {
@@ -111,49 +111,45 @@ function ShowDataSecond({ currentPosts }) {
     return tempType;
   }
 
-  function showDescribe(data){
+  function showDescribe(data) {
     let size = data.length;
     let tempdata = [];
-    if(size === 1){
-      data.map((d,i) => {
-        if(data === "-"){
+    if (size === 1) {
+      data.map((d, i) => {
+        if (data === "-") {
           tempdata.push("-");
-        }
-        else{
+        } else {
           tempdata.push(d);
         }
-      })
+      });
       return tempdata;
-    }
-    else {
-      data.map((d,i)=> {
+    } else {
+      data.map((d, i) => {
         tempdata.push(d);
-        tempdata.push(",")
-      })
+        tempdata.push(",");
+      });
       tempdata.pop();
       return tempdata;
     }
   }
 
-  function showPlace(data){
+  function showPlace(data) {
     let size = data.length;
     let tempdata = [];
-    if(size === 1){
-      data.map((d,i) => {
-        if(data === "-"){
+    if (size === 1) {
+      data.map((d, i) => {
+        if (data === "-") {
           tempdata.push("-");
-        }
-        else{
+        } else {
           tempdata.push(d);
         }
-      })
+      });
       return tempdata;
-    }
-    else {
-      data.map((d,i)=> {
+    } else {
+      data.map((d, i) => {
         tempdata.push(d);
-        tempdata.push(",")
-      })
+        tempdata.push(",");
+      });
       tempdata.pop();
       return tempdata;
     }
@@ -161,51 +157,56 @@ function ShowDataSecond({ currentPosts }) {
 
   return (
     <>
-      {currentPosts.map((data, index) => {
-        let day = new Date(data.detailPost.date_time);
-        return (
-          <div key={index} className="second">
-            <div className="second-1">
-              <div className="second1-date">
-                <p>
-                  วันที่ : {day.getDate()}/{day.getMonth() + 1}/{day.getFullYear() + 543}
-                </p>
-              </div>
-              <div className="second2-userfacebook">
-                <p>ผู้โพสต์ : {data.detailPost.username}</p>
-              </div>
-            </div>
-            <div className="second-2">
-              <div className="second2-category">
-                ประเภท : {showType(data.detailPost.category)}
-              </div>
-            </div>
-            <div className="second-3">
-              <div className="second3-left">
-                <ImageSlider slides={data.detailPost.image} />
-              </div>
-              <div className="second3-right">
-                <div className="second3-right-top">
-                  <p style={{ display: "flex" }}>
-                    สถานที่ : {showPlace(data.detailPost.place)}
-                  </p>
-                  <p style={{ display: "flex" }}>
-                    ลักษณะ : {showDescribe(data.detailPost.describe)}
-                  </p>
-                  <p style={{ display: "flex" }}>
-                    ราคา : {data.detailPost.price}
+      {currentPosts.length === 0 ? (
+        <p>ไม่มีข้อมูล</p>
+      ) : (
+        currentPosts.map((data, index) => {
+          let day = new Date(data.detailPost.date_time);
+          return (
+            <div key={index} className="second">
+              <div className="second-1">
+                <div className="second1-date">
+                  <p>
+                    วันที่ : {day.getDate()}/{day.getMonth() + 1}/
+                    {day.getFullYear() + 543}
                   </p>
                 </div>
-                <div className="second3-right-buttom">
-                  <button className="button-80" role="button">
-                    <a href={data.detailPost.post_url}>ดูโพสต์</a>
-                  </button>
+                <div className="second2-userfacebook">
+                  <p>ผู้โพสต์ : {data.detailPost.username}</p>
+                </div>
+              </div>
+              <div className="second-2">
+                <div className="second2-category">
+                  ประเภท : {showType(data.detailPost.category)}
+                </div>
+              </div>
+              <div className="second-3">
+                <div className="second3-left">
+                  <ImageSlider slides={data.detailPost.image} />
+                </div>
+                <div className="second3-right">
+                  <div className="second3-right-top">
+                    <p style={{ display: "flex" }}>
+                      สถานที่ : {showPlace(data.detailPost.place)}
+                    </p>
+                    <p style={{ display: "flex" }}>
+                      ลักษณะ : {showDescribe(data.detailPost.describe)}
+                    </p>
+                    <p style={{ display: "flex" }}>
+                      ราคา : {data.detailPost.price}
+                    </p>
+                  </div>
+                  <div className="second3-right-buttom">
+                    <button className="button-80" role="button">
+                      <a href={data.detailPost.post_url}>ดูโพสต์</a>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </>
   );
 }

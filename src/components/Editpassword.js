@@ -3,39 +3,91 @@ import "./Editpassword.css";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, update } from "firebase/database";
 import { Button, Input } from "antd";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Editpassword() {
-  const [passdb, setPassDb] = useState("");
+  const [passdb, setPassDb] = useState();
 
-  const [oldPass, setOldPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [confirmNewPass, setconfirmNewPass] = useState("");
+  const [oldPass, setOldPass] = useState();
+  const [newPass, setNewPass] = useState();
+  const [confirmNewPass, setconfirmNewPass] = useState();
 
-  const [error, setError] = useState("");
+  const [errorText, setErrorText] = useState("");
+
+  function refresh() {
+    window.location.reload(true);
+  }
+
+  function success() {
+    toast.success("แก้ไขรหัสผ่านสำเร็จ กดรีเฟรช 1 ครั้ง", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+
+  function error() {
+    toast.error('กดรีเฟรช 1 ครั้ง แล้วกรอกใหม่', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  }
 
   function editToDb() {
-    let newP = parseInt(newPass);
-    if (oldPass === passdb) {
-      //passเก่าตรงกัน
-      if (newPass === confirmNewPass) {
-        //พร้อมแก้ไข
-        setError("noError");
-        update(ref(db, "user"), {
-          password: newP,
-        });
+    let oldP = parseInt(oldPass); // string
+    let passinDb = passdb; // number
+    let newP = parseInt(newPass); //number
+    let tempNewP = `${newPass}`; // "string"
+    let confirmP = confirmNewPass; // string
+
+    const numberCheck = /^((?!(0))[0-9]{6})$/.test(tempNewP);
+    const pwdLenghtCheck = () => {
+      if (tempNewP.length === 6) {
+        return true;
       } else {
-        // newpass กับ confirmnewpass ไม่ตรงกัน
-        setError("newpassER");
+        return false;
+      }
+    };
+
+    if (oldP === passinDb) {
+      if (numberCheck && pwdLenghtCheck()) {
+        if (tempNewP === confirmP) {
+          setErrorText("");
+          update(ref(db, "user"), {
+            password: newP,
+          });
+          success();
+        } else {
+          setErrorText("newpassER");
+          error();
+        }
+      } else {
+        setErrorText("checkPass");
+        error();
       }
     } else {
-      // ใส่passเก่าไม่ถูก
-      setError("oldpassER");
+      setErrorText("oldpassER");
+      error();
     }
   }
+
   useEffect(() => {
     onValue(ref(db, "user"), (snapshot) => {
       let passDb = snapshot.val().password;
-      setPassDb(passDb.toString());
+      setPassDb(passDb);
     });
   }, []);
 
@@ -52,8 +104,8 @@ function Editpassword() {
         placeholder="old password"
         onChange={(e) => setOldPass(e.target.value)}
       />
-      {error === "oldpassER" && (
-        <p className="text-error">old password error</p>
+      {errorText === "oldpassER" && (
+        <p className="text-error">รหัสผ่านเก่าไม่ถูกต้อง</p>
       )}
       <Input
         style={{
@@ -77,10 +129,36 @@ function Editpassword() {
         placeholder="confirm password"
         onChange={(e) => setconfirmNewPass(e.target.value)}
       />
-      {error === "newpassER" && (
-        <p className="text-error">new password not same</p>
+      {errorText === "newpassER" && (
+        <p className="text-error">รหัสผ่านใหม่กับยืนยันรหัสผ่านใหม่ไม่ตรงกัน</p>
       )}
-      <Button style={{ marginTop: 10,width: 100 }} type="primary" onClick={editToDb}>ยืนยัน</Button>
+      {errorText === "checkPass" && (
+        <p className="text-error">รหัสผ่านต้องเป็นตัวเลข, มีความยาว 6 ตัว, ห้ามขึ้นต้นด้วย 0</p>
+      )}
+      <div className="box-buttom">
+        <Button
+          style={{ marginTop: 10, width: 100 }}
+          type="primary"
+          onClick={editToDb}
+        >
+          ยืนยัน
+        </Button>
+        <div className="refresh" onClick={refresh}>
+          <HiOutlineRefresh />
+        </div>
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }

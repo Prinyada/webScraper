@@ -60,6 +60,24 @@
 
 }
 
+.refresh {
+    background-color: var(--black);
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    color: var(--white);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.refresh:hover {
+    background-color: var(--white);
+    border: 1px solid black;
+    color: var(--black);
+}
+
 .delete {
     background-color: var(--red);
     /* width: 100%; */

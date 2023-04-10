@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Insertdata.css";
-import { Select, Input, Button, Tag, message, Modal } from "antd";
+import { Select, Input, Button, message } from "antd";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, set } from "firebase/database";
+import { HiOutlineRefresh } from "react-icons/hi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Insertdata() {
   const [text, setText] = useState("");
@@ -13,14 +16,14 @@ function Insertdata() {
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
 
-  const [messageApi, contextHolder] = message.useMessage();
-
   function showTableSelect() {
     let temp;
     if (selected === "close_post") {
       temp = "ปิดโพสต์";
     } else if (selected === "acessories") {
       temp = "อุปกรณ์เสริม";
+    } else if (selected === "close_post_comment") {
+      temp = "ปิดโพสต์จากคอมเมนต์";
     } else if (selected === "apartment_condo") {
       temp = "หอพัก/คอนโด/ที่อยู่อาศัย";
     } else if (selected === "bag_wallet") {
@@ -49,12 +52,47 @@ function Insertdata() {
       temp = "สี";
     } else if (selected === "place") {
       temp = "สถานที่";
-    } else if (selected === "find") {
-      temp = "ตามหา";
-    } else if (selected === "sell") {
-      temp = "ซื้อ-ขาย";
     }
     return temp;
+  }
+
+  function success() {
+    toast.success("เพิ่มข้อมูลสำเร็จ กดรีเฟรช 1 ครั้ง", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+
+  function warning() {
+    toast.warn("มีข้อมูลแล้ว กดรีเฟรช 1 ครั้ง", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+
+  function deletesuccess() {
+    toast.success("ลบข้อมูลสำเร็จ กดรีเฟรช 1 ครั้ง", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
 
   // insert data
@@ -63,40 +101,66 @@ function Insertdata() {
     if (selected === "") {
       setError("selectedError");
     } else {
+      let check = true;
       if (addData === "") {
         setError("inputError");
       } else {
-        if (selected === "close_post") {
-          addData.push(text);
-          set(ref(db, selected), {
-            ...addData,
+        if (selected === "close_post" || selected === "close_post_comment") {
+          tempSelectTable.map((data) => {
+            if (data === text) {
+              check = false;
+            }
           });
+          if (check === true) {
+            addData.push(text);
+            set(ref(db, selected), {
+              ...addData,
+            });
+            success();
+          } else if (check === false) {
+            warning();
+          }
         } else if (selected === "color" || selected === "place") {
-          addData.push(text);
-          set(ref(db, "detail/" + selected), {
-            ...addData,
+          tempSelectTable.map((data) => {
+            if (data === text) {
+              check = false;
+            }
           });
-        } else if (selected === "find" || selected === "sell") {
-          addData.push(text);
-          set(ref(db, "type/" + selected), {
-            ...addData,
-          });
+          if (check === true) {
+            addData.push(text);
+            set(ref(db, "detail/" + selected), {
+              ...addData,
+            });
+            success();
+          } else if (check === false) {
+            warning();
+          }
         } else {
-          addData.push(text);
-          set(ref(db, "detail/category/" + selected), {
-            ...addData,
+          tempSelectTable.map((data) => {
+            if (data === text) {
+              check = false;
+            }
           });
+          if (check === true) {
+            addData.push(text);
+            set(ref(db, "detail/category/" + selected), {
+              ...addData,
+            });
+            success();
+          } else if (check === false) {
+            warning();
+          }
         }
         setSelected("");
       }
     }
   }
 
-  // read data then select 
+  // read data then select
   function selectTable(table) {
     let tempData = [];
     if (table !== "") {
-      if (table === "close_post") {
+      if (table === "close_post" || table === "close_post_comment") {
         onValue(ref(db, table), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
@@ -107,15 +171,6 @@ function Insertdata() {
         });
       } else if (table === "color" || table === "place") {
         onValue(ref(db, "detail/" + table), (snapshot) => {
-          snapshot.forEach((childsnapshot) => {
-            let t = childsnapshot.val();
-            tempData.push(t);
-          });
-          setAddData([...tempData]);
-          setTempSelectTable([...tempData]);
-        });
-      } else if (table === "find" || table === "sell") {
-        onValue(ref(db, "type/" + table), (snapshot) => {
           snapshot.forEach((childsnapshot) => {
             let t = childsnapshot.val();
             tempData.push(t);
@@ -140,12 +195,12 @@ function Insertdata() {
   function clickDeleteText(index) {
     let data = addData;
     let position = index;
-    for(let i=position; i<data.length-1;i++){
-      data[i] = data[i+1];
+    for (let i = position; i < data.length - 1; i++) {
+      data[i] = data[i + 1];
     }
     data.pop();
     setAddData(data);
-    if (selected === "close_post") {
+    if (selected === "close_post" || selected === "close_post_comment") {
       set(ref(db, selected), {
         ...addData,
       });
@@ -153,27 +208,25 @@ function Insertdata() {
       set(ref(db, "detail/" + selected), {
         ...addData,
       });
-    } else if (selected === "find" || selected === "sell") {
-      set(ref(db, "type/" + selected), {
-        ...addData,
-      });
     } else {
       set(ref(db, "detail/category/" + selected), {
         ...addData,
       });
+      
     }
+    deletesuccess();
     setSelected("");
+  }
+
+  function refresh() {
+    window.location.reload(true);
   }
 
   useEffect(() => {}, []);
 
   const forMap = (tag, index) => {
     return (
-      <p
-        key={tag}
-        id={index}
-        className="boxText"
-      >
+      <p key={tag} id={index} className="boxText">
         {tag}
         <span
           className="delete"
@@ -212,6 +265,7 @@ function Insertdata() {
           }}
           options={[
             { value: "close_post", label: "ปิดโพสต์" },
+            { value: "close_post_comment", label: "ปิดโพสต์จากคอมเมนต์" },
             { value: "acessories", label: "อุปกรณ์เสริม" },
             { value: "apartment_condo", label: "หอพัก/คอนโด/ที่อยู่อาศัย" },
             { value: "bag_wallet", label: "กระเป๋า" },
@@ -227,8 +281,6 @@ function Insertdata() {
             { value: "watch", label: "นาฬิกา" },
             { value: "color", label: "สี" },
             { value: "place", label: "สถานที่" },
-            { value: "find", label: "ตามหา" },
-            { value: "sell", label: "ซื้อ-ขาย" },
           ]}
         />
       </div>
@@ -252,11 +304,26 @@ function Insertdata() {
         <Button type="primary" onClick={addtofirebase}>
           เพิ่มข้อมูล
         </Button>
+        &nbsp;
+        <div className="refresh" onClick={refresh}>
+          <HiOutlineRefresh />
+        </div>
       </div>
       {(error === "undefine" || error === "inputError") && (
         <p className="text-error">กรุณากรอกข้อมูล</p>
       )}
-      {contextHolder}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       {showDataSelect()}
     </div>
   );

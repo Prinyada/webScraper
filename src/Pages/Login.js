@@ -34,10 +34,12 @@ function Login() {
             setError("usernameError")
         }
     }
-    else{ // กรอกไม่ครบหรือไม่ได้กรอกเลย
+    else if(usernameInput === ''  || passwordInput === ''){ // กรอกไม่ครบหรือไม่ได้กรอกเลย
         setError("undefine")
     }
   }
+
+
   useEffect(() => {
     onValue(ref(db, "user"), (snapshot) => {
       let userDb = snapshot.val().username;
@@ -50,12 +52,13 @@ function Login() {
   return (
     <div className="login-container">
       <div className="login-content">
-        <h1 className="text-login">Login&nbsp;<FiLogIn/></h1>
-        <input className="input-login" type="text" placeholder="username" onChange={e => setUsernameInput(e.target.value)}/>
-        { (error === "undefine" || error === "usernameError") && <p className="text-error">username error</p>}
-        <input className="input-login" type="password" placeholder="password" onChange={e => setPasswordInput(e.target.value)}/>
-        { (error === "undefine" || error === "passwordError") && <p className="text-error">password error</p>}
-        <div className="login-btn" onClick={checkLogin}>Login</div>
+        <h1 className="text-login">เข้าสู่ระบบ&nbsp;<FiLogIn/></h1>
+        <input className="input-login" type="text" placeholder="ชื่อผู้ใช้" onChange={e => setUsernameInput(e.target.value)}/>
+        { (error === "usernameError") && <p className="text-error">ชื่อผู้ดูแลผิด</p>}
+        <input className="input-login" type="password" placeholder="รหัสผ่าน" onChange={e => setPasswordInput(e.target.value)}/>
+        { (error === "passwordError") && <p className="text-error">รหัสผ่านผิด</p>}
+        { (error === "undefine") && <p className="text-error">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน</p>}
+        <div className="login-btn" onClick={checkLogin}>เข้าสู่ระบบ</div>
       </div>
     </div>
   );

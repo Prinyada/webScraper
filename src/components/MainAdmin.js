@@ -21,77 +21,83 @@ function MainAdmin() {
   const [sell, setSell] = useState([]);
   const [select, setSelect] = useState(false);
 
-  function newDataThenSelect(value) {
-    let sizeArray = day.length;
-    let newFind = [];
-    let newSell = [];
-    let newDate = [];
-    let firstIndex;
-    let count;
-    let lastIndex;
-    let tempFind = 0;
-    let tempSell = 0;
-    let dayFirst;
-    let dayLast;
-    if (value === "all") {
-      setSelect(false);
-      onValue(ref(db, "report"), (snapshot) => {
-        let d = [];
-        let f = [];
-        let s = [];
-        snapshot.forEach((childSnapshot) => {
-          let day = childSnapshot.key;
-          let find = childSnapshot.val().find;
-          let sell = childSnapshot.val().sell;
-          d.push(day);
-          f.push(find);
-          s.push(sell);
-        });
-        setDay([...d]);
-        setFind([...f]);
-        setSell([...s]);
+  function past7days(){
+    onValue(ref(db, "report"), (snapshot) => {
+      let d = [];
+      let f = [];
+      let s = [];
+      snapshot.forEach((childSnapshot) => {
+        let day = childSnapshot.key;
+        let find = childSnapshot.val().find;
+        let sell = childSnapshot.val().sell;
+        d.push(day);
+        f.push(find);
+        s.push(sell);
       });
-    } else if (value === "week") {
-      setSelect(true);
-      firstIndex = 0;
-      count = 7;
-      lastIndex = firstIndex + count;
-      let find7Day;
-      let sell7Day;
-      let tempSize = sizeArray;
-      while (tempSize > 0) {
-        find7Day = find.slice(firstIndex, lastIndex);
-        sell7Day = sell.slice(firstIndex, lastIndex);
-        dayFirst = new Date(day.slice(firstIndex, firstIndex + 1));
-        dayLast = new Date(day.slice(lastIndex - 1, lastIndex));
-        tempFind = 0;
-        tempSell = 0;
-        for (let i = 0; i < count; i++) {
-          if (find7Day[i] !== undefined) {
-            tempFind = tempFind + find7Day[i];
-            tempSell = tempSell + sell7Day[i];
-          }
-        }
-        let dayOfWeek = `${dayFirst.getDate()}/${dayFirst.getMonth() + 1}/${
-          dayFirst.getFullYear() + 543
-        }-${dayLast.getDate()}/${dayLast.getMonth() + 1}/${
-          dayLast.getFullYear() + 543
-        }`;
-        newFind.push(tempFind);
-        newSell.push(tempSell);
-        newDate.push(dayOfWeek);
-        firstIndex = lastIndex;
-        lastIndex = firstIndex + count;
-        if (lastIndex > sizeArray) {
-          let tempCount = sizeArray % count;
-          lastIndex = firstIndex + tempCount;
-        }
-        tempSize = tempSize - count;
-      }
-      setDay(newDate);
-      setFind(newFind);
-      setSell(newSell);
+      let new7Day = d.slice(-7);
+      let new7Find = f.slice(-7);
+      let new7Sell = s.slice(-7);
+      setDay([...new7Day]);
+      setFind([...new7Find]);
+      setSell([...new7Sell]);
+    });
+  }
+
+  function past15days(){
+    onValue(ref(db, "report"), (snapshot) => {
+      let d = [];
+      let f = [];
+      let s = [];
+      snapshot.forEach((childSnapshot) => {
+        let day = childSnapshot.key;
+        let find = childSnapshot.val().find;
+        let sell = childSnapshot.val().sell;
+        d.push(day);
+        f.push(find);
+        s.push(sell);
+      });
+      let new15Day = d.slice(-15);
+      let new15Find = f.slice(-15);
+      let new15Sell = s.slice(-15);
+      setDay([...new15Day]);
+      setFind([...new15Find]);
+      setSell([...new15Sell]);
+    });
+  }
+
+  function past30days(){
+    onValue(ref(db, "report"), (snapshot) => {
+      let d = [];
+      let f = [];
+      let s = [];
+      snapshot.forEach((childSnapshot) => {
+        let day = childSnapshot.key;
+        let find = childSnapshot.val().find;
+        let sell = childSnapshot.val().sell;
+        d.push(day);
+        f.push(find);
+        s.push(sell);
+      });
+      let new30Day = d.slice(-30);
+      let new30Find = f.slice(-30);
+      let new30Sell = s.slice(-30);
+      setDay([...new30Day]);
+      setFind([...new30Find]);
+      setSell([...new30Sell]);
+    });
+  }
+
+  function newDataThenSelect(value) {
+    if(value === "seven"){
+      past7days();
     }
+    else if(value === "fifteen"){
+      past15days();
+    }
+    else if(value === "thirty"){
+      past30days();
+    }
+
   }
 
   const data = {
@@ -196,43 +202,41 @@ function MainAdmin() {
         f.push(find);
         s.push(sell);
       });
-      setDay([...d]);
-      setFind([...f]);
-      setSell([...s]);
+      let new7Day = d.slice(-7);
+      let new7Find = f.slice(-7);
+      let new7Sell = s.slice(-7);
+      setDay([...new7Day]);
+      setFind([...new7Find]);
+      setSell([...new7Sell]);
     });
   }, []);
 
+  
   return (
     <div className="main-admin-container">
       <div className="chart-content">
         <div className="header-chart">
           <p className="header-chart-text">รายงานผลการค้นหา</p>
           <Select
-            defaultValue="ทั้งหมด"
+            defaultValue="ย้อนหลัง 7 วัน"
             className="select-table-main"
             onChange={(value) => {
               newDataThenSelect(value);
             }}
             options={[
-              { value: "all", label: "ทั้งหมด" },
-              { value: "week", label: "รายสัปดาห์" },
+              { value: "seven", label: "ย้อนหลัง 7 วัน" },
+              { value: "fifteen", label: "ย้อนหลัง 15 วัน" },
+              { value: "thirty", label: "ย้อนหลัง 30 วัน" },
             ]}
           />
         </div>
-        {select === false && (
+        <Bar className="bar-chart" data={data} options={options}></Bar>
+        {/* {select === false && (
           <Bar className="bar-chart" data={data} options={options}></Bar>
         )}
         {select === true && (
           <Bar className="bar-chart" data={dataSelect} options={options}></Bar>
-        )}
-      </div>
-      <div className="chart-content-2">
-        <div className="chart-content-left">
-          <p className="text-result">ประกาศของหาย ณ ปัจจุบัน</p>
-        </div>
-        <div className="chart-content-right">
-        <p className="text-result">ประกาศซื้อ-ขาย ณ ปัจจุบัน</p>
-        </div>
+        )} */}
       </div>
     </div>
   );

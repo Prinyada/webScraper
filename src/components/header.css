@@ -90,7 +90,7 @@
     border: none;
     background-color: var(--pastelblue);
 }
-
+/* ------------ responsive ------------------- */
 @media screen and (max-width: 480px) {
     .mobile-menu {
         display: block;

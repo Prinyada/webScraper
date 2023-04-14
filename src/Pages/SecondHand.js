@@ -15,7 +15,6 @@ function SecondHand(props) {
   console.log("this data -> ", dataArray);
 
   const [searchText, setSearchText] = useState("");
-  const [status, setStatus] = useState(0);
   const [filterText, setFilterText] = useState("");
   const [sortText, setSortText] = useState("");
 

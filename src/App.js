@@ -10,7 +10,7 @@ import Header from "./components/header";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
 import { initialState, reducer } from "./reducer/UseReducer";
-import './App.css';
+import "./App.css";
 
 export const UserContext = createContext();
 
@@ -26,39 +26,34 @@ function App() {
   const [dataLostItems, setDatadataLostItems] = useState([]);
   const [dataSecondHand, setdataSecondHand] = useState([]);
 
-  const [ sizeLost, setSizeLost ] = useState(0);
-  const [ sizeSecond, setSizeSecond ] = useState(0);
+  const [sizeLost, setSizeLost] = useState(0);
+  const [sizeSecond, setSizeSecond] = useState(0);
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function Data() {
-    useEffect(() => {
-      onValue(ref(db, "scraper"), (snapshot) => {
-        let tempArrayLost = [];
-        let tempArraySecond = [];
-        snapshot.forEach((childSnapshot) => {
-          let year = childSnapshot.key;
-          childSnapshot.forEach((monthOfYear) => {
-            let month = monthOfYear.key;
-            monthOfYear.forEach((dayOfMonth) => {
-              let day = dayOfMonth.key;
-              let detailPost = dayOfMonth.val();
-              if (detailPost.post_type === "ประกาศของหาย") {
-                tempArrayLost.push(new Detail(year, month, day, detailPost));
-              } else {
-                tempArraySecond.push(new Detail(year, month, day, detailPost));
-              }
-            });
+  useEffect(() => {
+    onValue(ref(db, "scraper"), (snapshot) => {
+      let tempArrayLost = [];
+      let tempArraySecond = [];
+      snapshot.forEach((childSnapshot) => {
+        let year = childSnapshot.key;
+        childSnapshot.forEach((monthOfYear) => {
+          let month = monthOfYear.key;
+          monthOfYear.forEach((dayOfMonth) => {
+            let day = dayOfMonth.key;
+            let detailPost = dayOfMonth.val();
+            if (detailPost.post_type === "ประกาศของหาย") {
+              tempArrayLost.push(new Detail(year, month, day, detailPost));
+            } else {
+              tempArraySecond.push(new Detail(year, month, day, detailPost));
+            }
           });
         });
-        setDatadataLostItems([...tempArrayLost]);
-        setdataSecondHand([...tempArraySecond]);
       });
-    
-    }, []);
-    
-  }
-  Data();
+      setDatadataLostItems([...tempArrayLost]);
+      setdataSecondHand([...tempArraySecond]);
+    });
+  }, []);
 
   return (
     <>
@@ -77,7 +72,7 @@ function App() {
             element={<SecondHand dataSecond={dataSecondHand} />}
           />
           <Route exact path="/login" element={<Login />} />
-          <Route path="/admin/*" element={<Admin/>} />
+          <Route path="/admin/*" element={<Admin />} />
         </Routes>
       </UserContext.Provider>
     </>

@@ -212,7 +212,6 @@ function Insertdata() {
       set(ref(db, "detail/category/" + selected), {
         ...addData,
       });
-      
     }
     deletesuccess();
     setSelected("");

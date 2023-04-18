@@ -1,18 +1,37 @@
 import React, { useContext, useEffect } from "react";
 import "./Admin.css";
 import { UserContext } from "../App";
-import RouteAdmin from '../router/RouteAdmin'
+import { Routes, Route } from "react-router-dom";
+import Editpassword from "../components/Editpassword";
+import InsertAndDelete from "../components/Insertdata";
+import MainAdmin from "../components/MainAdmin";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
 
 function Admin() {
+  const { auth, setAuth } = useContext(AuthContext);
+  console.log("this user -> ",auth);
   const { state, dispatch } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch({ type: "ADMIN", payload: true });
+    if(auth === null){
+      navigate("/login");
+    }
+    else{
+      console.log('useffect Admin');
+      dispatch({ type: "ADMIN", payload: true });
+    }
   }, []);
 
   return (
     <div className="admin-container">
-      <RouteAdmin />
+      <Routes>
+        <Route path="main" element={<MainAdmin />} />
+        <Route path="editpassword" element={<Editpassword />} />
+        <Route path="insertdata" element={<InsertAndDelete />} />
+      </Routes>
     </div>
   );
 }

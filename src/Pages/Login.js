@@ -3,42 +3,54 @@ import "./Login.css";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../App";
+import { AuthContext, UserContext } from "../App";
 import { FiLogIn } from "react-icons/fi";
+import Editpassword from "../components/Editpassword";
+import Insertdata from "../components/Insertdata";
+import MainAdmin from "../components/MainAdmin";
+import Admin from "./Admin";
 
 function Login() {
+  const { auth, setAuth } = useContext(AuthContext);
+
   const { state, dispatch } = useContext(UserContext);
 
   const [usernameDb, setUsernameDb] = useState("");
   const [passwordDb, setPasswordDb] = useState("");
 
-  const [ usernameInput, setUsernameInput ] = useState("");
-  const [ passwordInput, setPasswordInput ] = useState("");
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
 
-  const [ error, setError ] = useState("")
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  function checkLogin() {
-    if(usernameInput !== ''  && passwordInput !== ''){ // ต้องกรอกทั้ง 2 ช่อง
-        if(usernameInput === usernameDb){ // username ถูก
-            if(passwordInput === passwordDb){ // username ถูก | password ถูก
-                dispatch({type:"ADMIN", payload: true})
-                navigate("/admin/main");
-            }
-            else{ // username ถูก | password ผิด
-                setError("passwordError")
-            }
+  function checkLogin(event) {
+    event.preventDefault();
+    setAuth({usernameDb});
+    console.log("this auth -> ",auth);
+    if (usernameInput !== "" && passwordInput !== "") {
+      // ต้องกรอกทั้ง 2 ช่อง
+      if (usernameInput === usernameDb) {
+        // username ถูก
+        if (passwordInput === passwordDb) {
+          // username ถูก | password ถูก
+          
+          dispatch({ type: "ADMIN", payload: true });
+          navigate("/admin/main");
+        } else {
+          // username ถูก | password ผิด
+          setError("passwordError");
         }
-        else{ // username ผิด
-            setError("usernameError")
-        }
-    }
-    else if(usernameInput === ''  || passwordInput === ''){ // กรอกไม่ครบหรือไม่ได้กรอกเลย
-        setError("undefine")
+      } else {
+        // username ผิด
+        setError("usernameError");
+      }
+    } else if (usernameInput === "" || passwordInput === "") {
+      // กรอกไม่ครบหรือไม่ได้กรอกเลย
+      setError("undefine");
     }
   }
-
 
   useEffect(() => {
     onValue(ref(db, "user"), (snapshot) => {
@@ -47,18 +59,43 @@ function Login() {
       setUsernameDb(userDb);
       setPasswordDb(passDb.toString());
     });
+    setAuth(usernameDb);
+    console.log("this auth -> ",auth);
   }, []);
 
   return (
     <div className="login-container">
       <div className="login-content">
-        <h1 className="text-login">เข้าสู่ระบบ&nbsp;<FiLogIn/></h1>
-        <input className="input-login" type="text" placeholder="ชื่อผู้ใช้" onChange={e => setUsernameInput(e.target.value)}/>
-        { (error === "usernameError") && <p className="text-error">ชื่อผู้ดูแลผิด</p>}
-        <input className="input-login" type="password" placeholder="รหัสผ่าน" onChange={e => setPasswordInput(e.target.value)}/>
-        { (error === "passwordError") && <p className="text-error">รหัสผ่านผิด</p>}
-        { (error === "undefine") && <p className="text-error">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน</p>}
-        <div className="login-btn" onClick={checkLogin}>เข้าสู่ระบบ</div>
+        <form className="login-content" onSubmit={checkLogin}>
+          <h1 className="text-login">
+            เข้าสู่ระบบ&nbsp;
+            <FiLogIn />
+          </h1>
+          <input
+            className="input-login"
+            type="text"
+            placeholder="ชื่อผู้ดูแล"
+            onChange={(e) => setUsernameInput(e.target.value)}
+          />
+          {error === "usernameError" && (
+            <p className="text-error">ชื่อผู้ดูแลผิด</p>
+          )}
+          <input
+            className="input-login"
+            type="password"
+            placeholder="รหัสผ่าน"
+            onChange={(e) => setPasswordInput(e.target.value)}
+          />
+          {error === "passwordError" && (
+            <p className="text-error">รหัสผ่านผิด</p>
+          )}
+          {error === "undefine" && (
+            <p className="text-error">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน</p>
+          )}
+          <button className="login-btn" type="submit">
+            เข้าสู่ระบบ
+          </button>
+        </form>
       </div>
     </div>
   );

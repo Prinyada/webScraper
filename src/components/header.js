@@ -5,9 +5,11 @@ import { MdAdminPanelSettings, MdHome } from "react-icons/md";
 import { UserContext } from "../App";
 import mainLogo from "../logo.png";
 import { FiMenu, FiX } from "react-icons/fi";
+import { AuthContext } from "../App";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   let activeLink = "button-link active";
   let normalLink = "button-link";
@@ -64,6 +66,7 @@ function Header() {
                     onClick={() => {
                       dispatch({ type: "ADMIN", payload: false });
                       closeMobileMenu();
+                      setAuth(null);
                     }}
                   >
                     ออกจากระบบ

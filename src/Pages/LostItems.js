@@ -22,8 +22,6 @@ function LostItems(props) {
   let size = dataArray.length;
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPage] = useState(8);
-  // const [lastPostIndex, setLastPostIndex] = useState(currentPage * postsPerPage);
-  // const [firstPostIndex, setFirstPostIndex] = useState(lastPostIndex - postsPerPage);
   let lastPostIndex = currentPage * postsPerPage;
   let firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
@@ -108,7 +106,7 @@ function LostItems(props) {
         <div className="lost-search-left">
           <Input
             className="searchText"
-            placeholder="พิมพ์คำที่ต้องการค้นหา"
+            placeholder="สถานที่/ลักษณะ"
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
@@ -116,7 +114,7 @@ function LostItems(props) {
         </div>
         <div className="lost-filtter-right">
           <Select
-            defaultValue="ทั้งหมด"
+            defaultValue="เลือกประเภท"
             className="select-type"
             onChange={(value) => {
               setFilterText(value);

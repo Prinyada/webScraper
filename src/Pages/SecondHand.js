@@ -107,7 +107,7 @@ function SecondHand(props) {
         <div className="second-search-left">
           <Input
             className="searchText"
-            placeholder="พิมพ์คำที่ต้องการค้นหา"
+            placeholder="สถานที่/ลักษณะ"
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
@@ -115,7 +115,7 @@ function SecondHand(props) {
         </div>
         <div className="second-filtter-right">
           <Select
-            defaultValue="ทั้งหมด"
+            defaultValue="เลือกประเภท"
             className="select-type"
             onChange={(value) => {
               setFilterText(value);

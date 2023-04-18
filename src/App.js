@@ -14,6 +14,8 @@ import "./App.css";
 
 export const UserContext = createContext();
 
+const AuthContext = React.createContext();
+
 function App() {
   class Detail {
     constructor(year, month, day, detailPost) {
@@ -26,10 +28,8 @@ function App() {
   const [dataLostItems, setDatadataLostItems] = useState([]);
   const [dataSecondHand, setdataSecondHand] = useState([]);
 
-  const [sizeLost, setSizeLost] = useState(0);
-  const [sizeSecond, setSizeSecond] = useState(0);
-
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [ auth, setAuth ] = useState(null);
 
   useEffect(() => {
     onValue(ref(db, "scraper"), (snapshot) => {
@@ -57,6 +57,7 @@ function App() {
 
   return (
     <>
+    <AuthContext.Provider value={{ auth, setAuth }}>
       <UserContext.Provider value={{ state, dispatch }}>
         <Header />
         <Routes>
@@ -75,8 +76,11 @@ function App() {
           <Route path="/admin/*" element={<Admin />} />
         </Routes>
       </UserContext.Provider>
+    </AuthContext.Provider>
+
     </>
   );
 }
 
+export { AuthContext };
 export default App;

@@ -12,8 +12,6 @@ function SecondHand(props) {
     dataArray.push(data);
   });
 
-  console.log("this data -> ", dataArray);
-
   const [searchText, setSearchText] = useState("");
   const [filterText, setFilterText] = useState("");
   const [sortText, setSortText] = useState("");
@@ -25,6 +23,9 @@ function SecondHand(props) {
   let lastPostIndex = currentPage * postsPerPage;
   let firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+
+  let stateFilter = false;
+  let stateSearch = false;
 
   function search() {
     let searchData = dataArray.filter((d) => {
@@ -44,6 +45,7 @@ function SecondHand(props) {
       }
     }
     currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+    stateSearch = true;
     return true;
   }
 
@@ -63,10 +65,40 @@ function SecondHand(props) {
       }
     }
     currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+    stateFilter = true;
     return true;
   }
 
   function sortDate() {
+    if (stateFilter === true || stateSearch === true) {
+      if (sortText === "oldToNew") {
+        const sortByDate = (currentPosts) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(a.detailPost.date_time).getTime() -
+              new Date(b.detailPost.date_time).getTime()
+            );
+          };
+          currentPosts.sort(sorter);
+        };
+        sortByDate(currentPosts);
+        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        return true;
+      } else if (sortText === "newToOld") {
+        const sortByDate = (currentPosts) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(b.detailPost.date_time).getTime() -
+              new Date(a.detailPost.date_time).getTime()
+            );
+          };
+          currentPosts.sort(sorter);
+        };
+        sortByDate(currentPosts);
+        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        return true;
+      }
+    }
     if (sortText === "oldToNew") {
       const sortByDate = (dataArray) => {
         const sorter = (a, b) => {
@@ -149,13 +181,28 @@ function SecondHand(props) {
         </div>
       </div>
       <div className="second-content">
-        {searchText !== "" ? (
-          search() && (
-            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+      {searchText !== "" ? (
+          sortText !== "default" && sortText !== "" ? (
+            search() &&
+            sortDate() &&
+            (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            )
+          ) : (
+            search() && (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            )
           )
         ) : filterText !== "all" && filterText !== "" ? (
-          filter() && (
-            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+          sortText !== "default" && sortText !== "" ? (
+            filter() &&
+            sortDate() && (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            )
+          ) : (
+            filter() && (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            )
           )
         ) : sortText !== "default" && sortText !== "" ? (
           sortDate() && (

@@ -18,6 +18,9 @@ function LostItems(props) {
   const [filterText, setFilterText] = useState("");
   const [sortText, setSortText] = useState("");
 
+  let stateFilter = false;
+  let stateSearch = false;
+
   //---------- Pagination --------------------//
   let size = dataArray.length;
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,9 +38,9 @@ function LostItems(props) {
         return d;
       }
     });
-  
+
     size = searchData.length;
-    if(size !== 0){
+    if (size !== 0) {
       if (searchData[firstPostIndex] === undefined) {
         setCurrentPage(1);
         lastPostIndex = currentPage * postsPerPage;
@@ -45,6 +48,7 @@ function LostItems(props) {
       }
     }
     currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+    stateSearch = true;
     return true;
   }
 
@@ -55,7 +59,7 @@ function LostItems(props) {
       }
     });
     size = filterData.length;
-    if(size !== 0){
+    if (size !== 0) {
       if (filterData[firstPostIndex] === undefined) {
         setCurrentPage(1);
         lastPostIndex = currentPage * postsPerPage;
@@ -63,13 +67,40 @@ function LostItems(props) {
       }
     }
     currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+    stateFilter = true;
     return true;
   }
 
-  // console.log("this filter -> ",filter());
-
   function sortDate() {
-    console.log("sort ready!");
+    if (stateFilter === true || stateSearch === true) {
+      if (sortText === "oldToNew") {
+        const sortByDate = (currentPosts) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(a.detailPost.date_time).getTime() -
+              new Date(b.detailPost.date_time).getTime()
+            );
+          };
+          currentPosts.sort(sorter);
+        };
+        sortByDate(currentPosts);
+        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        return true;
+      } else if (sortText === "newToOld") {
+        const sortByDate = (currentPosts) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(b.detailPost.date_time).getTime() -
+              new Date(a.detailPost.date_time).getTime()
+            );
+          };
+          currentPosts.sort(sorter);
+        };
+        sortByDate(currentPosts);
+        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        return true;
+      }
+    }
     if (sortText === "oldToNew") {
       const sortByDate = (dataArray) => {
         const sorter = (a, b) => {
@@ -151,9 +182,28 @@ function LostItems(props) {
       </div>
       <div className="lost-content">
         {searchText !== "" ? (
-          search() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+          sortText !== "default" && sortText !== "" ? (
+            search() &&
+            sortDate() &&
+            (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            )
+          ) : (
+            search() && (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            )
+          )
         ) : filterText !== "all" && filterText !== "" ? (
-          filter() && <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+          sortText !== "default" && sortText !== "" ? (
+            filter() &&
+            sortDate() && (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            )
+          ) : (
+            filter() && (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            )
+          )
         ) : sortText !== "default" && sortText !== "" ? (
           sortDate() && (
             <ShowDataLost currentPosts={currentPosts}></ShowDataLost>

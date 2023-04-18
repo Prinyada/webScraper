@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Insertdata.css";
 import { Select, Input, Button, message } from "antd";
 import { db } from "../realtimeData/firebase-config";
@@ -6,6 +6,7 @@ import { ref, onValue, set } from "firebase/database";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext, UserContext } from "../App";
 
 function Insertdata() {
   const [text, setText] = useState("");
@@ -15,6 +16,7 @@ function Insertdata() {
   const [state, setState] = useState(true);
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
+
 
   function showTableSelect() {
     let temp;
@@ -218,10 +220,11 @@ function Insertdata() {
   }
 
   function refresh() {
-    window.location.reload(true);
+    window.location.reload(true)
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+  }, []);
 
   const forMap = (tag, index) => {
     return (

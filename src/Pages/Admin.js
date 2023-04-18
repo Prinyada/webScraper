@@ -10,28 +10,28 @@ import { AuthContext } from "../App";
 
 function Admin() {
   const { auth, setAuth } = useContext(AuthContext);
-  console.log("this user -> ",auth);
+  const { setSession } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(auth === null){
+
+    if (auth === null && setSession !== true) {
       navigate("/login");
-    }
-    else{
-      console.log('useffect Admin');
+    } else {
       dispatch({ type: "ADMIN", payload: true });
+      setAuth(auth);
     }
   }, []);
 
   return (
     <div className="admin-container">
-      <Routes>
-        <Route path="main" element={<MainAdmin />} />
-        <Route path="editpassword" element={<Editpassword />} />
-        <Route path="insertdata" element={<InsertAndDelete />} />
-      </Routes>
+        <Routes>
+          <Route path="main" element={<MainAdmin />} />
+          <Route path="editpassword" element={<Editpassword />} />
+          <Route path="insertdata" element={<InsertAndDelete />} />
+        </Routes>
     </div>
   );
 }

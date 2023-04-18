@@ -9,7 +9,7 @@ import { AuthContext } from "../App";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   let activeLink = "button-link active";
   let normalLink = "button-link";

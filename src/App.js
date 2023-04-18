@@ -57,7 +57,7 @@ function App() {
 
   return (
     <>
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ setAuth }}>
       <UserContext.Provider value={{ state, dispatch }}>
         <Header />
         <Routes>

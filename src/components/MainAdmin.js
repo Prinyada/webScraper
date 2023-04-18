@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./MainAdmin.css";
 import {
   Chart as ChartJS,
@@ -19,7 +19,6 @@ function MainAdmin() {
   const [day, setDay] = useState([]);
   const [find, setFind] = useState([]);
   const [sell, setSell] = useState([]);
-  const [select, setSelect] = useState(false);
 
   function past7days(){
     onValue(ref(db, "report"), (snapshot) => {
@@ -231,12 +230,6 @@ function MainAdmin() {
           />
         </div>
         <Bar className="bar-chart" data={data} options={options}></Bar>
-        {/* {select === false && (
-          <Bar className="bar-chart" data={data} options={options}></Bar>
-        )}
-        {select === true && (
-          <Bar className="bar-chart" data={dataSelect} options={options}></Bar>
-        )} */}
       </div>
     </div>
   );

@@ -66,7 +66,10 @@ function LostItems(props) {
     return true;
   }
 
+  // console.log("this filter -> ",filter());
+
   function sortDate() {
+    console.log("sort ready!");
     if (sortText === "oldToNew") {
       const sortByDate = (dataArray) => {
         const sorter = (a, b) => {

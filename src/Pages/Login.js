@@ -5,13 +5,11 @@ import { ref, onValue } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import { AuthContext, UserContext } from "../App";
 import { FiLogIn } from "react-icons/fi";
-import Editpassword from "../components/Editpassword";
-import Insertdata from "../components/Insertdata";
-import MainAdmin from "../components/MainAdmin";
-import Admin from "./Admin";
 
 function Login() {
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
+
+  const { setSession } = useContext(AuthContext);
 
   const { state, dispatch } = useContext(UserContext);
 
@@ -27,15 +25,14 @@ function Login() {
 
   function checkLogin(event) {
     event.preventDefault();
-    setAuth({usernameDb});
-    console.log("this auth -> ",auth);
+    
     if (usernameInput !== "" && passwordInput !== "") {
       // ต้องกรอกทั้ง 2 ช่อง
       if (usernameInput === usernameDb) {
         // username ถูก
         if (passwordInput === passwordDb) {
           // username ถูก | password ถูก
-          
+          setAuth({usernameDb});
           dispatch({ type: "ADMIN", payload: true });
           navigate("/admin/main");
         } else {
@@ -59,8 +56,6 @@ function Login() {
       setUsernameDb(userDb);
       setPasswordDb(passDb.toString());
     });
-    setAuth(usernameDb);
-    console.log("this auth -> ",auth);
   }, []);
 
   return (

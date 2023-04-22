@@ -47,15 +47,15 @@ function Editpassword() {
   }
 
   function editToDb() {
-    let oldP = parseInt(oldPass); // string
-    let passinDb = passdb; // number
-    let newP = parseInt(newPass); //number
-    let tempNewP = `${newPass}`; // "string"
-    let confirmP = confirmNewPass; // string
+    let oldP = oldPass; 
+    let passinDb = passdb; 
+    let newP = newPass; 
+    let confirmP = confirmNewPass;
 
-    const numberCheck = /^((?!(0))[0-9]{6})$/.test(tempNewP);
+    const numberCheck = /[0-9]{6}$/.test(newP);
+
     const pwdLenghtCheck = () => {
-      if (tempNewP.length === 6) {
+      if (newP.length === 6) {
         return true;
       } else {
         return false;
@@ -64,7 +64,7 @@ function Editpassword() {
 
     if (oldP === passinDb) {
       if (numberCheck && pwdLenghtCheck()) {
-        if (tempNewP === confirmP) {
+        if (newP === confirmP) {
           setErrorText("");
           update(ref(db, "user"), {
             password: newP,
@@ -133,7 +133,7 @@ function Editpassword() {
         <p className="text-error">รหัสผ่านใหม่กับยืนยันรหัสผ่านใหม่ไม่ตรงกัน</p>
       )}
       {errorText === "checkPass" && (
-        <p className="text-error">รหัสผ่านต้องเป็นตัวเลข, มีความยาว 6 ตัว, ห้ามขึ้นต้นด้วย 0</p>
+        <p className="text-error">รหัสผ่านต้องเป็นตัวเลข มีความยาว 6 ตัว</p>
       )}
       <div className="box-buttom">
         <Button

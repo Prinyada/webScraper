@@ -25,7 +25,6 @@ function Login() {
 
   function checkLogin(event) {
     event.preventDefault();
-    
     if (usernameInput !== "" && passwordInput !== "") {
       // ต้องกรอกทั้ง 2 ช่อง
       if (usernameInput === usernameDb) {
@@ -54,7 +53,7 @@ function Login() {
       let userDb = snapshot.val().username;
       let passDb = snapshot.val().password;
       setUsernameDb(userDb);
-      setPasswordDb(passDb.toString());
+      setPasswordDb(passDb);
     });
   }, []);
 

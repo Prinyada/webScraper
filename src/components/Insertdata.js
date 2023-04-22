@@ -6,7 +6,6 @@ import { ref, onValue, set } from "firebase/database";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthContext, UserContext } from "../App";
 
 function Insertdata() {
   const [text, setText] = useState("");

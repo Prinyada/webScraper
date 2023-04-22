@@ -10,13 +10,11 @@ import { AuthContext } from "../App";
 
 function Admin() {
   const { auth, setAuth } = useContext(AuthContext);
-  const { setSession } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("this auth admin -> ",auth);
     if (auth === undefined) {
       navigate("/login");
     } else {

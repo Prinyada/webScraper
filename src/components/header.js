@@ -6,21 +6,20 @@ import { UserContext } from "../App";
 import mainLogo from "../logo.png";
 import { FiMenu, FiX } from "react-icons/fi";
 import { AuthContext } from "../App";
-import { useNavigate } from "react-router-dom";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   let activeLink = "button-link active";
   let normalLink = "button-link";
 
   const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
+  const handleClick = () => {
+    setClick(!click)
+    setAuth(null)
+  };
   const closeMobileMenu = () => setClick(false);
-
-  const navigate = useNavigate();
-
 
   const RenderHeader = () => {
     if (state === true) {
@@ -70,7 +69,6 @@ function Header() {
                     onClick={() => {
                       dispatch({ type: "ADMIN", payload: false });
                       closeMobileMenu();
-                      setAuth(null);
                     }}
                   >
                     ออกจากระบบ

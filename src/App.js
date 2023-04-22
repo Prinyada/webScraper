@@ -32,7 +32,6 @@ function App() {
   const [ auth, setAuth ] = useState(null);
 
   useEffect(() => {
-    console.log("this auth app -> ",auth);
     onValue(ref(db, "scraper"), (snapshot) => {
       let tempArrayLost = [];
       let tempArraySecond = [];

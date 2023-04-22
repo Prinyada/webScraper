@@ -332,14 +332,19 @@ function SecondHand(props) {
             }}
             options={[
               { value: "all", label: "ทั้งหมด" },
+              { value: "acessories", label: "อุปกรณ์เสริม" },
               { value: "apartment_condo", label: "อพาร์ทเม้นท์/คอนโด" },
               { value: "bag_wallet", label: "กระเป๋า" },
-              { value: "card_ticket", label: "บัตร" },
+              { value: "card_ticket", label: "บัตร/ตั๋ว" },
               { value: "clothing", label: "เสื้อผ้า" },
-              { value: "key", label: "กุญแจ" },
-              { value: "notebook_pc", label: "โน๊ตบุ๊ค" },
+              { value: "decoration", label: "เครื่องประดับ" },
+              { value: "education", label: "การศึกษา" },
+              { value: "key", label: "กุญแจ/คีย์การ์ด" },
+              { value: "notebook_pc", label: "คอมพิวเตอร์" },
               { value: "pet", label: "สัตว์เลี้ยง" },
               { value: "phone", label: "โทรศัพท์" },
+              { value: "stuff", label: "ของใช้ภายในบ้าน" },
+              { value: "vehicle", label: "ยานพาหนะ" },
               { value: "watch", label: "นาฬิกา" },
             ]}
           />

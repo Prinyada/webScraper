@@ -7,9 +7,7 @@ import { AuthContext, UserContext } from "../App";
 import { FiLogIn } from "react-icons/fi";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
-
-  const { setSession } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   const { state, dispatch } = useContext(UserContext);
 
@@ -31,7 +29,6 @@ function Login() {
         // username ถูก
         if (passwordInput === passwordDb) {
           // username ถูก | password ถูก
-          console.log("username -> ",usernameDb);
           setAuth(usernameDb);
           navigate("/admin/main");
         } else {
@@ -49,6 +46,7 @@ function Login() {
   }
 
   useEffect(() => {
+    console.log("this auth -> ",auth);
     onValue(ref(db, "user"), (snapshot) => {
       let userDb = snapshot.val().username;
       let passDb = snapshot.val().password;

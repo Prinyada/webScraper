@@ -24,13 +24,36 @@ function SecondHand(props) {
   let firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
 
+  let filterData = [];
+  let searchData = [];
+
   let stateFilter = false;
   let stateSearch = false;
   let stateSort = false;
 
   function search() {
-    if(stateFilter === true || stateSort === true){
-      let searchData = currentPosts.filter((d) => {
+    if (stateFilter === true || stateSort === true) {
+      searchData = currentPosts.filter((d) => {
+        if (
+          d.detailPost.place.includes(searchText) ||
+          d.detailPost.describe.includes(searchText)
+        ) {
+          return d;
+        }
+      });
+      size = searchData.length;
+      if (size !== 0) {
+        if (searchData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+      stateSearch = true;
+      return true;
+    } else {
+      searchData = dataArray.filter((d) => {
         if (
           d.detailPost.place.includes(searchText) ||
           d.detailPost.describe.includes(searchText)
@@ -50,30 +73,28 @@ function SecondHand(props) {
       stateSearch = true;
       return true;
     }
-    let searchData = dataArray.filter((d) => {
-      if (
-        d.detailPost.place.includes(searchText) ||
-        d.detailPost.describe.includes(searchText)
-      ) {
-        return d;
-      }
-    });
-    size = searchData.length;
-    if (size !== 0) {
-      if (searchData[firstPostIndex] === undefined) {
-        setCurrentPage(1);
-        lastPostIndex = currentPage * postsPerPage;
-        firstPostIndex = lastPostIndex - postsPerPage;
-      }
-    }
-    currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
-    stateSearch = true;
-    return true;
   }
 
   function filter() {
-    if (stateSearch === true || stateSort === true){
-      let filterData = currentPosts.filter((d) => {
+    if (stateSearch === true || stateSort === true) {
+      filterData = currentPosts.filter((d) => {
+        if (d.detailPost.category.includes(filterText)) {
+          return d;
+        }
+      });
+      size = filterData.length;
+      if (size !== 0) {
+        if (filterData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+      stateFilter = true;
+      return true;
+    } else {
+      filterData = dataArray.filter((d) => {
         if (d.detailPost.category.includes(filterText)) {
           return d;
         }
@@ -90,84 +111,99 @@ function SecondHand(props) {
       stateFilter = true;
       return true;
     }
-    let filterData = dataArray.filter((d) => {
-      if (d.detailPost.category.includes(filterText)) {
-        return d;
-      }
-    });
-    size = filterData.length;
-    if (size !== 0) {
-      if (filterData[firstPostIndex] === undefined) {
-        setCurrentPage(1);
-        lastPostIndex = currentPage * postsPerPage;
-        firstPostIndex = lastPostIndex - postsPerPage;
-      }
-    }
-    currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
-    stateFilter = true;
-    return true;
   }
 
   function sortDate() {
-    if (stateFilter === true || stateSearch === true) {
+    if (stateFilter === true) {
       if (sortText === "oldToNew") {
-        const sortByDate = (currentPosts) => {
+        const sortByDate = (filterData) => {
           const sorter = (a, b) => {
             return (
               new Date(a.detailPost.date_time).getTime() -
               new Date(b.detailPost.date_time).getTime()
             );
           };
-          currentPosts.sort(sorter);
+          filterData.sort(sorter);
         };
-        sortByDate(currentPosts);
-        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        sortByDate(filterData);
+        currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
         stateSort = true;
         return true;
       } else if (sortText === "newToOld") {
-        const sortByDate = (currentPosts) => {
+        const sortByDate = (filterData) => {
           const sorter = (a, b) => {
             return (
               new Date(b.detailPost.date_time).getTime() -
               new Date(a.detailPost.date_time).getTime()
             );
           };
-          currentPosts.sort(sorter);
+          filterData.sort(sorter);
         };
-        sortByDate(currentPosts);
-        currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        sortByDate(filterData);
+        currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
         stateSort = true;
         return true;
       }
-    }
-    if (sortText === "oldToNew") {
-      const sortByDate = (dataArray) => {
-        const sorter = (a, b) => {
-          return (
-            new Date(a.detailPost.date_time).getTime() -
-            new Date(b.detailPost.date_time).getTime()
-          );
+    } else if (stateSearch === true) {
+      if (sortText === "oldToNew") {
+        const sortByDate = (searchData) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(a.detailPost.date_time).getTime() -
+              new Date(b.detailPost.date_time).getTime()
+            );
+          };
+          searchData.sort(sorter);
         };
-        dataArray.sort(sorter);
-      };
-      sortByDate(dataArray);
-      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
-      stateSort = true;
-      return true;
-    } else if (sortText === "newToOld") {
-      const sortByDate = (dataArray) => {
-        const sorter = (a, b) => {
-          return (
-            new Date(b.detailPost.date_time).getTime() -
-            new Date(a.detailPost.date_time).getTime()
-          );
+        sortByDate(searchData);
+        currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
+        return true;
+      } else if (sortText === "newToOld") {
+        const sortByDate = (searchData) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(b.detailPost.date_time).getTime() -
+              new Date(a.detailPost.date_time).getTime()
+            );
+          };
+          searchData.sort(sorter);
         };
-        dataArray.sort(sorter);
-      };
-      sortByDate(dataArray);
-      currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
-      stateSort = true;
-      return true;
+        sortByDate(searchData);
+        currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
+        return true;
+      }
+    } else {
+      if (sortText === "oldToNew") {
+        const sortByDate = (dataArray) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(a.detailPost.date_time).getTime() -
+              new Date(b.detailPost.date_time).getTime()
+            );
+          };
+          dataArray.sort(sorter);
+        };
+        sortByDate(dataArray);
+        currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
+        return true;
+      } else if (sortText === "newToOld") {
+        const sortByDate = (dataArray) => {
+          const sorter = (a, b) => {
+            return (
+              new Date(b.detailPost.date_time).getTime() -
+              new Date(a.detailPost.date_time).getTime()
+            );
+          };
+          dataArray.sort(sorter);
+        };
+        sortByDate(dataArray);
+        currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
+        return true;
+      }
     }
   }
 

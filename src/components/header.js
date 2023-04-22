@@ -6,6 +6,7 @@ import { UserContext } from "../App";
 import mainLogo from "../logo.png";
 import { FiMenu, FiX } from "react-icons/fi";
 import { AuthContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const { state, dispatch } = useContext(UserContext);
@@ -17,6 +18,9 @@ function Header() {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const navigate = useNavigate();
+
 
   const RenderHeader = () => {
     if (state === true) {
@@ -66,7 +70,7 @@ function Header() {
                     onClick={() => {
                       dispatch({ type: "ADMIN", payload: false });
                       closeMobileMenu();
-                      setAuth("");
+                      setAuth(null);
                     }}
                   >
                     ออกจากระบบ

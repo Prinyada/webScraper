@@ -6,6 +6,8 @@ import { Button, Input } from "antd";
 import { HiOutlineRefresh } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function Editpassword() {
   const [passdb, setPassDb] = useState();
@@ -15,10 +17,7 @@ function Editpassword() {
   const [confirmNewPass, setconfirmNewPass] = useState();
 
   const [errorText, setErrorText] = useState("");
-
-  function refresh() {
-    window.location.reload(true);
-  }
+  const navigate = useNavigate();
 
   function success() {
     toast.success("แก้ไขรหัสผ่านสำเร็จ กดรีเฟรช 1 ครั้ง", {
@@ -34,7 +33,7 @@ function Editpassword() {
   }
 
   function error() {
-    toast.error('กดรีเฟรช 1 ครั้ง แล้วกรอกใหม่', {
+    toast.error("กดรีเฟรช 1 ครั้ง แล้วกรอกใหม่", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -43,13 +42,16 @@ function Editpassword() {
       draggable: true,
       progress: undefined,
       theme: "colored",
-      });
+    });
+  }
+  function refresh() {
+    window.location.reload(true);
   }
 
   function editToDb() {
-    let oldP = oldPass; 
-    let passinDb = passdb; 
-    let newP = newPass; 
+    let oldP = oldPass;
+    let passinDb = passdb;
+    let newP = newPass;
     let confirmP = confirmNewPass;
 
     const numberCheck = /[0-9]{6}$/.test(newP);

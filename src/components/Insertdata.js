@@ -34,7 +34,9 @@ function Insertdata() {
       temp = "บัตร/ตั๋ว";
     } else if (selected === "clothing") {
       temp = "เครื่องแต่งกาย";
-    } else if (selected === "education") {
+    } else if (selected === "decoration") {
+      temp = "เครื่องประดับ";
+    }else if (selected === "education") {
       temp = "เกี่ยวกับการศึกษา";
     } else if (selected === "key") {
       temp = "กุญแจ";
@@ -220,10 +222,11 @@ function Insertdata() {
   }
 
   function refresh() {
-    window.location.reload(true)
+    window.location.reload(true);
   }
 
   useEffect(() => {
+    
   }, []);
 
   const forMap = (tag, index) => {
@@ -273,6 +276,7 @@ function Insertdata() {
             { value: "bag_wallet", label: "กระเป๋า" },
             { value: "card_ticket", label: "บัตร/ตั๋ว" },
             { value: "clothing", label: "เครื่องแต่งกาย" },
+            { value: "decoration", label: "เครื่องประดับ" },
             { value: "education", label: "เกี่ยวกับการศึกษา" },
             { value: "key", label: "กุญแจ/คีย์การ์ด" },
             { value: "notebook_pc", label: "คอมพิวเตอร์/โน๊ตบุ๊ค" },

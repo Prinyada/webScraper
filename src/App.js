@@ -29,7 +29,7 @@ function App() {
   const [dataSecondHand, setdataSecondHand] = useState([]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [ auth, setAuth ] = useState(null);
+  const [ auth, setAuth ] = useState("");
 
   useEffect(() => {
     onValue(ref(db, "scraper"), (snapshot) => {
@@ -57,7 +57,7 @@ function App() {
 
   return (
     <>
-    <AuthContext.Provider value={{ setAuth }}>
+    <AuthContext.Provider value={{ auth , setAuth }}>
       <UserContext.Provider value={{ state, dispatch }}>
         <Header />
         <Routes>

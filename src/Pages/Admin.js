@@ -10,18 +10,15 @@ import { AuthContext } from "../App";
 
 function Admin() {
   const { auth, setAuth } = useContext(AuthContext);
-  const { setSession } = useContext(AuthContext);
   const { state, dispatch } = useContext(UserContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    if (auth === null && setSession !== true) {
+    if (auth === "") {
       navigate("/login");
     } else {
       dispatch({ type: "ADMIN", payload: true });
-      setAuth(auth);
     }
   }, []);
 

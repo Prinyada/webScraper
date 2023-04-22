@@ -66,7 +66,7 @@ function Header() {
                     onClick={() => {
                       dispatch({ type: "ADMIN", payload: false });
                       closeMobileMenu();
-                      setAuth(null);
+                      setAuth("");
                     }}
                   >
                     ออกจากระบบ

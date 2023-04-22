@@ -7,9 +7,7 @@ import { AuthContext, UserContext } from "../App";
 import { FiLogIn } from "react-icons/fi";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
-
-  const { setSession } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   const { state, dispatch } = useContext(UserContext);
 
@@ -25,13 +23,14 @@ function Login() {
 
   function checkLogin(event) {
     event.preventDefault();
+    console.log();
     if (usernameInput !== "" && passwordInput !== "") {
       // ต้องกรอกทั้ง 2 ช่อง
       if (usernameInput === usernameDb) {
         // username ถูก
         if (passwordInput === passwordDb) {
           // username ถูก | password ถูก
-          setAuth({usernameDb});
+          setAuth(usernameDb);
           dispatch({ type: "ADMIN", payload: true });
           navigate("/admin/main");
         } else {

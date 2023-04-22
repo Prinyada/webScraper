@@ -18,8 +18,7 @@ function LostItems(props) {
   const [filterText, setFilterText] = useState("");
   const [sortText, setSortText] = useState("");
 
-  let stateFilter = false;
-  let stateSearch = false;
+  
 
   //---------- Pagination --------------------//
   let size = dataArray.length;
@@ -29,7 +28,32 @@ function LostItems(props) {
   let firstPostIndex = lastPostIndex - postsPerPage;
   let currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
 
+  let stateFilter = false;
+  let stateSearch = false;
+  let stateSort = false;
+
   function search() {
+    if(stateFilter === true || stateSort === true){
+      let searchData = currentPosts.filter((d) => {
+        if (
+          d.detailPost.place.includes(searchText) ||
+          d.detailPost.describe.includes(searchText)
+        ) {
+          return d;
+        }
+      });
+      size = searchData.length;
+      if (size !== 0) {
+        if (searchData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+      stateSearch = true;
+      return true;
+    }
     let searchData = dataArray.filter((d) => {
       if (
         d.detailPost.place.includes(searchText) ||
@@ -38,7 +62,6 @@ function LostItems(props) {
         return d;
       }
     });
-
     size = searchData.length;
     if (size !== 0) {
       if (searchData[firstPostIndex] === undefined) {
@@ -53,6 +76,24 @@ function LostItems(props) {
   }
 
   function filter() {
+    if (stateSearch === true || stateSort === true){
+      let filterData = currentPosts.filter((d) => {
+        if (d.detailPost.category.includes(filterText)) {
+          return d;
+        }
+      });
+      size = filterData.length;
+      if (size !== 0) {
+        if (filterData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+      stateFilter = true;
+      return true;
+    }
     let filterData = dataArray.filter((d) => {
       if (d.detailPost.category.includes(filterText)) {
         return d;
@@ -85,6 +126,7 @@ function LostItems(props) {
         };
         sortByDate(currentPosts);
         currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
         return true;
       } else if (sortText === "newToOld") {
         const sortByDate = (currentPosts) => {
@@ -98,6 +140,7 @@ function LostItems(props) {
         };
         sortByDate(currentPosts);
         currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
         return true;
       }
     }
@@ -113,6 +156,7 @@ function LostItems(props) {
       };
       sortByDate(dataArray);
       currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      stateSort = true;
       return true;
     } else if (sortText === "newToOld") {
       const sortByDate = (dataArray) => {
@@ -126,9 +170,110 @@ function LostItems(props) {
       };
       sortByDate(dataArray);
       currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      stateSort = true;
       return true;
     }
   }
+
+  function checkSelectandSearch() {
+    if (
+      searchText !== "" ||
+      (filterText !== "all" && filterText !== "") ||
+      (sortText !== "default" && sortText !== "")
+    ) {
+      if (searchText !== "") {
+        search();
+        if (filterText !== "all" && filterText !== "") {
+          filter();
+          if (sortText !== "default" && sortText !== "") {
+            sortDate();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else if (sortText !== "default" && sortText !== "") {
+          sortDate();
+          if (filterText !== "all" && filterText !== "") {
+            filter();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else {
+          return <ShowDataLost currentPosts={currentPosts}></ShowDataLost>;
+        }
+      } else if (filterText !== "all" && filterText !== "") {
+        filter();
+        if (searchText !== "") {
+          search();
+          if (sortText !== "default" && sortText !== "") {
+            sortDate();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else if (sortText !== "default" && sortText !== "") {
+          sortDate();
+          if (searchText !== "") {
+            search();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else {
+          return <ShowDataLost currentPosts={currentPosts}></ShowDataLost>;
+        }
+      } else if (sortText !== "default" && sortText !== "") {
+        sortDate();
+        if (filterText !== "all" && filterText !== "") {
+          filter();
+          if (searchText !== "") {
+            search();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else if (searchText !== "") {
+          search();
+          if (filterText !== "all" && filterText !== "") {
+            filter();
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          } else {
+            return (
+              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
+            );
+          }
+        } else {
+          return <ShowDataLost currentPosts={currentPosts}></ShowDataLost>;
+        }
+      }
+    } else {
+      return <ShowDataLost currentPosts={currentPosts}></ShowDataLost>;
+    }
+  }
+
   useEffect(() => {}, []);
 
   return (
@@ -181,36 +326,7 @@ function LostItems(props) {
         </div>
       </div>
       <div className="lost-content">
-        {searchText !== "" ? (
-          sortText !== "default" && sortText !== "" ? (
-            search() &&
-            sortDate() &&
-            (
-              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-            )
-          ) : (
-            search() && (
-              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-            )
-          )
-        ) : filterText !== "all" && filterText !== "" ? (
-          sortText !== "default" && sortText !== "" ? (
-            filter() &&
-            sortDate() && (
-              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-            )
-          ) : (
-            filter() && (
-              <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-            )
-          )
-        ) : sortText !== "default" && sortText !== "" ? (
-          sortDate() && (
-            <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-          )
-        ) : (
-          <ShowDataLost currentPosts={currentPosts}></ShowDataLost>
-        )}
+        {checkSelectandSearch()}
         {
           <Pagination
             totalPosts={size}

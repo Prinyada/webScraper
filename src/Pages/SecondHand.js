@@ -26,8 +26,30 @@ function SecondHand(props) {
 
   let stateFilter = false;
   let stateSearch = false;
+  let stateSort = false;
 
   function search() {
+    if(stateFilter === true || stateSort === true){
+      let searchData = currentPosts.filter((d) => {
+        if (
+          d.detailPost.place.includes(searchText) ||
+          d.detailPost.describe.includes(searchText)
+        ) {
+          return d;
+        }
+      });
+      size = searchData.length;
+      if (size !== 0) {
+        if (searchData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = searchData.slice(firstPostIndex, lastPostIndex);
+      stateSearch = true;
+      return true;
+    }
     let searchData = dataArray.filter((d) => {
       if (
         d.detailPost.place.includes(searchText) ||
@@ -50,7 +72,24 @@ function SecondHand(props) {
   }
 
   function filter() {
-    console.log("filtter text -> ", filterText);
+    if (stateSearch === true || stateSort === true){
+      let filterData = currentPosts.filter((d) => {
+        if (d.detailPost.category.includes(filterText)) {
+          return d;
+        }
+      });
+      size = filterData.length;
+      if (size !== 0) {
+        if (filterData[firstPostIndex] === undefined) {
+          setCurrentPage(1);
+          lastPostIndex = currentPage * postsPerPage;
+          firstPostIndex = lastPostIndex - postsPerPage;
+        }
+      }
+      currentPosts = filterData.slice(firstPostIndex, lastPostIndex);
+      stateFilter = true;
+      return true;
+    }
     let filterData = dataArray.filter((d) => {
       if (d.detailPost.category.includes(filterText)) {
         return d;
@@ -83,6 +122,7 @@ function SecondHand(props) {
         };
         sortByDate(currentPosts);
         currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
         return true;
       } else if (sortText === "newToOld") {
         const sortByDate = (currentPosts) => {
@@ -96,6 +136,7 @@ function SecondHand(props) {
         };
         sortByDate(currentPosts);
         currentPosts = currentPosts.slice(firstPostIndex, lastPostIndex);
+        stateSort = true;
         return true;
       }
     }
@@ -111,6 +152,7 @@ function SecondHand(props) {
       };
       sortByDate(dataArray);
       currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      stateSort = true;
       return true;
     } else if (sortText === "newToOld") {
       const sortByDate = (dataArray) => {
@@ -124,7 +166,107 @@ function SecondHand(props) {
       };
       sortByDate(dataArray);
       currentPosts = dataArray.slice(firstPostIndex, lastPostIndex);
+      stateSort = true;
       return true;
+    }
+  }
+
+  function checkSelectandSearch() {
+    if (
+      searchText !== "" ||
+      (filterText !== "all" && filterText !== "") ||
+      (sortText !== "default" && sortText !== "")
+    ) {
+      if (searchText !== "") {
+        search();
+        if (filterText !== "all" && filterText !== "") {
+          filter();
+          if (sortText !== "default" && sortText !== "") {
+            sortDate();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else if (sortText !== "default" && sortText !== "") {
+          sortDate();
+          if (filterText !== "all" && filterText !== "") {
+            filter();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else {
+          return <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>;
+        }
+      } else if (filterText !== "all" && filterText !== "") {
+        filter();
+        if (searchText !== "") {
+          search();
+          if (sortText !== "default" && sortText !== "") {
+            sortDate();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else if (sortText !== "default" && sortText !== "") {
+          sortDate();
+          if (searchText !== "") {
+            search();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else {
+          return <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>;
+        }
+      } else if (sortText !== "default" && sortText !== "") {
+        sortDate();
+        if (filterText !== "all" && filterText !== "") {
+          filter();
+          if (searchText !== "") {
+            search();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else if (searchText !== "") {
+          search();
+          if (filterText !== "all" && filterText !== "") {
+            filter();
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          } else {
+            return (
+              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
+            );
+          }
+        } else {
+          return <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>;
+        }
+      }
+    } else {
+      return <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>;
     }
   }
 
@@ -181,37 +323,7 @@ function SecondHand(props) {
         </div>
       </div>
       <div className="second-content">
-      {searchText !== "" ? (
-          sortText !== "default" && sortText !== "" ? (
-            search() &&
-            sortDate() &&
-            (
-              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-            )
-          ) : (
-            search() && (
-              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-            )
-          )
-        ) : filterText !== "all" && filterText !== "" ? (
-          sortText !== "default" && sortText !== "" ? (
-            filter() &&
-            sortDate() && (
-              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-            )
-          ) : (
-            filter() && (
-              <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-            )
-          )
-        ) : sortText !== "default" && sortText !== "" ? (
-          sortDate() && (
-            <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-          )
-        ) : (
-          <ShowDataSecond currentPosts={currentPosts}></ShowDataSecond>
-        )}
-
+        {checkSelectandSearch()}
         {
           <Pagination
             totalPosts={size}

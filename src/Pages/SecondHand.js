@@ -20,6 +20,17 @@ function SecondHand(props) {
     dataArray.push(data);
   });
 
+  const sortDefault = (dataArray) => {
+    const sorter = (a, b) => {
+      return (
+        new Date(b.detailPost.date_time).getTime() -
+        new Date(a.detailPost.date_time).getTime()
+      );
+    };
+    dataArray.sort(sorter);
+  };
+  sortDefault(dataArray);
+
   const [searchText, setSearchText] = useState("");
   const [filterText, setFilterText] = useState("");
   const [sortText, setSortText] = useState("");

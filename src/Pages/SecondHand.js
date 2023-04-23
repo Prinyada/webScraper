@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./SecondHand.css";
 import { Input, Select } from "antd";
 import Pagination from "../components/Pagination";
 import ShowDataSecond from "../components/ShowDataSecond";
+import { AuthContext } from "../App";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function SecondHand(props) {
+
+  const { checkBox, setCheckBox } = useContext(AuthContext);
+  const { state, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
+
   let data = props.dataSecond;
   let dataArray = [];
 
@@ -306,7 +314,12 @@ function SecondHand(props) {
     }
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(checkBox === false){
+      dispatch({ type: "ADMIN", payload: false });
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="second-container">

@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./LostItems.css";
 import { Input, Space, Select } from "antd";
 import Pagination from "../components/Pagination";
 import ShowDataLost from "../components/ShowDataLost";
+import { AuthContext } from "../App";
+import { UserContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function LostItems(props) {
+
+  const { checkBox, setCheckBox } = useContext(AuthContext);
+  const { state, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
+
   let data = props.dataLost;
 
   let dataArray = [];
@@ -283,7 +291,12 @@ function LostItems(props) {
     }
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if(checkBox === false){
+      dispatch({ type: "ADMIN", payload: false });
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="lost-container">

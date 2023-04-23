@@ -6,13 +6,16 @@ import { Checkbox } from "antd";
 import Dialog from "../components/Dialog";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../App";
+
 
 function Home() {
   const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [checkBox, setCheckBox] = useState(false);
+
+  const { checkBox, setCheckBox } = useContext(AuthContext);
 
   useEffect(() => {
     dispatch({ type: "ADMIN", payload: false });

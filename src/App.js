@@ -30,6 +30,7 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const [ auth, setAuth ] = useState(null);
+  const [checkBox, setCheckBox] = useState(false);
 
   useEffect(() => {
     onValue(ref(db, "scraper"), (snapshot) => {
@@ -57,7 +58,7 @@ function App() {
 
   return (
     <>
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, checkBox, setCheckBox }}>
       <UserContext.Provider value={{ state, dispatch }}>
         <Header />
         <Routes>

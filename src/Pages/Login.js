@@ -46,7 +46,6 @@ function Login() {
   }
 
   useEffect(() => {
-    console.log("this auth -> ",auth);
     onValue(ref(db, "user"), (snapshot) => {
       let userDb = snapshot.val().username;
       let passDb = snapshot.val().password;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import "./Insertdata.css";
 import { Select, Input, Button, message } from "antd";
 import { db } from "../realtimeData/firebase-config";
@@ -13,6 +13,9 @@ function Insertdata() {
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
   const [state, setState] = useState(true);
+
+  const textInput = useRef();
+  const selectInput = useRef();
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
 
@@ -35,7 +38,7 @@ function Insertdata() {
       temp = "เครื่องแต่งกาย";
     } else if (selected === "decoration") {
       temp = "เครื่องประดับ";
-    }else if (selected === "education") {
+    } else if (selected === "education") {
       temp = "เกี่ยวกับการศึกษา";
     } else if (selected === "key") {
       temp = "กุญแจ";
@@ -60,7 +63,7 @@ function Insertdata() {
   }
 
   function success() {
-    toast.success("เพิ่มข้อมูลสำเร็จ กดรีเฟรช 1 ครั้ง", {
+    toast.success("เพิ่มข้อมูลสำเร็จ", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -73,7 +76,7 @@ function Insertdata() {
   }
 
   function warning() {
-    toast.warn("มีข้อมูลแล้ว กดรีเฟรช 1 ครั้ง", {
+    toast.warn("มีข้อมูลแล้ว", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -86,7 +89,7 @@ function Insertdata() {
   }
 
   function deletesuccess() {
-    toast.success("ลบข้อมูลสำเร็จ กดรีเฟรช 1 ครั้ง", {
+    toast.success("ลบข้อมูลสำเร็จ", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -100,7 +103,7 @@ function Insertdata() {
 
   // insert data
   function addtofirebase() {
-    setState(false);
+    // setState(false);
     if (selected === "") {
       setError("selectedError");
     } else {
@@ -120,6 +123,7 @@ function Insertdata() {
               ...addData,
             });
             success();
+            selectTable(selected);
           } else if (check === false) {
             warning();
           }
@@ -135,6 +139,7 @@ function Insertdata() {
               ...addData,
             });
             success();
+            selectTable(selected);
           } else if (check === false) {
             warning();
           }
@@ -150,11 +155,11 @@ function Insertdata() {
               ...addData,
             });
             success();
+            selectTable(selected);
           } else if (check === false) {
             warning();
           }
         }
-        setSelected("");
       }
     }
   }
@@ -191,6 +196,9 @@ function Insertdata() {
           setTempSelectTable([...tempData]);
         });
       }
+    } else {
+      setAddData([]);
+      setTempSelectTable([]);
     }
   }
 
@@ -217,16 +225,12 @@ function Insertdata() {
       });
     }
     deletesuccess();
-    setSelected("");
+    selectTable(selected);
   }
 
-  function refresh() {
-    window.location.reload(true);
-  }
+  function refresh() {}
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   const forMap = (tag, index) => {
     return (
@@ -245,12 +249,15 @@ function Insertdata() {
   };
 
   function showDataSelect() {
+    console.log("this select -> ", selected);
     if (selected !== "") {
       return (
         <div className="showData-content">
-          {state === true && tempSelectTable.map(forMap)}
+          {tempSelectTable.map(forMap)}
         </div>
       );
+    } else {
+      return <></>;
     }
   }
 
@@ -287,8 +294,10 @@ function Insertdata() {
             { value: "color", label: "สี" },
             { value: "place", label: "สถานที่" },
           ]}
+          ref={selectInput}
         />
       </div>
+
       {(error === "undefine" || error === "selectedError") && (
         <p className="text-error">กรุณาเลือกหมวด</p>
       )}
@@ -304,15 +313,13 @@ function Insertdata() {
             setText(e.target.value);
             setError("");
           }}
+          ref={textInput}
         />
         &nbsp;
         <Button type="primary" onClick={addtofirebase}>
           เพิ่มข้อมูล
         </Button>
         &nbsp;
-        <div className="refresh" onClick={refresh}>
-          <HiOutlineRefresh />
-        </div>
       </div>
       {(error === "undefine" || error === "inputError") && (
         <p className="text-error">กรุณากรอกข้อมูล</p>

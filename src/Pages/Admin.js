@@ -15,7 +15,6 @@ function Admin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("this auth -> ",auth);
     if (auth === undefined || auth === null) {
       navigate("/login");
     } else {

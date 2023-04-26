@@ -12,13 +12,11 @@ function Insertdata() {
   const [addData, setAddData] = useState([]);
   const [selected, setSelected] = useState("");
   const [error, setError] = useState("");
-  const [state, setState] = useState(true);
 
   const textInput = useRef();
   const selectInput = useRef();
 
   const [tempSelectTable, setTempSelectTable] = useState([]);
-
 
   function showTableSelect() {
     let temp;
@@ -103,7 +101,6 @@ function Insertdata() {
 
   // insert data
   function addtofirebase() {
-    // setState(false);
     if (selected === "") {
       setError("selectedError");
     } else {
@@ -227,8 +224,6 @@ function Insertdata() {
     deletesuccess();
     selectTable(selected);
   }
-
-  function refresh() {}
 
   useEffect(() => {}, []);
 

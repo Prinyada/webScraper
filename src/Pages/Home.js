@@ -73,6 +73,7 @@ function Home() {
         <button
           className="secondaryBtn button"
           onClick={() => {
+            console.log("this checkbox -> ",checkBox);
             if (checkBox === true) {
               secondhandClick();
             } else {

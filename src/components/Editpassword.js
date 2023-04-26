@@ -3,10 +3,8 @@ import "./Editpassword.css";
 import { db } from "../realtimeData/firebase-config";
 import { ref, onValue, update } from "firebase/database";
 import { Button, Input } from "antd";
-import { HiOutlineRefresh } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AuthContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 function Editpassword() {
@@ -17,10 +15,9 @@ function Editpassword() {
   const [confirmNewPass, setconfirmNewPass] = useState();
 
   const [errorText, setErrorText] = useState("");
-  const navigate = useNavigate();
 
   function success() {
-    toast.success("แก้ไขรหัสผ่านสำเร็จ กดรีเฟรช 1 ครั้ง", {
+    toast.success("แก้ไขรหัสผ่านสำเร็จ", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -33,7 +30,7 @@ function Editpassword() {
   }
 
   function error() {
-    toast.error("กดรีเฟรช 1 ครั้ง แล้วกรอกใหม่", {
+    toast.error("กรุณากรอกใหม่", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -43,9 +40,6 @@ function Editpassword() {
       progress: undefined,
       theme: "colored",
     });
-  }
-  function refresh() {
-    window.location.reload(true);
   }
 
   function editToDb() {
@@ -145,9 +139,6 @@ function Editpassword() {
         >
           ยืนยัน
         </Button>
-        <div className="refresh" onClick={refresh}>
-          <HiOutlineRefresh />
-        </div>
       </div>
       <ToastContainer
         position="top-center"

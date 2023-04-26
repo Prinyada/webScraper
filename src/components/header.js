@@ -10,16 +10,20 @@ import { AuthContext } from "../App";
 function Header() {
   const { state, dispatch } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
+  const { checkBox, setCheckBox } = useContext(AuthContext);
 
   let activeLink = "button-link active";
   let normalLink = "button-link";
 
   const [click, setClick] = useState(false);
   const handleClick = () => {
-    setClick(!click)
-    setAuth(null)
+    setClick(!click);
+    setAuth(null);
   };
-  const closeMobileMenu = () => setClick(false);
+  const closeMobileMenu = () => {
+    setCheckBox(false);
+    setClick(false)
+  };
 
   const RenderHeader = () => {
     if (state === true) {
@@ -104,7 +108,10 @@ function Header() {
                     หน้าหลัก
                   </NavLink>
                 </div>
-                <div className="button-admin" onClick={closeMobileMenu}>
+                <div
+                  className="button-admin"
+                  onClick={closeMobileMenu}
+                >
                   <NavLink
                     to="/login"
                     className={({ isActive }) =>
